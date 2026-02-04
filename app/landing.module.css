@@ -1,0 +1,744 @@
+/* ============================================
+   PEAKHEIGHT PREMIUM LANDING PAGE
+   Optimized for iPhone (375px - 430px)
+   ============================================ */
+
+/* Base Page Styles */
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   HEADER - Floating Glass Effect
+   ============================================ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.logoText {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.headerLinks {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.headerLink {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.headerLink:active {
+  color: #ffffff;
+}
+
+.headerLang {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+}
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 90px 24px 60px;
+  padding-top: max(90px, calc(75px + env(safe-area-inset-top)));
+  overflow: hidden;
+}
+
+.heroWaveBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.heroGlow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.heroVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero Title */
+.heroTitle {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  margin: 0 0 16px 0;
+  max-width: 340px;
+}
+
+.heroTitleGradient {
+  background: linear-gradient(135deg, #ffffff 0%, #a8a8a8 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSubtitle {
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 28px 0;
+  max-width: 320px;
+}
+
+/* CTA Button */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  padding: 18px 32px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 60px rgba(255, 255, 255, 0.1);
+}
+
+.ctaButton:active {
+  transform: scale(0.98);
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.ctaSubtext {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 16px 0 0 0;
+}
+
+/* Hero Store Badges */
+.heroStoreBadges {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 28px;
+  justify-content: center;
+  width: 100%;
+}
+
+.heroStoreBadge {
+  display: block;
+  width: 190px;
+  height: 56px;
+  background-image: url('/pngstores.png');
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.heroStoreBadge:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.heroStoreBadgeGoogle {
+  background-position: 0 0;
+}
+
+.heroStoreBadgeApple {
+  background-position: 0 100%;
+}
+
+/* App Store Popup */
+.appStorePopup {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  padding: 0 16px;
+  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.appStorePopupInner {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  max-width: 360px;
+  width: 100%;
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.appStorePopupIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.appStorePopupContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.appStorePopupTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 2px 0;
+}
+
+.appStorePopupSubtitle {
+  font-size: 13px;
+  color: #666666;
+  margin: 0;
+}
+
+.appStorePopupButton {
+  padding: 10px 18px;
+  background: #007AFF;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.appStorePopupButton:active {
+  transform: scale(0.96);
+  background: #0066DD;
+}
+
+.appStorePopupClose {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 24px;
+  height: 24px;
+  background: #000000;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Phone Mockup */
+.phoneContainer {
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.phoneGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}
+
+.phoneImage {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-radius: 32px;
+  box-shadow: 
+    0 40px 80px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.sectionTag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+/* ============================================
+   FEATURES SECTION
+   ============================================ */
+.featuresSection {
+  padding: 60px 20px;
+  background: #0a0a0a;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.featureCard {
+  padding: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+
+.featureCard:active {
+  transform: scale(0.98);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.featureIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  font-size: 22px;
+  margin-bottom: 16px;
+}
+
+.featureTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
+}
+
+.featureDescription {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+/* ============================================
+   VIDEO SECTION
+   ============================================ */
+.videoSection {
+  padding: 60px 20px;
+  background: #000000;
+}
+
+.videoContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+  aspect-ratio: 16 / 9;
+}
+
+.videoIframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ============================================
+   STEPS SECTION
+   ============================================ */
+.stepsSection {
+  padding: 60px 20px;
+  background: #000000;
+}
+
+.stepsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.stepCard {
+  position: relative;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+}
+
+.stepNumber {
+  font-size: 32px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.15);
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.stepTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.3px;
+}
+
+.stepDescription {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.stepConnector {
+  display: none; /* Hidden on mobile for cleaner look */
+}
+
+/* ============================================
+   FINAL CTA SECTION
+   ============================================ */
+.finalCta {
+  position: relative;
+  padding: 80px 24px;
+  background: #000000;
+  text-align: center;
+  overflow: hidden;
+}
+
+.finalCtaGlow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at top center,
+    rgba(255, 255, 255, 0.05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.finalCtaTitle {
+  position: relative;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 0 0 16px 0;
+}
+
+.finalCtaSubtitle {
+  position: relative;
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 32px 0;
+  max-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.finalCta .ctaButton {
+  margin: 0 auto;
+}
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  padding: 40px 20px;
+  padding-bottom: max(40px, calc(20px + env(safe-area-inset-bottom)));
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.footerLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.footerLinks a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footerLinks a:active {
+  color: #ffffff;
+}
+
+.footerCopy {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+/* ============================================
+   LARGER PHONES (390px+)
+   ============================================ */
+@media (min-width: 390px) {
+  .heroTitle {
+    font-size: 40px;
+    max-width: 360px;
+  }
+
+  .heroSubtitle {
+    font-size: 17px;
+    max-width: 340px;
+  }
+
+  .heroStoreBadge {
+    width: 200px;
+    height: 60px;
+  }
+
+  .phoneContainer {
+    max-width: 320px;
+  }
+
+  .sectionTitle {
+    font-size: 32px;
+  }
+
+  .finalCtaTitle {
+    font-size: 36px;
+  }
+}
+
+/* ============================================
+   TABLET & DESKTOP (for completeness)
+   ============================================ */
+@media (min-width: 768px) {
+  .heroTitle {
+    font-size: 52px;
+    max-width: 500px;
+  }
+
+  .heroSubtitle {
+    font-size: 18px;
+    max-width: 400px;
+  }
+
+  .phoneContainer {
+    max-width: 340px;
+    margin-top: 24px;
+  }
+
+  .heroStoreBadges {
+    gap: 16px;
+  }
+
+  .heroStoreBadge {
+    width: 235px;
+    height: 72px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+  }
+
+  .videoContainer {
+    max-width: 600px;
+  }
+
+  .stepsGrid {
+    flex-direction: row;
+    max-width: 800px;
+  }
+
+  .stepCard {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heroTitle {
+    font-size: 64px;
+    max-width: 600px;
+  }
+
+  .sectionTitle {
+    font-size: 40px;
+  }
+
+  .finalCtaTitle {
+    font-size: 48px;
+  }
+
+  .featuresGrid {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1000px;
+  }
+
+  .videoContainer {
+    max-width: 800px;
+  }
+}
