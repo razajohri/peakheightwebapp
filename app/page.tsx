@@ -122,7 +122,7 @@ export default function Home() {
             </h1>
 
             <p className={styles.heroSubtitle}>
-              PeakHeight helps you grow taller—naturally.
+              PeakHeight helps you grow taller - naturally.
             </p>
 
             {/* CTA Button - TikTok Users: Open in Browser */}
