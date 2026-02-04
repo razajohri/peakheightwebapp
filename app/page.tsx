@@ -125,10 +125,15 @@ export default function Home() {
               PeakHeight helps you grow taller - naturally.
             </p>
 
-            {/* CTA Button - TikTok Users: Open in Browser */}
-            <Link href="/" className={styles.ctaButton}>
+            {/* CTA Button - TikTok Users: Open in Browser → App Store */}
+            <a
+              href={mobileOS === 'ios' ? 'https://apps.apple.com/us/app/peak-height/id6752793377' : mobileOS === 'android' ? 'https://play.google.com/store/apps/details?id=com.peakheight.app' : 'https://apps.apple.com/us/app/peak-height/id6752793377'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.ctaButton}
+            >
               <span>📱 TikTok Users: Hold ↓ then &quot;Open in Browser&quot;</span>
-            </Link>
+            </a>
 
             {/* App Store Badges in Hero */}
             <div className={styles.heroStoreBadges}>
@@ -223,9 +228,14 @@ export default function Home() {
           <p className={styles.finalCtaSubtitle}>
             Start your personalized growth journey today.
           </p>
-          <Link href="/" className={styles.ctaButton}>
+          <a
+            href={mobileOS === 'ios' ? 'https://apps.apple.com/us/app/peak-height/id6752793377' : mobileOS === 'android' ? 'https://play.google.com/store/apps/details?id=com.peakheight.app' : 'https://apps.apple.com/us/app/peak-height/id6752793377'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.ctaButton}
+          >
             <span>📱 TikTok Users: Hold ↓ then &quot;Open in Browser&quot;</span>
-          </Link>
+          </a>
         </section>
       </main>
 
