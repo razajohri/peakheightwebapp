@@ -56,7 +56,7 @@ export default function PaywallPage() {
 
     const run = async () => {
       if (!isRevenueCatConfigured()) {
-        setErrorMessage('Payments not configured.')
+        setErrorMessage('Subscription options aren’t available on this site yet. If you’re the site owner, add NEXT_PUBLIC_REVENUECAT_API_KEY in Netlify (or your host) and redeploy.')
         setStatus('error')
         return
       }
@@ -98,7 +98,12 @@ export default function PaywallPage() {
   if (status === 'error') {
     return (
       <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6">
-        <p className="text-red-400 text-center mb-6">{errorMessage}</p>
+        <p className="text-amber-200 text-center mb-2 max-w-md">
+          Subscription isn’t available on this site yet.
+        </p>
+        <p className="text-white/50 text-center text-sm mb-6 max-w-md">
+          {errorMessage}
+        </p>
         <Link
           href="/dashboard"
           className="px-6 py-3 rounded-xl bg-white text-black font-semibold"
