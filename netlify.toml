@@ -1,0 +1,9 @@
+# PeakHeight Web App – Netlify
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+  environment = { NODE_VERSION = "20" }
+
+# Netlify auto-detects Next.js and uses @netlify/plugin-nextjs for SSR and API routes.

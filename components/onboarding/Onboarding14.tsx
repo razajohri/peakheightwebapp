@@ -18,18 +18,21 @@ const reviews = [
     id: 'mark',
     name: 'Mark Michael',
     handle: '@michaelmark',
+    image: '/testimonial-mark.webp',
     text: 'The daily reminders are a game changer. Makes it so much easier to stay consistent with exercise.',
   },
   {
     id: 'mo',
     name: 'Mo Daiyoub',
     handle: '@baby_mo',
+    image: '/testimonial-mo.webp',
     text: "Didn't think an app could motivate me like this.",
   },
   {
     id: 'seva',
     name: 'Seva Jaenen',
     handle: '@s.jaenen04',
+    image: '/testimonial-seva.webp',
     text: 'Really impressed with how smooth the app is.',
   },
 ]
@@ -77,10 +80,12 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">
-                        {review.name.charAt(0)}
-                      </span>
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center shrink-0">
+                      <img
+                        src={review.image}
+                        alt={review.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                     <div>
                       <p className="text-white font-semibold text-sm">{review.name}</p>

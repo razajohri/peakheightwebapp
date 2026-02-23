@@ -7,7 +7,6 @@ import type { OnboardingData } from '@/lib/onboarding/types'
 const INTRO_VIDEO_PATH = '/assets/hyperspeed.webm'
 const VIDEO_DURATION_MS = 5000
 const EXIT_ANIMATION_MS = 700
-const FALLBACK_DURATION_MS = 8000
 
 interface OnboardingHyperspeedIntroProps {
   data: OnboardingData
@@ -17,14 +16,15 @@ interface OnboardingHyperspeedIntroProps {
 }
 
 /**
- * Step 1: 5s hyperspeed video, then exit animation (warp into next), then advance.
- * Next page animates in as if arriving from the hyperspeed.
+ * Step 1: Hyperspeed video (or gradient fallback), then exit animation, then advance.
+ * Put your video at public/assets/hyperspeed.webm for the full effect.
  */
 export default function OnboardingHyperspeedIntro({
   onNext,
 }: OnboardingHyperspeedIntroProps) {
   const advanced = useRef(false)
   const [exiting, setExiting] = useState(false)
+  const [videoFailed, setVideoFailed] = useState(false)
 
   const goNext = () => {
     if (advanced.current) return
@@ -53,14 +53,33 @@ export default function OnboardingHyperspeedIntro({
               transition: { duration: EXIT_ANIMATION_MS / 1000, ease: [0.22, 1, 0.36, 1] },
             }}
           >
-            <video
-              src={INTRO_VIDEO_PATH}
-              className="absolute inset-0 w-full h-full object-cover"
-              autoPlay
-              muted
-              playsInline
-              onEnded={goNext}
-            />
+            {!videoFailed ? (
+              <video
+                src={INTRO_VIDEO_PATH}
+                className="absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                playsInline
+                preload="auto"
+                onEnded={goNext}
+                onError={() => setVideoFailed(true)}
+              />
+            ) : null}
+            {/* Fallback when video missing or fails: gradient + logo text */}
+            <div
+              className={`absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#0A0A0A] via-[#1a1a2e] to-[#0A0A0A] ${videoFailed ? '' : 'opacity-0 pointer-events-none'}`}
+              aria-hidden={!videoFailed}
+            >
+              <motion.div
+                animate={{ opacity: videoFailed ? 1 : 0 }}
+                className="text-center"
+              >
+                <h1 className="text-white text-3xl font-bold tracking-tight">
+                  Peak Height
+                </h1>
+                <p className="text-amber-400/80 text-sm mt-2">Unlock your potential</p>
+              </motion.div>
+            </div>
           </motion.div>
         ) : null}
       </AnimatePresence>
