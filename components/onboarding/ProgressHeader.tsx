@@ -12,7 +12,7 @@ interface ProgressHeaderProps {
 
 export default function ProgressHeader({
   currentStep,
-  totalSteps = 19,
+  totalSteps = 22,
   onBack,
   showBackButton = true,
 }: ProgressHeaderProps) {

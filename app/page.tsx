@@ -94,9 +94,6 @@ export default function Home() {
             <span className={styles.logoText}>PeakHeight</span>
           </Link>
           <div className={styles.headerLinks}>
-            <Link href="/blog" className={styles.headerLink}>
-              Blog
-            </Link>
             <span className={styles.headerLang}>EN</span>
           </div>
         </div>
@@ -125,15 +122,13 @@ export default function Home() {
               PeakHeight helps you grow taller - naturally.
             </p>
 
-            {/* CTA Button - TikTok Users: Open in Browser → App Store */}
-            <a
-              href={mobileOS === 'ios' ? 'https://apps.apple.com/us/app/peak-height/id6752793377' : mobileOS === 'android' ? 'https://play.google.com/store/apps/details?id=com.peakheight.app' : 'https://apps.apple.com/us/app/peak-height/id6752793377'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.ctaButton}
-            >
-              <span>📱 TikTok Users: Hold ↓ then &quot;Open in Browser&quot;</span>
-            </a>
+            {/* CTA Button - Start onboarding */}
+            <Link href="/onboarding" className={styles.ctaButton}>
+              <span>Start Now — Get Your Plan</span>
+              <svg className={styles.ctaButtonIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
 
             {/* App Store Badges in Hero */}
             <div className={styles.heroStoreBadges}>
@@ -228,14 +223,9 @@ export default function Home() {
           <p className={styles.finalCtaSubtitle}>
             Start your personalized growth journey today.
           </p>
-          <a
-            href={mobileOS === 'ios' ? 'https://apps.apple.com/us/app/peak-height/id6752793377' : mobileOS === 'android' ? 'https://play.google.com/store/apps/details?id=com.peakheight.app' : 'https://apps.apple.com/us/app/peak-height/id6752793377'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.ctaButton}
-          >
-            <span>📱 TikTok Users: Hold ↓ then &quot;Open in Browser&quot;</span>
-          </a>
+          <Link href="/onboarding" className={styles.ctaButton}>
+            <span>Get Started Free</span>
+          </Link>
         </section>
       </main>
 

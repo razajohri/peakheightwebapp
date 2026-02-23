@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import Onboarding1 from '@/components/onboarding/Onboarding1'
+import OnboardingHyperspeedIntro from '@/components/onboarding/OnboardingHyperspeedIntro'
 import Onboarding2 from '@/components/onboarding/Onboarding2'
 import Onboarding3 from '@/components/onboarding/Onboarding3'
 import Onboarding4 from '@/components/onboarding/Onboarding4'
@@ -22,27 +22,28 @@ import Onboarding14 from '@/components/onboarding/Onboarding14'
 import Onboarding15 from '@/components/onboarding/Onboarding15'
 import Onboarding17 from '@/components/onboarding/Onboarding17'
 import OnboardingAuth from '@/components/onboarding/OnboardingAuth'
-import OnboardingPaywall from '@/components/onboarding/OnboardingPaywall'
 import OnboardingComplete from '@/components/onboarding/OnboardingComplete'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
+
+function OnboardingPaywallRedirect() {
+  const router = useRouter()
+  useEffect(() => {
+    router.replace('/paywall')
+  }, [router])
+  return (
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4">
+      <div className="w-8 h-8 border-2 border-white/30 border-t-amber-500 rounded-full animate-spin" />
+      <p className="text-white/60 text-sm">Taking you to subscription…</p>
+    </div>
+  )
+}
 
 function OnboardingFlow() {
   const router = useRouter()
   const { currentStep, data, updateData, nextStep, prevStep } = useOnboarding()
 
-  const handleComplete = async () => {
-    // Redirect to completion page
-    try {
-      console.log('Onboarding completed with data:', data)
-      router.push('/onboarding/complete')
-    } catch (error) {
-      console.error('Failed to complete onboarding:', error)
-    }
-  }
-
   const handleAuthRequired = (authMode: 'signup' | 'signin' = 'signup') => {
-    // Go to auth step instead of redirecting
-    nextStep()
+    router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
   }
 
   // Render current onboarding step
@@ -55,12 +56,7 @@ function OnboardingFlow() {
 
   switch (currentStep) {
     case 1:
-      return (
-        <Onboarding1
-          {...commonProps}
-          onAuthRequired={handleAuthRequired}
-        />
-      )
+      return <OnboardingHyperspeedIntro {...commonProps} />
     case 2:
       return <Onboarding2 {...commonProps} />
     case 3:
@@ -100,7 +96,7 @@ function OnboardingFlow() {
     case 20:
       return <OnboardingAuth {...commonProps} />
     case 21:
-      return <OnboardingPaywall {...commonProps} />
+      return <OnboardingPaywallRedirect />
     case 22:
       return <OnboardingComplete data={data} />
     default:

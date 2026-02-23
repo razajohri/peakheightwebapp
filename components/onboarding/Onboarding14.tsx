@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import FloatingStars from './FloatingStars'
+import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
 
 interface Onboarding14Props {
@@ -47,9 +48,8 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        {/* No progress header on this page */}
-        
-        <div className="flex-1 flex flex-col px-6 pt-8">
+        <ProgressHeader currentStep={17} totalSteps={22} onBack={onBack} />
+        <div className="flex-1 flex flex-col px-6 pt-4">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}

@@ -30,11 +30,13 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
         dreamFeet,
         dreamInches,
         dreamCm: dreamHeightInCm,
+        dreamHeight: dreamHeightInCm,
         targetHeight: dreamHeightInCm
       })
     } else {
       updateData({
         dreamCm,
+        dreamHeight: dreamCm,
         targetHeight: dreamCm
       })
     }

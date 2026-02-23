@@ -1,17 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
-
-interface OnboardingData {
-  gender?: string
-  age?: number
-  currentHeight?: number
-  parentHeight?: { father?: number; mother?: number }
-  dreamHeight?: number
-  motivation?: string
-  barriers?: string[]
-  [key: string]: any
-}
+import type { OnboardingData } from '@/lib/onboarding/types'
 
 interface OnboardingContextType {
   currentStep: number

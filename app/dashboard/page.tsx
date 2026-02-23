@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase/client'
+import { initializeRevenueCat, openCustomerCenter, isRevenueCatConfigured } from '@/lib/services/revenuecat'
 import logo from '../../peakheight-logo.jpg'
 
 interface UserProfile {
@@ -13,34 +14,15 @@ interface UserProfile {
   first_name?: string
   last_name?: string
   email?: string
-  premium_status?: boolean
-  premium_expires_at?: string
-  current_height?: number
-  target_height?: number
-  onboarding_completed?: boolean
-  created_at?: string
-  motivation?: string
-  workout_frequency?: string
-  sleep_hours?: number
 }
 
-interface Subscription {
-  id?: string
-  plan_id?: string
-  status?: string
-  start_date?: string
-  end_date?: string
-  auto_renew?: boolean
-  payment_source?: string
-  created_at?: string
-  updated_at?: string
-}
+const APP_STORE_URL = 'https://apps.apple.com/us/app/peak-height/id6752793377'
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.peakheight.app'
 
 export default function DashboardPage() {
   const router = useRouter()
   const { user, loading, signOut, isPremium } = useAuth()
   const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -51,38 +33,23 @@ export default function DashboardPage() {
 
     if (user) {
       fetchUserData()
+      if (isPremium && isRevenueCatConfigured()) {
+        initializeRevenueCat(user.id).catch(() => {})
+      }
     }
-  }, [user, loading, router])
+  }, [user, loading, isPremium, router])
 
   const fetchUserData = async () => {
     if (!user) return
-
     try {
-      // Fetch user profile
-      const { data: profileData } = await supabase
+      const { data } = await supabase
         .from('users')
-        .select('display_name, first_name, last_name, email, premium_status, premium_expires_at, current_height, target_height, onboarding_completed, created_at, motivation, workout_frequency, sleep_hours')
+        .select('display_name, first_name, last_name, email')
         .eq('id', user.id)
         .single()
-
-      if (profileData) {
-        setProfile(profileData)
-      }
-
-      // Fetch subscription (get most recent if multiple)
-      const { data: subData } = await supabase
-        .from('user_subscriptions')
-        .select('id, plan_id, status, start_date, end_date, auto_renew, payment_source, created_at, updated_at')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
-        .limit(1)
-        .single()
-
-      if (subData) {
-        setSubscription(subData)
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error)
+      if (data) setProfile(data)
+    } catch (e) {
+      console.error('Error fetching profile:', e)
     } finally {
       setIsLoading(false)
     }
@@ -92,54 +59,6 @@ export default function DashboardPage() {
     await signOut()
     router.push('/')
   }
-
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return 'N/A'
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-  }
-
-  const getPlanName = (planId?: string) => {
-    switch (planId) {
-      case 'weekly': return 'Weekly'
-      case 'yearly': return 'Yearly'
-      case 'monthly': return 'Monthly'
-      default: return planId || 'Premium'
-    }
-  }
-
-  const getStatusBadge = (status?: string) => {
-    switch (status) {
-      case 'active': return { label: 'Active', className: 'bg-green-500/20 text-green-400' }
-      case 'trial': return { label: 'Trial', className: 'bg-blue-500/20 text-blue-400' }
-      case 'cancelled': return { label: 'Cancelled', className: 'bg-amber-500/20 text-amber-400' }
-      case 'expired': return { label: 'Expired', className: 'bg-red-500/20 text-red-400' }
-      default: return { label: status || 'Unknown', className: 'bg-white/10 text-white/60' }
-    }
-  }
-
-  const getPaymentSourceLabel = (source?: string) => {
-    switch (source) {
-      case 'web': return 'Credit Card (Web)'
-      case 'revenuecat': return 'App Store / Google Play'
-      case 'stripe': return 'Credit Card'
-      default: return '—'
-    }
-  }
-
-  const formatHeight = (cm?: number) => {
-    if (cm == null) return '—'
-    const feet = Math.floor(cm / 30.48)
-    const inches = Math.round((cm % 30.48) / 2.54)
-    return `${feet}'${inches}" (${cm} cm)`
-  }
-
-  const memberSince = profile?.created_at
-    ? new Date(profile.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-    : null
 
   if (loading || isLoading) {
     return (
@@ -153,49 +72,28 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0A0A0A] via-[#1a1a2e] to-[#0A0A0A]">
-      {/* Header */}
       <header className="px-6 pt-6 pb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl p-1">
-            <Image
-              src={logo}
-              alt="PeakHeight"
-              width={32}
-              height={32}
-              className="w-full h-full object-cover rounded-lg"
-            />
+            <Image src={logo} alt="PeakHeight" width={32} height={32} className="w-full h-full object-cover rounded-lg" />
           </div>
           <span className="text-white font-bold text-lg">PeakHeight</span>
         </div>
-        <button
-          onClick={handleSignOut}
-          className="text-white/60 hover:text-white text-sm transition-colors"
-        >
+        <button onClick={handleSignOut} className="text-white/60 hover:text-white text-sm transition-colors">
           Sign Out
         </button>
       </header>
 
       <div className="px-6 pb-12 max-w-lg mx-auto">
-        {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8 pt-4"
         >
-          <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-[0_8px_30px_rgba(34,197,94,0.3)]">
-            <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h1 className="text-white text-2xl font-bold mb-2">
-            Welcome, {userName}!
-          </h1>
-          <p className="text-white/60">
-            Your account is ready. Download the app to start your journey.
-          </p>
+          <h1 className="text-white text-2xl font-bold mb-2">Welcome, {userName}!</h1>
+          <p className="text-white/60">Your account is ready. Download the app to start your journey.</p>
         </motion.div>
 
-        {/* Account */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -218,138 +116,32 @@ export default function DashboardPage() {
                 {user?.email || profile?.email || '—'}
               </span>
             </div>
-            {memberSince && (
-              <div className="flex justify-between text-sm">
-                <span className="text-white/50">Member since</span>
-                <span className="text-white">{memberSince}</span>
-              </div>
-            )}
           </div>
+          {isPremium && isRevenueCatConfigured() && (
+            <button
+              type="button"
+              onClick={() => openCustomerCenter('/support')}
+              className="mt-4 w-full py-2.5 rounded-xl border border-white/20 text-white/80 text-sm font-medium hover:bg-white/5 transition-colors"
+            >
+              Manage subscription
+            </button>
+          )}
         </motion.div>
 
-        {/* Subscription Details */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 mb-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-white font-semibold">Subscription</h2>
-            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-              isPremium || profile?.premium_status
-                ? 'bg-green-500/20 text-green-400'
-                : subscription
-                  ? getStatusBadge(subscription.status).className
-                  : 'bg-white/10 text-white/60'
-            }`}>
-              {isPremium || profile?.premium_status
-                ? 'Active'
-                : subscription
-                  ? getStatusBadge(subscription.status).label
-                  : 'No subscription'}
-            </span>
-          </div>
-          
-          <div className="space-y-3">
-            <div className="flex justify-between text-sm">
-              <span className="text-white/50">Plan</span>
-              <span className="text-white">{getPlanName(subscription?.plan_id) || '—'}</span>
-            </div>
-            {subscription?.start_date && (
-              <div className="flex justify-between text-sm">
-                <span className="text-white/50">Started</span>
-                <span className="text-white">{formatDate(subscription.start_date)}</span>
-              </div>
-            )}
-            {subscription?.end_date && (
-              <div className="flex justify-between text-sm">
-                <span className="text-white/50">
-                  {subscription?.auto_renew ? 'Renews' : 'Expires'}
-                </span>
-                <span className="text-white">{formatDate(subscription.end_date)}</span>
-              </div>
-            )}
-            <div className="flex justify-between text-sm">
-              <span className="text-white/50">Auto-renew</span>
-              <span className="text-white">
-                {subscription?.auto_renew != null
-                  ? subscription.auto_renew ? 'On' : 'Off'
-                  : '—'}
-              </span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-white/50">Payment method</span>
-              <span className="text-white">{getPaymentSourceLabel(subscription?.payment_source)}</span>
-            </div>
-          </div>
-          <p className="text-white/40 text-xs mt-4">
-            To cancel or change your plan, use the same method you used to subscribe (app or web).
-          </p>
-        </motion.div>
-
-        {/* Your Plan Summary (onboarding data) */}
-        {(profile?.current_height != null || profile?.target_height != null || profile?.motivation || profile?.workout_frequency != null) && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10 mb-6"
-          >
-            <h2 className="text-white font-semibold mb-4">Your Plan Summary</h2>
-            <div className="space-y-3">
-              {profile?.current_height != null && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-white/50">Current height</span>
-                  <span className="text-white">{formatHeight(profile.current_height)}</span>
-                </div>
-              )}
-              {profile?.target_height != null && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-white/50">Target height</span>
-                  <span className="text-white">{formatHeight(profile.target_height)}</span>
-                </div>
-              )}
-              {profile?.workout_frequency && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-white/50">Workout frequency</span>
-                  <span className="text-white capitalize">{profile.workout_frequency}</span>
-                </div>
-              )}
-              {profile?.sleep_hours != null && (
-                <div className="flex justify-between text-sm">
-                  <span className="text-white/50">Sleep (hours/night)</span>
-                  <span className="text-white">{profile.sleep_hours}</span>
-                </div>
-              )}
-              {profile?.motivation && (
-                <div className="pt-2">
-                  <span className="text-white/50 text-sm block mb-1">Motivation</span>
-                  <p className="text-white text-sm">{profile.motivation}</p>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-
-        {/* Download App Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
           className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 backdrop-blur-sm rounded-2xl p-6 border border-amber-500/20 mb-6"
         >
-          <h2 className="text-white font-bold text-lg mb-2 text-center">
-            Download the App
-          </h2>
+          <h2 className="text-white font-bold text-lg mb-2 text-center">Download the App</h2>
           <p className="text-white/60 text-sm text-center mb-6">
-            Continue your growth journey on your phone. Your premium subscription is already active!
+            Continue your growth journey on your phone.
+            {isPremium && ' Your premium subscription is already active.'}
           </p>
-
           <div className="space-y-3">
-            {/* iOS App Store */}
             <a
-              href="https://apps.apple.com/us/app/peak-height/id6752793377"
+              href={APP_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full h-14 bg-black rounded-xl flex items-center justify-center gap-3 border border-white/20 hover:border-white/40 transition-colors"
@@ -362,10 +154,8 @@ export default function DashboardPage() {
                 <p className="text-white font-semibold text-sm leading-tight">App Store</p>
               </div>
             </a>
-
-            {/* Google Play */}
             <a
-              href="https://play.google.com/store/apps/details?id=com.peakheight.app" // Replace with actual Play Store link
+              href={PLAY_STORE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full h-14 bg-black rounded-xl flex items-center justify-center gap-3 border border-white/20 hover:border-white/40 transition-colors"
@@ -384,54 +174,9 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
-        {/* How it works */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white/5 backdrop-blur-sm rounded-2xl p-5 border border-white/10"
-        >
-          <h2 className="text-white font-semibold mb-4">Next Steps</h2>
-          <div className="space-y-4">
-            <div className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
-                1
-              </div>
-              <div>
-                <p className="text-white text-sm font-medium">Download the app</p>
-                <p className="text-white/50 text-xs">Available on iOS and Android</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
-                2
-              </div>
-              <div>
-                <p className="text-white text-sm font-medium">Sign in with the same account</p>
-                <p className="text-white/50 text-xs">Use {user?.email}</p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-6 h-6 rounded-full bg-amber-500 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
-                3
-              </div>
-              <div>
-                <p className="text-white text-sm font-medium">Start your 120-day journey</p>
-                <p className="text-white/50 text-xs">Your premium is already active!</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Support link */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="text-center text-white/40 text-xs mt-8"
-        >
+        <p className="text-center text-white/40 text-xs">
           Need help? <a href="mailto:support@peakheight.app" className="text-amber-400 underline">Contact Support</a>
-        </motion.p>
+        </p>
       </div>
     </div>
   )

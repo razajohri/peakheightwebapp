@@ -1,93 +1,67 @@
-# PeakHeight Web App – What's Left & Tomorrow
+# PeakHeight Web App – What's Left & Next Steps
 
-**Last updated:** Jan 31, 2026
+**Last updated:** Feb 2026
 
 ---
 
 ## ✅ What's Done
 
 - **Landing page** – Working
-- **Onboarding flow** – All steps, auth step (email + Apple + Google), paywall
-- **Auth** – Supabase email sign up/sign in, Apple & Google OAuth, auth callback, user profile in `public.users`
-- **Dashboard** – Shows user info, subscription status, onboarding summary, iOS/Android download links
-- **Onboarding data** – Saves to Supabase (`users`, `user_progress`, `user_preferences`, `user_join_events`) when user is signed in and reaches "You're All Set!"
-- **Paywall** – UI with weekly/yearly plans; **Development Mode** (simulated payment) works when RevenueCat is not configured
-- **RevenueCat code** – `lib/services/revenuecat.ts` (init, offerings, purchase, restore, etc.)
-- **RevenueCat webhook** – `app/api/revenuecat/webhook/route.ts` – updates `users.premium_status` and `user_subscriptions` on payment events
-- **Environment** – `.env.local` has placeholders for Supabase, RevenueCat, Stripe, webhook secret
-- **Middleware** – Currently disabled (was redirecting to auth); dashboard uses client-side auth check
-- **Docs** – Apple/Google auth setup, setup plan, this file
+- **Onboarding flow** – All steps, auth (email + Apple + Google), paywall (monthly + yearly)
+- **Auth** – Supabase auth, user profile in `public.users`, sign out clears RevenueCat
+- **Dashboard** – Account, subscription block, “Manage subscription” (Customer Center–style), plan summary, app download links
+- **Onboarding data** – Saves to Supabase when signed in and user reaches “You're All Set!”
+- **RevenueCat** – Full integration: init, offerings (monthly/yearly), purchase, restore, **PeakHeight Web** entitlement, presentPaywall component, `openCustomerCenter`
+- **Paywall** – Custom onboarding paywall + optional RevenueCat-hosted paywall; Development Mode when RC not configured
+- **Webhook** – `POST /api/revenuecat/webhook` updates `users.premium_status` and `user_subscriptions`
+- **Environment** – `.env.local` has RevenueCat test API key; placeholders for webhook secret and Supabase service role
+- **Middleware** – Disabled (dashboard uses client-side auth)
+- **Docs** – Apple/Google auth, setup plan, RevenueCat integration, this file
 
 ---
 
-## 🔲 What's Left
+## 🔲 What's Next (in order)
 
-### 1. RevenueCat + Stripe (finish setup)
+### 1. RevenueCat Dashboard setup
 
-- [ ] **Connect Stripe to RevenueCat** (you were about to do this)
-  - RevenueCat Dashboard → Add app → Stripe → Connect with Stripe OAuth
-- [ ] **Create products in RevenueCat** (or import from Stripe)
-  - Weekly plan (e.g. $4.99/week)
-  - Yearly plan (e.g. $49.99/year)
-- [ ] **Create offering** in RevenueCat (e.g. `default`) with weekly + annual packages
-- [ ] **Create entitlement** (e.g. `premium`) and attach both products
-- [ ] **Get Web API key** from RevenueCat → Project Settings → API Keys
-- [ ] **Fill in `.env.local`**:
-  - `NEXT_PUBLIC_REVENUECAT_API_KEY=rcb_...`
-  - `REVENUECAT_WEBHOOK_AUTH_HEADER=<your-secret>`
-  - `SUPABASE_SERVICE_ROLE_KEY=<from Supabase Dashboard>`
-  - Optional: `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`, `STRIPE_SECRET_KEY` if needed
+- [ ] **Connect Stripe** – RevenueCat → Project Settings → Apps → + New → Stripe → Connect
+- [ ] **Products** – Create or import **monthly** and **yearly** (Stripe) and link to packages with identifiers `monthly` and `yearly`
+- [ ] **Entitlement** – Create **PeakHeight Web**, attach both products
+- [ ] **Offering** – Create offering (e.g. `default`), add monthly + yearly packages, set as **Current**
+- [ ] **API key** – You already have test key in `.env.local`; for production use live Web API key from Project Settings → API Keys
 
-### 2. RevenueCat webhook (live)
+### 2. Webhook + Supabase keys
 
-- [ ] **Add webhook in RevenueCat** → Project Settings → Webhooks
-  - URL: `https://your-domain.com/api/revenuecat/webhook`
-  - Authorization header: same value as `REVENUECAT_WEBHOOK_AUTH_HEADER`
-- [ ] For **local testing**: use ngrok (or similar) to expose `http://localhost:3001/api/revenuecat/webhook` and use that URL in RevenueCat
+- [ ] **Supabase** – Copy **service_role** key from Supabase Dashboard → Settings → API → paste into `.env.local` as `SUPABASE_SERVICE_ROLE_KEY`
+- [ ] **Webhook secret** – Pick a random string (e.g. `my_webhook_secret_xyz`), add to `.env.local` as `REVENUECAT_WEBHOOK_AUTH_HEADER`
+- [ ] **RevenueCat webhook** – Project Settings → Webhooks → Add URL:  
+  - Production: `https://your-domain.com/api/revenuecat/webhook`  
+  - Local test: use ngrok to expose `http://localhost:3001/api/revenuecat/webhook`  
+  - Set **Authorization** header to the same value as `REVENUECAT_WEBHOOK_AUTH_HEADER`
 
-### 3. After payment: sync to Supabase
+### 3. Test the full flow
 
-- [ ] **Test a real payment** (Stripe test mode)
-- [ ] Confirm webhook fires and updates:
-  - `public.users` → `premium_status = true`, `premium_expires_at`
-  - `public.user_subscriptions` → new row with plan, dates, payment_source
-- [ ] Confirm dashboard shows premium status after payment
+- [ ] Run app: `npm run dev` (e.g. port 3001)
+- [ ] Sign up → complete onboarding → paywall: choose **Monthly** or **Yearly** → pay with Stripe test card
+- [ ] Check Supabase: `users.premium_status = true`, row in `user_subscriptions`
+- [ ] Open Dashboard: subscription shows Active, “Manage subscription” opens Stripe portal (or fallback)
+- [ ] Optional: test **Restore purchases** on paywall
 
-### 4. Optional / polish
+### 4. Optional / later
 
-- [ ] Re-enable **middleware** for `/dashboard` once cookie/session handling is confirmed (or keep client-side only)
-- [ ] **Restore purchases** button on dashboard/paywall (RevenueCat restore)
-- [ ] **Error handling** – e.g. webhook down, invalid payload
-- [ ] **Deploy** web app (Vercel, etc.) and set production env vars
-
----
-
-## 📋 Tomorrow's Plan
-
-1. **Finish RevenueCat + Stripe**
-   - Connect Stripe in RevenueCat
-   - Create products + offering + entitlement
-   - Add API key and webhook secret to `.env.local`
-
-2. **Webhook**
-   - Add webhook URL in RevenueCat (production or ngrok for local)
-   - Test with a Stripe test payment
-
-3. **Verify flow**
-   - Sign up → onboarding → paywall → pay with test card → check Supabase (`users.premium_status`, `user_subscriptions`) and dashboard
-
-4. **Optional**
-   - Restore purchases, re-enable middleware, deploy
+- [ ] **Deploy** – Vercel (or other host), set env vars, add production URL to Supabase redirect URLs and RevenueCat webhook
+- [ ] **Re-enable middleware** – If you want server-side auth check for `/dashboard`, fix cookie/session in `middleware.ts` and re-enable matcher
+- [ ] **Live keys** – Switch to RevenueCat live API key and Stripe live keys for production
 
 ---
 
 ## Quick reference
 
-- **RevenueCat connect Stripe:** Project Settings → Apps → + New → Stripe → Connect with Stripe  
-- **Web API key:** Project Settings → API Keys (starts with `rcb_`)  
-- **Webhook:** Project Settings → Webhooks → URL = `https://yourdomain.com/api/revenuecat/webhook`  
-- **Supabase service role:** Supabase Dashboard → Settings → API → service_role key  
-
----
-
-See you tomorrow. 👋
+| Item | Where |
+|------|--------|
+| RevenueCat + Stripe | Project Settings → Apps → + New → Stripe |
+| Web API key | Project Settings → API Keys (Web) |
+| Webhook | Project Settings → Webhooks |
+| Entitlement | Entitlements → **PeakHeight Web** |
+| Package IDs | **monthly**, **yearly** (in your offering) |
+| Supabase service_role | Supabase Dashboard → Settings → API |

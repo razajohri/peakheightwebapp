@@ -61,7 +61,16 @@ export default function Onboarding2({ data, updateData, onNext, onBack }: Onboar
     <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
       <FloatingStars />
 
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+      <motion.div
+        className="relative z-10 min-h-screen min-h-dvh flex flex-col"
+        initial={{ opacity: 0, scale: 0.88, filter: 'blur(14px)' }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+          filter: 'blur(0px)',
+          transition: { duration: 0.85, ease: [0.22, 1, 0.36, 1] },
+        }}
+      >
         <ProgressHeader currentStep={2} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
@@ -128,7 +137,7 @@ export default function Onboarding2({ data, updateData, onNext, onBack }: Onboar
         <div className="px-6 pb-10">
           <OnboardingButton title="Continue" onPress={onNext} disabled={!selectedGender} />
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

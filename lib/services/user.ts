@@ -1,24 +1,7 @@
 import { supabase } from '@/lib/supabase/client'
+import type { OnboardingData } from '@/lib/onboarding/types'
 
-interface OnboardingData {
-  gender?: string
-  age?: number
-  currentHeight?: number
-  parentHeight?: { father?: number; mother?: number }
-  dreamHeight?: number
-  motivation?: string
-  barriers?: string[]
-  ethnicity?: string
-  footSize?: number
-  footSizeSystem?: string
-  workoutFrequency?: string
-  sleepHours?: number
-  smokingStatus?: boolean
-  drinkingStatus?: boolean
-  triedOptions?: string[]
-  stoppingGoals?: string[]
-  [key: string]: any
-}
+export type { OnboardingData } from '@/lib/onboarding/types'
 
 /**
  * Save onboarding data to Supabase users table
@@ -40,36 +23,41 @@ export async function saveOnboardingData(userId: string, data: OnboardingData): 
       dbData.gender = data.gender.toLowerCase()
     }
 
-    // Age -> Date of birth (approximate)
-    if (data.age) {
+    // Date of birth (web: dateOfBirth ISO; mobile/legacy: age -> approximate)
+    if (data.dateOfBirth) {
+      dbData.date_of_birth = data.dateOfBirth.split('T')[0]
+    } else if (data.age) {
       const birthYear = new Date().getFullYear() - data.age
       dbData.date_of_birth = `${birthYear}-01-01`
     }
 
-    // Heights (in cm)
-    if (data.currentHeight) {
+    // Heights (in cm) — same fields as mobile
+    if (data.currentHeight != null) {
       dbData.current_height = data.currentHeight
     }
-
-    if (data.dreamHeight) {
+    if (data.targetHeight != null) {
+      dbData.target_height = data.targetHeight
+    }
+    if (data.dreamHeight != null) {
       dbData.target_height = data.dreamHeight
     }
 
-    // Parent heights
-    if (data.parentHeight?.father) {
-      dbData.parent_height_father = data.parentHeight.father
-    }
-    if (data.parentHeight?.mother) {
-      dbData.parent_height_mother = data.parentHeight.mother
+    // Weight (same as mobile)
+    if (data.currentWeight != null) {
+      dbData.current_weight = data.currentWeight
     }
 
-    // Additional parent height formats
-    if (data.fatherCm) dbData.father_cm = data.fatherCm
-    if (data.motherCm) dbData.mother_cm = data.motherCm
-    if (data.fatherFeet) dbData.father_feet = data.fatherFeet
-    if (data.fatherInches) dbData.father_inches = data.fatherInches
-    if (data.motherFeet) dbData.mother_feet = data.motherFeet
-    if (data.motherInches) dbData.mother_inches = data.motherInches
+    // Parent heights (web: parentHeightFather/Mother in cm; mobile may use parentHeight.father/mother)
+    if (data.parentHeightFather != null) dbData.parent_height_father = data.parentHeightFather
+    if (data.parentHeightMother != null) dbData.parent_height_mother = data.parentHeightMother
+    if (data.parentHeight?.father != null) dbData.parent_height_father = data.parentHeight.father
+    if (data.parentHeight?.mother != null) dbData.parent_height_mother = data.parentHeight.mother
+    if (data.fatherCm != null) dbData.father_cm = data.fatherCm
+    if (data.motherCm != null) dbData.mother_cm = data.motherCm
+    if (data.fatherFeet != null) dbData.father_feet = data.fatherFeet
+    if (data.fatherInches != null) dbData.father_inches = data.fatherInches
+    if (data.motherFeet != null) dbData.mother_feet = data.motherFeet
+    if (data.motherInches != null) dbData.mother_inches = data.motherInches
     if (data.parentMeasurementSystem) dbData.parent_measurement_system = data.parentMeasurementSystem
 
     // Motivation

@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { WavyBackground } from '@/components/ui/wavy-background'
 import FloatingStars from './FloatingStars'
+import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
 
 interface Onboarding15Props {
@@ -63,10 +65,20 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
 
   return (
     <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+      <WavyBackground
+        containerClassName="absolute inset-0 z-0 min-h-screen min-h-dvh"
+        className="pointer-events-none absolute inset-0 min-h-screen min-h-dvh"
+        backgroundFill="#000000"
+        waveOpacity={0.2}
+        blur={12}
+        speed="slow"
+        colors={['#22d3ee', '#818cf8', '#c084fc', '#38bdf8', '#e879f9']}
+      />
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <div className="flex-1 flex flex-col px-6 pt-10">
+        <ProgressHeader currentStep={18} totalSteps={22} onBack={onBack} />
+        <div className="flex-1 flex flex-col px-6 pt-4">
           <AnimatePresence mode="wait">
             {analyzing ? (
               <motion.div
