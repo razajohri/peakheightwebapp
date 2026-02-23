@@ -168,7 +168,7 @@ export function checkEntitlement(
   if (!customerInfo?.entitlements?.active) {
     return false
   }
-  const active = customerInfo.entitlements.active as Record<string, { expirationDate?: string }>
+  const active = customerInfo.entitlements.active as unknown as Record<string, { expirationDate?: string }>
   return Boolean(active[entitlementIdentifier])
 }
 
@@ -193,7 +193,7 @@ export function getExpirationDate(
   customerInfo: CustomerInfo,
   entitlementIdentifier: string = ENTITLEMENT_ID
 ): Date | null {
-  const active = customerInfo?.entitlements?.active as Record<string, { expirationDate?: string }> | undefined
+  const active = customerInfo?.entitlements?.active as unknown as Record<string, { expirationDate?: string }> | undefined
   if (!active?.[entitlementIdentifier]?.expirationDate) {
     return null
   }
@@ -264,19 +264,17 @@ export async function purchasePackage(pkg: Package): Promise<PurchaseResult> {
 }
 
 /**
- * Restore previous purchases (e.g. user switched device or reinstalled).
+ * Restore / refresh subscription state (web: refetch customer info from RevenueCat).
  */
 export async function restorePurchases(): Promise<CustomerInfo | null> {
   const purchases = getRevenueCat()
   if (!purchases) {
     throw new Error('RevenueCat not initialized')
   }
-
   try {
-    const customerInfo = await purchases.restorePurchases()
-    return customerInfo
+    return await purchases.getCustomerInfo()
   } catch (error) {
-    console.error('[RevenueCat] restorePurchases failed:', error)
+    console.error('[RevenueCat] restorePurchases (getCustomerInfo) failed:', error)
     throw error
   }
 }
@@ -346,14 +344,7 @@ export async function openCustomerCenter(fallbackUrl?: string): Promise<void> {
 // ---------------------------------------------------------------------------
 
 export async function logOutRevenueCat(): Promise<void> {
-  if (purchasesInstance) {
-    try {
-      await purchasesInstance.logOut()
-    } catch (error) {
-      console.error('[RevenueCat] logOut failed:', error)
-    }
-    purchasesInstance = null
-  }
+  purchasesInstance = null
 }
 
 // ---------------------------------------------------------------------------

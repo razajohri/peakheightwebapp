@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import type { OnboardingData } from '@/lib/onboarding/types'
 
 const INTRO_VIDEO_PATH = '/assets/hyperspeed.webm'
 const VIDEO_DURATION_MS = 5000
@@ -9,8 +10,8 @@ const EXIT_ANIMATION_MS = 700
 const FALLBACK_DURATION_MS = 8000
 
 interface OnboardingHyperspeedIntroProps {
-  data: unknown
-  updateData: (data: unknown) => void
+  data: OnboardingData
+  updateData: (data: Partial<OnboardingData>) => void
   onNext: () => void
   onBack?: () => void
 }
