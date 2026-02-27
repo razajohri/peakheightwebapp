@@ -58,8 +58,7 @@ function OnboardingFlow() {
   }
 
   switch (currentStep) {
-    case 1:
-      return <OnboardingHyperspeedIntro {...commonProps} />
+    case 1: // legacy saved step; treat as step 2
     case 2:
       return <Onboarding2 {...commonProps} />
     case 3:
