@@ -93,6 +93,14 @@ export default function RevenueCatPaywall({
     return () => { cancelled = true }
   }, [user?.id, onPurchaseSuccess])
 
+  // Automatically present the paywall once everything is ready
+  useEffect(() => {
+    if (status === 'ready') {
+      void handlePresentPaywall()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status])
+
   const handlePresentPaywall = async () => {
     if (!user?.id) return
     const target = htmlTargetId ? document.getElementById(htmlTargetId) : null
@@ -180,13 +188,9 @@ export default function RevenueCatPaywall({
   return (
     <div ref={containerRef} className="w-full">
       {htmlTargetId && <div id={htmlTargetId} className="min-h-[200px]" />}
-      <button
-        type="button"
-        onClick={handlePresentPaywall}
-        className="w-full h-[54px] rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[16px] flex items-center justify-center shadow-[0_8px_30px_rgba(245,158,11,0.3)] active:scale-[0.98] transition-transform"
-      >
-        View subscription options
-      </button>
+      {status === 'ready' && !errorMessage && (
+        <p className="text-white/60 text-sm text-center">Opening subscription options…</p>
+      )}
       {errorMessage && (
         <p className="text-red-400 text-sm mt-2 text-center">{errorMessage}</p>
       )}

@@ -18,6 +18,7 @@ function AuthPageContent() {
   const [authMode, setAuthMode] = useState<'signup' | 'signin'>(mode as 'signup' | 'signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(errorParam === 'auth_failed' ? 'Authentication failed. Please try again.' : '')
@@ -35,6 +36,11 @@ function AuthPageContent() {
     setIsLoading(true)
 
     try {
+      if (authMode === 'signup' && password !== confirmPassword) {
+        setError('Passwords do not match.')
+        setIsLoading(false)
+        return
+      }
       let result
       if (authMode === 'signup') {
         result = await signUpWithEmail(email, password, name)
@@ -43,12 +49,17 @@ function AuthPageContent() {
       }
 
       if (result.error) {
-        if (result.error.message.includes('Invalid login credentials')) {
+        const msg = result.error.message || ''
+        if (msg.includes('Invalid login credentials')) {
           setError('Invalid email or password.')
-        } else if (result.error.message.includes('User already registered')) {
+        } else if (msg.includes('User already registered')) {
           setError('An account with this email already exists.')
+        } else if (msg.includes('Failed to fetch')) {
+          setError(
+            'Unable to reach the server. Check your internet connection (and any ad‑blockers or VPN), then try again.'
+          )
         } else {
-          setError(result.error.message)
+          setError(msg || 'Something went wrong. Please try again.')
         }
       } else {
         router.push(redirectTo)
@@ -156,6 +167,21 @@ function AuthPageContent() {
               />
             </div>
 
+            {authMode === 'signup' && (
+              <div>
+                <label className="text-white/60 text-[12px] font-medium mb-1.5 block">Repeat password</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Repeat password"
+                  required
+                  minLength={6}
+                  className="w-full h-[48px] bg-white/5 border border-white/10 rounded-xl px-4 text-white text-[15px] placeholder:text-white/30 focus:outline-none focus:border-amber-500/50 transition-colors"
+                />
+              </div>
+            )}
+
             {error && (
               <p className="text-red-400 text-[13px] text-center bg-red-400/10 rounded-lg py-2 px-3">
                 {error}
@@ -164,7 +190,12 @@ function AuthPageContent() {
 
             <button
               type="submit"
-              disabled={isLoading || !email || !password}
+              disabled={
+                isLoading ||
+                !email ||
+                !password ||
+                (authMode === 'signup' && !confirmPassword)
+              }
               className="w-full h-[52px] rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[15px] flex items-center justify-center shadow-[0_8px_30px_rgba(245,158,11,0.3)] active:scale-[0.98] transition-transform disabled:opacity-50"
             >
               {isLoading ? (

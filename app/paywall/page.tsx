@@ -114,32 +114,14 @@ export default function PaywallPage() {
     )
   }
 
+  // When status === 'paywall', immediately show the hosted paywall (no intermediate screen)
   return (
-    <div className="min-h-screen bg-black flex flex-col">
-      <header className="p-4 flex items-center justify-between border-b border-white/10">
-        <Link href="/" className="text-white font-semibold">
-          Peak Height
-        </Link>
-        <Link
-          href="/dashboard"
-          className="text-white/60 text-sm hover:text-white"
-        >
-          Skip for now
-        </Link>
-      </header>
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        <h1 className="text-white text-xl font-bold text-center mb-2">
-          Unlock your growth plan
-        </h1>
-        <p className="text-white/60 text-sm text-center mb-8 max-w-sm">
-          Subscribe to get your custom report and use the app on your phone with the same account.
-        </p>
-        <div className="w-full max-w-md">
-          <RevenueCatPaywall
-            onPurchaseSuccess={handlePurchaseSuccess}
-            onBack={() => router.push('/dashboard')}
-          />
-        </div>
+    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-md">
+        <RevenueCatPaywall
+          onPurchaseSuccess={handlePurchaseSuccess}
+          onBack={() => router.push('/dashboard')}
+        />
       </div>
     </div>
   )
