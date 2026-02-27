@@ -3,7 +3,8 @@
 import { useEffect, useRef } from 'react'
 import type { OnboardingData } from '@/lib/onboarding/types'
 
-const INTRO_VIDEO_PATH = '/assets/hyperspeed.webm'
+const INTRO_VIDEO_WEBM = '/assets/hyperspeed.webm'
+const INTRO_VIDEO_MP4 = '/assets/hyperspeed.mp4'
 const FALLBACK_DURATION_MS = 12000
 
 interface OnboardingHyperspeedIntroProps {
@@ -29,11 +30,6 @@ export default function OnboardingHyperspeedIntro({
     const vid = videoRef.current
     if (!vid) return
 
-    // Try to autoplay silently
-    vid.play().catch(() => {
-      // If autoplay is blocked, user can tap to start
-    })
-
     // Fallback: advance even if ended doesn't fire (e.g. codec issue)
     const timer = setTimeout(() => {
       onNext()
@@ -56,7 +52,6 @@ export default function OnboardingHyperspeedIntro({
     <div className="fixed inset-0 bg-black flex flex-col">
       <video
         ref={videoRef}
-        src={INTRO_VIDEO_PATH}
         className="w-full h-full object-cover"
         autoPlay
         muted
@@ -64,7 +59,11 @@ export default function OnboardingHyperspeedIntro({
         controls={false}
         onEnded={onNext}
         onClick={handleTap}
-      />
+      >
+        {/* iOS Safari prefers H.264 MP4; other browsers can use WebM */}
+        <source src={INTRO_VIDEO_MP4} type="video/mp4" />
+        <source src={INTRO_VIDEO_WEBM} type="video/webm" />
+      </video>
       {/* Soft vignette only, no button */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/70" />
     </div>
