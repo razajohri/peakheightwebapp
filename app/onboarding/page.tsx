@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
 
 // Lazy-load each step so phones only load one step at a time (faster initial load)
-const OnboardingHyperspeedIntro = dynamic(() => import('@/components/onboarding/OnboardingHyperspeedIntro'), { ssr: false })
 const Onboarding2 = dynamic(() => import('@/components/onboarding/Onboarding2'), { ssr: false })
 const Onboarding3 = dynamic(() => import('@/components/onboarding/Onboarding3'), { ssr: false })
 const Onboarding4 = dynamic(() => import('@/components/onboarding/Onboarding4'), { ssr: false })

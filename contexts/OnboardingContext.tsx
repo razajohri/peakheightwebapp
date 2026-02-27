@@ -15,8 +15,8 @@ interface OnboardingContextType {
 const OnboardingContext = createContext<OnboardingContextType | undefined>(undefined)
 
 export function OnboardingProvider({ children }: { children: ReactNode }) {
-  // Start at step 2 by default (skip intro screen)
-  const [currentStep, setCurrentStep] = useState(2)
+  // Start at step 1, which is now the first question (gender)
+  const [currentStep, setCurrentStep] = useState(1)
   const [data, setData] = useState<OnboardingData>({})
 
   // Load saved data from localStorage on mount
@@ -33,8 +33,7 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
     if (savedStep) {
       try {
         const step = parseInt(savedStep, 10)
-        // If old data saved step 1 (intro), bump to 2
-        setCurrentStep(step === 1 ? 2 : step)
+        setCurrentStep(step)
       } catch (error) {
         console.error('Failed to load saved step:', error)
       }
