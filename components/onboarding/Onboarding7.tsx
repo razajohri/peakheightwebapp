@@ -1,6 +1,7 @@
-'use client'
+ 'use client'
 
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import FloatingStars from './FloatingStars'
 import ProgressHeader from './ProgressHeader'
@@ -48,75 +49,42 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
   return (
     <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
       <FloatingStars />
+
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
         <ProgressHeader currentStep={8} totalSteps={22} onBack={onBack} />
 
-        <div className="flex-1 flex flex-col px-6 pt-4">
+        <div className="flex-1 flex flex-col px-6 pt-0">
           {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="mb-6"
+            className="mb-4"
           >
-            <h1 className="text-white text-[28px] font-bold leading-tight">
+            <h1 className="text-white text-[24px] sm:text-[28px] font-bold leading-tight">
               Height isn't just inherited,
             </h1>
             <div className="inline-block bg-white/10 px-3 py-1 rounded-lg border border-white/20 mt-2">
-              <span className="text-white text-[28px] font-bold">it's earned.</span>
+              <span className="text-white text-[24px] sm:text-[28px] font-bold">it's earned.</span>
             </div>
           </motion.div>
 
-          {/* Video/Animation Placeholder */}
+          {/* Illustration */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex-1 flex items-center justify-center mb-6"
+            className="flex-1 flex items-center justify-center mb-4"
           >
-            <div className="w-full max-w-md aspect-square rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
-              {/* DNA Animation Placeholder */}
-              <svg width="200" height="200" viewBox="0 0 200 200" fill="none" className="animate-pulse">
-                <path
-                  d="M60 20C60 20 80 50 100 50C120 50 140 20 140 20"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeOpacity="0.5"
-                />
-                <path
-                  d="M60 50C60 50 80 80 100 80C120 80 140 50 140 50"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeOpacity="0.4"
-                />
-                <path
-                  d="M60 80C60 80 80 110 100 110C120 110 140 80 140 80"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeOpacity="0.5"
-                />
-                <path
-                  d="M60 110C60 110 80 140 100 140C120 140 140 110 140 110"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeOpacity="0.4"
-                />
-                <path
-                  d="M60 140C60 140 80 170 100 170C120 170 140 140 140 140"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeOpacity="0.5"
-                />
-                <circle cx="60" cy="20" r="6" fill="white" fillOpacity="0.8" />
-                <circle cx="140" cy="20" r="6" fill="white" fillOpacity="0.8" />
-                <circle cx="100" cy="50" r="6" fill="white" fillOpacity="0.6" />
-                <circle cx="60" cy="80" r="6" fill="white" fillOpacity="0.8" />
-                <circle cx="140" cy="80" r="6" fill="white" fillOpacity="0.8" />
-                <circle cx="100" cy="110" r="6" fill="white" fillOpacity="0.6" />
-                <circle cx="60" cy="140" r="6" fill="white" fillOpacity="0.8" />
-                <circle cx="140" cy="140" r="6" fill="white" fillOpacity="0.8" />
-                <circle cx="100" cy="170" r="6" fill="white" fillOpacity="0.6" />
-              </svg>
+            <div className="w-4/5 sm:w-full max-w-sm sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+              <Image
+                src="/assets/height-diagram.png"
+                alt="How posture, load, sleep, and nutrition affect height potential"
+                width={384}
+                height={684}
+                className="w-full h-auto object-contain"
+                priority={false}
+              />
             </div>
           </motion.div>
 

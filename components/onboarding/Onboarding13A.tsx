@@ -12,7 +12,20 @@ interface Onboarding13AProps {
   onBack: () => void
 }
 
+function formatHeight(heightInCm: number | undefined) {
+  if (!heightInCm || heightInCm === 0) return '—'
+  const totalInches = heightInCm / 2.54
+  const feet = Math.floor(totalInches / 12)
+  const inches = Math.round(totalInches % 12)
+  return `${feet}'${inches}"`
+}
+
 export default function Onboarding13A({ data, updateData, onNext, onBack }: Onboarding13AProps) {
+  const targetHeightValue =
+    data?.targetHeight ?? data?.dreamHeight ?? data?.dreamCm ?? undefined
+  const targetHeightFormatted = targetHeightValue
+    ? formatHeight(targetHeightValue)
+    : 'Not set'
   return (
     <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
       <FloatingStars />
@@ -97,7 +110,7 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#00FFC6]" />
-                <span className="text-white text-sm">With AI prediction</span>
+                <span className="text-white text-sm">With Peak Habits</span>
               </div>
             </div>
           </motion.div>
@@ -111,17 +124,17 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
           >
             <div className="flex justify-around mb-5">
               <div className="text-center">
-                <p className="text-[#00FFC6] text-2xl font-bold">87%</p>
-                <p className="text-white/50 text-sm">Accuracy Rate</p>
+                <p className="text-[#00FFC6] text-2xl font-bold">4.8</p>
+                <p className="text-white/50 text-sm">Average Rating</p>
               </div>
               <div className="text-center">
-                <p className="text-[#00FFC6] text-2xl font-bold">2.4"</p>
-                <p className="text-white/50 text-sm">Avg Growth</p>
+                <p className="text-[#00FFC6] text-2xl font-bold">{targetHeightFormatted}</p>
+                <p className="text-white/50 text-sm">Your target height</p>
               </div>
             </div>
             
             <p className="text-white text-center text-base leading-relaxed">
-              Our AI predicts your maximum height potential based on genetics and lifestyle patterns.
+              See how dialing in your daily habits can move you closer to your true height potential.
             </p>
           </motion.div>
         </div>

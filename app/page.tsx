@@ -125,9 +125,9 @@ export default function Home() {
             {/* CTA Button - Start onboarding */}
             <Link href="/onboarding" className={styles.ctaButton}>
               <span>Start Now — Get Your Plan</span>
-              <svg className={styles.ctaButtonIcon} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
+              <span className={styles.ctaButtonIcon} aria-hidden>
+                ✨
+              </span>
             </Link>
 
             {/* App Store Badges in Hero */}
