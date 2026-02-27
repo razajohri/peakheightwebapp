@@ -286,7 +286,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               </div>
               
               <h3 className="text-black text-2xl font-bold mb-4">
-                " Why we ask about your parents height? "
+                Why we ask about your parents height?
               </h3>
               
               <p className="text-gray-600 text-base mb-8">

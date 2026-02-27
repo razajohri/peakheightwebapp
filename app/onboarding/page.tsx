@@ -1,29 +1,32 @@
 'use client'
 
 import { useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import OnboardingHyperspeedIntro from '@/components/onboarding/OnboardingHyperspeedIntro'
-import Onboarding2 from '@/components/onboarding/Onboarding2'
-import Onboarding3 from '@/components/onboarding/Onboarding3'
-import Onboarding4 from '@/components/onboarding/Onboarding4'
-import Onboarding5 from '@/components/onboarding/Onboarding5'
-import Onboarding5B from '@/components/onboarding/Onboarding5B'
-import Onboarding6 from '@/components/onboarding/Onboarding6'
-import Onboarding7 from '@/components/onboarding/Onboarding7'
-import Onboarding7A from '@/components/onboarding/Onboarding7A'
-import Onboarding8 from '@/components/onboarding/Onboarding8'
-import Onboarding9 from '@/components/onboarding/Onboarding9'
-import Onboarding10 from '@/components/onboarding/Onboarding10'
-import Onboarding11 from '@/components/onboarding/Onboarding11'
-import Onboarding12 from '@/components/onboarding/Onboarding12'
-import Onboarding13 from '@/components/onboarding/Onboarding13'
-import Onboarding13A from '@/components/onboarding/Onboarding13A'
-import Onboarding14 from '@/components/onboarding/Onboarding14'
-import Onboarding15 from '@/components/onboarding/Onboarding15'
-import Onboarding17 from '@/components/onboarding/Onboarding17'
-import OnboardingAuth from '@/components/onboarding/OnboardingAuth'
-import OnboardingComplete from '@/components/onboarding/OnboardingComplete'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
+
+// Lazy-load each step so phones only load one step at a time (faster initial load)
+const OnboardingHyperspeedIntro = dynamic(() => import('@/components/onboarding/OnboardingHyperspeedIntro'), { ssr: false })
+const Onboarding2 = dynamic(() => import('@/components/onboarding/Onboarding2'), { ssr: false })
+const Onboarding3 = dynamic(() => import('@/components/onboarding/Onboarding3'), { ssr: false })
+const Onboarding4 = dynamic(() => import('@/components/onboarding/Onboarding4'), { ssr: false })
+const Onboarding5 = dynamic(() => import('@/components/onboarding/Onboarding5'), { ssr: false })
+const Onboarding5B = dynamic(() => import('@/components/onboarding/Onboarding5B'), { ssr: false })
+const Onboarding6 = dynamic(() => import('@/components/onboarding/Onboarding6'), { ssr: false })
+const Onboarding7 = dynamic(() => import('@/components/onboarding/Onboarding7'), { ssr: false })
+const Onboarding7A = dynamic(() => import('@/components/onboarding/Onboarding7A'), { ssr: false })
+const Onboarding8 = dynamic(() => import('@/components/onboarding/Onboarding8'), { ssr: false })
+const Onboarding9 = dynamic(() => import('@/components/onboarding/Onboarding9'), { ssr: false })
+const Onboarding10 = dynamic(() => import('@/components/onboarding/Onboarding10'), { ssr: false })
+const Onboarding11 = dynamic(() => import('@/components/onboarding/Onboarding11'), { ssr: false })
+const Onboarding12 = dynamic(() => import('@/components/onboarding/Onboarding12'), { ssr: false })
+const Onboarding13 = dynamic(() => import('@/components/onboarding/Onboarding13'), { ssr: false })
+const Onboarding13A = dynamic(() => import('@/components/onboarding/Onboarding13A'), { ssr: false })
+const Onboarding14 = dynamic(() => import('@/components/onboarding/Onboarding14'), { ssr: false })
+const Onboarding15 = dynamic(() => import('@/components/onboarding/Onboarding15'), { ssr: false })
+const Onboarding17 = dynamic(() => import('@/components/onboarding/Onboarding17'), { ssr: false })
+const OnboardingAuth = dynamic(() => import('@/components/onboarding/OnboardingAuth'), { ssr: false })
+const OnboardingComplete = dynamic(() => import('@/components/onboarding/OnboardingComplete'), { ssr: false })
 
 function OnboardingPaywallRedirect() {
   const router = useRouter()
