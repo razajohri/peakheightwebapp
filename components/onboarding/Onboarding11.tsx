@@ -54,6 +54,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
                 </div>
               )}
               <video
+                src="/assets/sleep-video.mp4"
                 className="w-full h-full object-cover"
                 autoPlay
                 loop
@@ -62,12 +63,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
                 preload="metadata"
                 onCanPlay={() => setVideoReady(true)}
                 onError={() => setVideoReady(true)}
-              >
-                {/* WebM often 30–50% smaller than MP4 → faster load in Chrome/Firefox/Edge */}
-                <source src="/assets/sleep-video.webm" type="video/webm" />
-                {/* Fallback for Safari (iOS/macOS) */}
-                <source src="/assets/sleep-video.mp4" type="video/mp4" />
-              </video>
+              />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pt-4 pb-1 sm:px-6 sm:pt-6 sm:pb-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                 <div className="inline-block mx-auto rounded-2xl bg-black/75 px-3 py-2 sm:px-5 sm:py-3">
                   <p className="text-white text-lg sm:text-xl leading-relaxed text-center">
