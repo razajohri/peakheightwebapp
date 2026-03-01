@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
+import Onboarding2 from '@/components/onboarding/Onboarding2'
 
 // 3-2-1 countdown — all inline styles, no CSS deps. Shows first so user always sees something.
 function IntroCountdown({ onComplete }: { onComplete: () => void }) {
@@ -70,9 +71,8 @@ function StepLoading() {
   )
 }
 
-// Next.js requires the options argument to be an object literal at the call site
-// Lazy-load each step so phones only load one step at a time (faster initial load)
-const Onboarding2 = dynamic(() => import('@/components/onboarding/Onboarding2'), { ssr: false, loading: StepLoading })
+// Onboarding2 in main bundle so first step loads without separate chunk (avoids 404 blank)
+// Lazy-load other steps
 const Onboarding3 = dynamic(() => import('@/components/onboarding/Onboarding3'), { ssr: false, loading: StepLoading })
 const Onboarding4 = dynamic(() => import('@/components/onboarding/Onboarding4'), { ssr: false, loading: StepLoading })
 const Onboarding5 = dynamic(() => import('@/components/onboarding/Onboarding5'), { ssr: false, loading: StepLoading })
