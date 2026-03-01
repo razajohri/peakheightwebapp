@@ -64,6 +64,11 @@ export default function RootLayout({
           minHeight: '100vh',
         }}
       >
+        {/* Critical CSS so spinner works when main stylesheet 404s (cache/deploy mismatch) */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          @keyframes ph-spin{to{transform:rotate(360deg)}}
+          .ph-critical-spinner{animation:ph-spin .8s linear infinite}
+        `}} />
         <AuthProvider>
           {children}
         </AuthProvider>

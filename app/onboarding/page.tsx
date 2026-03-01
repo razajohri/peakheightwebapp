@@ -6,15 +6,27 @@ import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
 
 // Fallback so the slot is never empty while a step chunk loads (avoids white/blank page)
+// Uses inline styles + layout's .ph-critical-spinner so it works when main stylesheet 404s
 function StepLoading() {
   return (
     <div
-      className="min-h-screen min-h-dvh flex items-center justify-center"
-      style={{ backgroundColor: '#000', minHeight: '100vh' }}
+      style={{
+        minHeight: '100dvh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000',
+      }}
     >
       <div
-        className="w-8 h-8 rounded-full border-2 border-white/30 border-t-white animate-spin"
-        style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#fff' }}
+        className="ph-critical-spinner"
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: '50%',
+          border: '2px solid rgba(255,255,255,0.3)',
+          borderTopColor: '#fff',
+        }}
       />
     </div>
   )
