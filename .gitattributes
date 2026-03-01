@@ -1,0 +1,2 @@
+# Ensure .nvmrc is always LF so Netlify/nvm can parse it
+.nvmrc text eol=lf
