@@ -131,7 +131,10 @@ function OnboardingFlow() {
 
 export default function OnboardingPage() {
   return (
-    <div className="min-h-screen min-h-dvh bg-black">
+    <div
+      className="min-h-screen min-h-dvh bg-black"
+      style={{ minHeight: '100vh', backgroundColor: '#000' }}
+    >
       <OnboardingProvider>
         <OnboardingFlow />
       </OnboardingProvider>

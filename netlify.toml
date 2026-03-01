@@ -7,3 +7,16 @@
   environment = { NODE_VERSION = "20" }
 
 # Netlify auto-detects Next.js and uses @netlify/plugin-nextjs for SSR and API routes.
+
+# Prevent caching HTML so users get fresh asset URLs after deploys (avoids 404 stylesheet/chunk)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+
+# Long cache for hashed static assets (Next.js adds hashes to filenames)
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

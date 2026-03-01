@@ -55,7 +55,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable} ${oswald.variable}`}>
-      <body className="antialiased">
+      <body
+        className="antialiased"
+        style={{
+          backgroundColor: '#000000',
+          color: '#ffffff',
+          margin: 0,
+          minHeight: '100vh',
+        }}
+      >
         <AuthProvider>
           {children}
         </AuthProvider>
