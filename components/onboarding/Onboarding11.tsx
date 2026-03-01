@@ -54,7 +54,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
                 </div>
               )}
               <video
-                src="/assets/sleep-video.mp4"
+                src="/assets/inherited.mp4"
                 className="w-full h-full object-cover"
                 autoPlay
                 loop

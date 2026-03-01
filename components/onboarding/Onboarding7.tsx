@@ -1,4 +1,4 @@
- 'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
@@ -53,49 +53,49 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
         <ProgressHeader currentStep={8} totalSteps={22} onBack={onBack} />
 
-        <div className="flex-1 flex flex-col min-h-0 px-6 pt-0">
-          {/* Title - slightly smaller */}
+        <div className="flex-1 flex flex-col px-6 pt-0">
+          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="mb-2 sm:mb-3 shrink-0"
+            className="mb-4"
           >
-            <h1 className="text-white text-[20px] sm:text-[24px] font-bold leading-tight">
+            <h1 className="text-white text-[24px] sm:text-[28px] font-bold leading-tight">
               Height isn't just inherited,
             </h1>
-            <div className="inline-block bg-white/10 px-2 py-0.5 sm:px-3 sm:py-1 rounded-lg border border-white/20 mt-1 sm:mt-2">
-              <span className="text-white text-[20px] sm:text-[24px] font-bold">it's earned.</span>
+            <div className="inline-block bg-white/10 px-3 py-1 rounded-lg border border-white/20 mt-2">
+              <span className="text-white text-[24px] sm:text-[28px] font-bold">it's earned.</span>
             </div>
           </motion.div>
 
-          {/* Illustration - capped height so button stays in view */}
+          {/* Illustration */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex min-h-0 flex-1 items-center justify-center mb-2 sm:mb-3"
+            className="flex-1 flex items-center justify-center mb-4"
           >
-            <div className="w-4/5 sm:w-full max-w-[280px] sm:max-w-sm h-[32vh] sm:h-[36vh] max-h-[220px] sm:max-h-[280px] rounded-2xl sm:rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+            <div className="w-4/5 sm:w-full max-w-sm sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
               <Image
                 src="/assets/height-diagram.png"
                 alt="How posture, load, sleep, and nutrition affect height potential"
                 width={384}
                 height={684}
-                className="h-full w-auto object-contain object-center"
+                className="w-full h-auto object-contain"
                 priority={false}
               />
             </div>
           </motion.div>
 
-          {/* Description - smaller text, less margin */}
+          {/* Description with typing effect */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            className="relative pl-3 sm:pl-4 border-l-2 border-white/80 mb-4 sm:mb-6 shrink-0"
+            className="relative pl-4 border-l-2 border-white/80 mb-8"
           >
-            <p className="text-white/80 text-base sm:text-lg leading-snug">
+            <p className="text-white/80 text-lg leading-relaxed">
               {renderText()}
               {currentIndex < fullText.length && (
                 <span className="animate-pulse">|</span>
@@ -104,8 +104,8 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
           </motion.div>
         </div>
 
-        {/* Button - stays in view */}
-        <div className="px-6 pb-6 sm:pb-10 shrink-0">
+        {/* Button */}
+        <div className="px-6 pb-10">
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>

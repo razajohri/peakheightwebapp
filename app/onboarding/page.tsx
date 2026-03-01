@@ -115,6 +115,33 @@ function OnboardingFlow() {
     router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
   }
 
+  // Prefetch next step's chunk so it loads faster when user taps Continue
+  useEffect(() => {
+    if (currentStep >= 22) return
+    const prefetch: Record<number, () => Promise<unknown>> = {
+      2: () => import('@/components/onboarding/Onboarding3'),
+      3: () => import('@/components/onboarding/Onboarding4'),
+      4: () => import('@/components/onboarding/Onboarding5'),
+      5: () => import('@/components/onboarding/Onboarding5B'),
+      6: () => import('@/components/onboarding/Onboarding6'),
+      7: () => import('@/components/onboarding/Onboarding7'),
+      8: () => import('@/components/onboarding/Onboarding7A'),
+      9: () => import('@/components/onboarding/Onboarding8'),
+      10: () => import('@/components/onboarding/Onboarding9'),
+      11: () => import('@/components/onboarding/Onboarding10'),
+      12: () => import('@/components/onboarding/Onboarding11'),
+      13: () => import('@/components/onboarding/Onboarding12'),
+      14: () => import('@/components/onboarding/Onboarding13'),
+      15: () => import('@/components/onboarding/Onboarding13A'),
+      16: () => import('@/components/onboarding/Onboarding14'),
+      17: () => import('@/components/onboarding/Onboarding15'),
+      18: () => import('@/components/onboarding/Onboarding17'),
+      19: () => import('@/components/onboarding/OnboardingAuth'),
+      20: () => import('@/components/onboarding/OnboardingComplete'),
+    }
+    prefetch[currentStep]?.()
+  }, [currentStep])
+
   // 3-2-1 countdown first — ensures user always sees something (works without CSS)
   const onCountdownComplete = useCallback(() => setCountdownDone(true), [])
   if (!countdownDone) {
