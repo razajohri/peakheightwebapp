@@ -22,6 +22,7 @@ function AuthPageContent() {
   const [name, setName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(errorParam === 'auth_failed' ? 'Authentication failed. Please try again.' : '')
+  const [justCompletedAuth, setJustCompletedAuth] = useState(false)
 
   // When already logged in: from onboarding we show "Continue to subscription"; otherwise redirect
   useEffect(() => {
@@ -29,6 +30,13 @@ function AuthPageContent() {
       router.push(redirectTo)
     }
   }, [user, loading, router, redirectTo, fromOnboarding])
+
+  // New user just completed signup/signin → redirect immediately (no "already signed in" screen)
+  useEffect(() => {
+    if (!user || !redirectTo || !justCompletedAuth) return
+    setJustCompletedAuth(false)
+    router.replace(redirectTo)
+  }, [user, redirectTo, justCompletedAuth, router])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -62,6 +70,7 @@ function AuthPageContent() {
           setError(msg || 'Something went wrong. Please try again.')
         }
       } else {
+        setJustCompletedAuth(true)
         router.push(redirectTo)
       }
     } catch (err) {
@@ -81,6 +90,15 @@ function AuthPageContent() {
 
   // Already logged in: from onboarding show "Continue" so user sees auth step; else redirect
   if (user) {
+    // New user just completed auth → redirect immediately (no intermediate screen)
+    if (fromOnboarding && justCompletedAuth) {
+      return (
+        <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4">
+          <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          <p className="text-white/60 text-sm">Taking you to subscription…</p>
+        </div>
+      )
+    }
     if (fromOnboarding) {
       return (
         <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6">

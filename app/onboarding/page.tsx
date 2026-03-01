@@ -13,8 +13,8 @@ function StepLoading() {
       style={{ backgroundColor: '#000', minHeight: '100vh' }}
     >
       <div
-        className="w-8 h-8 rounded-full border-2 border-white/30 border-t-amber-500 animate-spin"
-        style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#f59e0b' }}
+        className="w-8 h-8 rounded-full border-2 border-white/30 border-t-white animate-spin"
+        style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#fff' }}
       />
     </div>
   )
