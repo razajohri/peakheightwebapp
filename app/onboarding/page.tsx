@@ -1,12 +1,50 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
 
-// Fallback so the slot is never empty while a step chunk loads (avoids white/blank page)
-// Uses inline styles + layout's .ph-critical-spinner so it works when main stylesheet 404s
+// 3-2-1 countdown — all inline styles, no CSS deps. Shows first so user always sees something.
+function IntroCountdown({ onComplete }: { onComplete: () => void }) {
+  const [n, setN] = useState(3)
+
+  useEffect(() => {
+    if (n <= 0) {
+      onComplete()
+      return
+    }
+    const t = setTimeout(() => setN(n - 1), 900)
+    return () => clearTimeout(t)
+  }, [n, onComplete])
+
+  return (
+    <div
+      style={{
+        minHeight: '100dvh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000',
+        gap: 8,
+      }}
+    >
+      <span
+        style={{
+          fontSize: 72,
+          fontWeight: 700,
+          color: '#fff',
+          lineHeight: 1,
+        }}
+      >
+        {n > 0 ? n : ''}
+      </span>
+    </div>
+  )
+}
+
+// Fallback so the slot is never empty while a step chunk loads
 function StepLoading() {
   return (
     <div
@@ -71,9 +109,16 @@ function OnboardingPaywallRedirect() {
 function OnboardingFlow() {
   const router = useRouter()
   const { currentStep, data, updateData, nextStep, prevStep } = useOnboarding()
+  const [countdownDone, setCountdownDone] = useState(false)
 
   const handleAuthRequired = (authMode: 'signup' | 'signin' = 'signup') => {
     router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
+  }
+
+  // 3-2-1 countdown first — ensures user always sees something (works without CSS)
+  const onCountdownComplete = useCallback(() => setCountdownDone(true), [])
+  if (!countdownDone) {
+    return <IntroCountdown onComplete={onCountdownComplete} />
   }
 
   // Render current onboarding step
