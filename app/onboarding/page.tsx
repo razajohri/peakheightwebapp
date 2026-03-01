@@ -57,47 +57,48 @@ function OnboardingFlow() {
   }
 
   switch (currentStep) {
-    case 1: // legacy saved step; treat as step 2
-    case 2:
+    case 1:
       return <Onboarding2 {...commonProps} />
-    case 3:
+    case 2:
       return <Onboarding3 {...commonProps} />
-    case 4:
+    case 3:
       return <Onboarding4 {...commonProps} />
-    case 5:
+    case 4:
       return <Onboarding5 {...commonProps} />
-    case 6:
+    case 5:
       return <Onboarding5B {...commonProps} />
-    case 7:
+    case 6:
       return <Onboarding6 {...commonProps} />
-    case 8:
+    case 7:
       return <Onboarding7 {...commonProps} />
-    case 9:
+    case 8:
       return <Onboarding7A {...commonProps} />
-    case 10:
+    case 9:
       return <Onboarding8 {...commonProps} />
-    case 11:
+    case 10:
       return <Onboarding9 {...commonProps} />
-    case 12:
+    case 11:
       return <Onboarding10 {...commonProps} />
-    case 13:
+    case 12:
       return <Onboarding11 {...commonProps} />
-    case 14:
+    case 13:
       return <Onboarding12 {...commonProps} />
-    case 15:
+    case 14:
       return <Onboarding13 {...commonProps} />
-    case 16:
+    case 15:
       return <Onboarding13A {...commonProps} />
-    case 17:
+    case 16:
       return <Onboarding14 {...commonProps} />
-    case 18:
+    case 17:
       return <Onboarding15 {...commonProps} />
-    case 19:
+    case 18:
       return <Onboarding17 {...commonProps} onAuthRequired={handleAuthRequired} />
-    case 20:
+    case 19:
       return <OnboardingAuth {...commonProps} />
-    case 21:
+    case 20:
       return <OnboardingPaywallRedirect />
+    case 21:
+      return <OnboardingComplete data={data} />
     case 22:
       return <OnboardingComplete data={data} />
     default:
