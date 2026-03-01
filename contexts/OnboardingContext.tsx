@@ -33,7 +33,10 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
     if (savedStep) {
       try {
         const step = parseInt(savedStep, 10)
-        setCurrentStep(step)
+        // Guard: only apply if valid number in range (avoid NaN or corrupt data)
+        if (Number.isFinite(step) && step >= 1 && step <= 22) {
+          setCurrentStep(step)
+        }
       } catch (error) {
         console.error('Failed to load saved step:', error)
       }

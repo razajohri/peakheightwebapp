@@ -5,27 +5,44 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
 
+// Fallback so the slot is never empty while a step chunk loads (avoids white/blank page)
+function StepLoading() {
+  return (
+    <div
+      className="min-h-screen min-h-dvh flex items-center justify-center"
+      style={{ backgroundColor: '#000', minHeight: '100vh' }}
+    >
+      <div
+        className="w-8 h-8 rounded-full border-2 border-white/30 border-t-amber-500 animate-spin"
+        style={{ borderColor: 'rgba(255,255,255,0.3)', borderTopColor: '#f59e0b' }}
+      />
+    </div>
+  )
+}
+
+const dynamicOpts = { ssr: false, loading: StepLoading }
+
 // Lazy-load each step so phones only load one step at a time (faster initial load)
-const Onboarding2 = dynamic(() => import('@/components/onboarding/Onboarding2'), { ssr: false })
-const Onboarding3 = dynamic(() => import('@/components/onboarding/Onboarding3'), { ssr: false })
-const Onboarding4 = dynamic(() => import('@/components/onboarding/Onboarding4'), { ssr: false })
-const Onboarding5 = dynamic(() => import('@/components/onboarding/Onboarding5'), { ssr: false })
-const Onboarding5B = dynamic(() => import('@/components/onboarding/Onboarding5B'), { ssr: false })
-const Onboarding6 = dynamic(() => import('@/components/onboarding/Onboarding6'), { ssr: false })
-const Onboarding7 = dynamic(() => import('@/components/onboarding/Onboarding7'), { ssr: false })
-const Onboarding7A = dynamic(() => import('@/components/onboarding/Onboarding7A'), { ssr: false })
-const Onboarding8 = dynamic(() => import('@/components/onboarding/Onboarding8'), { ssr: false })
-const Onboarding9 = dynamic(() => import('@/components/onboarding/Onboarding9'), { ssr: false })
-const Onboarding10 = dynamic(() => import('@/components/onboarding/Onboarding10'), { ssr: false })
-const Onboarding11 = dynamic(() => import('@/components/onboarding/Onboarding11'), { ssr: false })
-const Onboarding12 = dynamic(() => import('@/components/onboarding/Onboarding12'), { ssr: false })
-const Onboarding13 = dynamic(() => import('@/components/onboarding/Onboarding13'), { ssr: false })
-const Onboarding13A = dynamic(() => import('@/components/onboarding/Onboarding13A'), { ssr: false })
-const Onboarding14 = dynamic(() => import('@/components/onboarding/Onboarding14'), { ssr: false })
-const Onboarding15 = dynamic(() => import('@/components/onboarding/Onboarding15'), { ssr: false })
-const Onboarding17 = dynamic(() => import('@/components/onboarding/Onboarding17'), { ssr: false })
-const OnboardingAuth = dynamic(() => import('@/components/onboarding/OnboardingAuth'), { ssr: false })
-const OnboardingComplete = dynamic(() => import('@/components/onboarding/OnboardingComplete'), { ssr: false })
+const Onboarding2 = dynamic(() => import('@/components/onboarding/Onboarding2'), dynamicOpts)
+const Onboarding3 = dynamic(() => import('@/components/onboarding/Onboarding3'), dynamicOpts)
+const Onboarding4 = dynamic(() => import('@/components/onboarding/Onboarding4'), dynamicOpts)
+const Onboarding5 = dynamic(() => import('@/components/onboarding/Onboarding5'), dynamicOpts)
+const Onboarding5B = dynamic(() => import('@/components/onboarding/Onboarding5B'), dynamicOpts)
+const Onboarding6 = dynamic(() => import('@/components/onboarding/Onboarding6'), dynamicOpts)
+const Onboarding7 = dynamic(() => import('@/components/onboarding/Onboarding7'), dynamicOpts)
+const Onboarding7A = dynamic(() => import('@/components/onboarding/Onboarding7A'), dynamicOpts)
+const Onboarding8 = dynamic(() => import('@/components/onboarding/Onboarding8'), dynamicOpts)
+const Onboarding9 = dynamic(() => import('@/components/onboarding/Onboarding9'), dynamicOpts)
+const Onboarding10 = dynamic(() => import('@/components/onboarding/Onboarding10'), dynamicOpts)
+const Onboarding11 = dynamic(() => import('@/components/onboarding/Onboarding11'), dynamicOpts)
+const Onboarding12 = dynamic(() => import('@/components/onboarding/Onboarding12'), dynamicOpts)
+const Onboarding13 = dynamic(() => import('@/components/onboarding/Onboarding13'), dynamicOpts)
+const Onboarding13A = dynamic(() => import('@/components/onboarding/Onboarding13A'), dynamicOpts)
+const Onboarding14 = dynamic(() => import('@/components/onboarding/Onboarding14'), dynamicOpts)
+const Onboarding15 = dynamic(() => import('@/components/onboarding/Onboarding15'), dynamicOpts)
+const Onboarding17 = dynamic(() => import('@/components/onboarding/Onboarding17'), dynamicOpts)
+const OnboardingAuth = dynamic(() => import('@/components/onboarding/OnboardingAuth'), dynamicOpts)
+const OnboardingComplete = dynamic(() => import('@/components/onboarding/OnboardingComplete'), dynamicOpts)
 
 function OnboardingPaywallRedirect() {
   const router = useRouter()
