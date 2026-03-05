@@ -34,9 +34,9 @@ export default function Onboarding13({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-10"
+            className="text-center mb-8"
           >
-            <h1 className="text-white text-[28px] font-extrabold">
+            <h1 className="text-white text-[24px] font-extrabold">
               The reality of being short
             </h1>
           </motion.div>
@@ -54,7 +54,7 @@ export default function Onboarding13({ data, updateData, onNext, onBack }: Onboa
                 <div className="w-7 h-7 rounded-full bg-red-800 flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(220,38,38,0.5)]">
                   <span className="text-white font-bold text-sm">!</span>
                 </div>
-                <p className="text-white/90 text-base">{fact}</p>
+                <p className="text-white/90 text-sm">{fact}</p>
               </motion.div>
             ))}
           </div>
@@ -64,7 +64,7 @@ export default function Onboarding13({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.6 }}
-            className="text-center mt-6"
+            className="text-center mt-6 mb-6"
           >
             <p className="text-white/50 text-sm italic">
               "We built this app because we faced the same issues growing up."

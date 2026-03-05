@@ -31,7 +31,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="text-center mb-4"
           >
-            <h1 className="text-white text-[26px] font-bold leading-tight">
+            <h1 className="text-white text-[24px] font-bold leading-tight">
               Losing Height Potential Every Night?
             </h1>
           </motion.div>
@@ -41,7 +41,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex items-center justify-center mb-4"
+            className="flex items-center justify-center mb-6"
           >
             <div className="relative w-full max-w-sm sm:max-w-md aspect-[9/16] rounded-3xl border border-white/15 overflow-hidden bg-black">
               {/* Placeholder while video loads — only metadata is fetched until playback */}
@@ -66,7 +66,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
               />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pt-4 pb-1 sm:px-6 sm:pt-6 sm:pb-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
                 <div className="inline-block mx-auto rounded-2xl bg-black/75 px-3 py-2 sm:px-5 sm:py-3">
-                  <p className="text-white text-lg sm:text-xl leading-relaxed text-center">
+                  <p className="text-white text-base sm:text-lg leading-relaxed text-center">
                     <span>Sleeping 8+ hours a day</span>
                     <br />
                     <span>boosts growth hormone by up to 75%</span>

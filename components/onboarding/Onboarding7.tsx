@@ -61,12 +61,9 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="mb-4"
           >
-            <h1 className="text-white text-[24px] sm:text-[28px] font-bold leading-tight">
-              Height isn't just inherited,
+            <h1 className="text-white text-[22px] sm:text-[26px] font-bold leading-tight">
+              Height isn't inherited, it's earned.
             </h1>
-            <div className="inline-block bg-white/10 px-3 py-1 rounded-lg border border-white/20 mt-2">
-              <span className="text-white text-[24px] sm:text-[28px] font-bold">it's earned.</span>
-            </div>
           </motion.div>
 
           {/* Illustration */}
@@ -76,7 +73,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex-1 flex items-center justify-center mb-4"
           >
-            <div className="w-4/5 sm:w-full max-w-sm sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+            <div className="w-3/4 sm:w-4/5 max-w-sm sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
               <Image
                 src="/assets/height-diagram.png"
                 alt="How posture, load, sleep, and nutrition affect height potential"
@@ -95,7 +92,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4, delay: 0.4 }}
             className="relative pl-4 border-l-2 border-white/80 mb-8"
           >
-            <p className="text-white/80 text-lg leading-relaxed">
+            <p className="text-white/80 text-base leading-relaxed">
               {renderText()}
               {currentIndex < fullText.length && (
                 <span className="animate-pulse">|</span>

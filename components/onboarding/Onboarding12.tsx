@@ -49,9 +49,9 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-10"
+            className="text-center mb-8"
           >
-            <h1 className="text-white text-[26px] font-bold">
+            <h1 className="text-white text-[24px] font-bold">
               Do you smoke or drink alcohol?
             </h1>
           </motion.div>
@@ -67,7 +67,7 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                   <path d="M18 12H2v4h16v-4zM22 12v4M22 10c0-1.5-1-3-3-3V4" />
                 </svg>
-                <span className="text-white font-semibold text-lg">Do you smoke?</span>
+                <span className="text-white font-semibold text-base">Do you smoke?</span>
               </div>
               <div className="flex gap-3">
                 <button
@@ -103,7 +103,7 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                   <path d="M8 22h8M12 11v11M7 2h10l-3 9H10L7 2z" />
                 </svg>
-                <span className="text-white font-semibold text-lg">Do you drink alcohol?</span>
+                <span className="text-white font-semibold text-base">Do you drink alcohol?</span>
               </div>
               <div className="flex gap-3">
                 <button
@@ -134,7 +134,7 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="flex gap-3 p-5 rounded-2xl bg-white/5 border border-white/10"
+              className="flex gap-3 p-5 rounded-2xl bg-white/5 border border-white/10 mb-4"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" className="flex-shrink-0 opacity-50 mt-0.5">
                 <circle cx="12" cy="12" r="10" />
