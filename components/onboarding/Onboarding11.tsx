@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import FloatingStars from './FloatingStars'
 import ProgressHeader from './ProgressHeader'
@@ -14,8 +14,6 @@ interface Onboarding11Props {
 }
 
 export default function Onboarding11({ data, updateData, onNext, onBack }: Onboarding11Props) {
-  const [videoReady, setVideoReady] = useState(false)
-
   return (
     <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
       <FloatingStars />
@@ -36,44 +34,26 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
             </h1>
           </motion.div>
 
-          {/* Sleep video with overlay copy */}
+          {/* Sleep illustration with overlay copy */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="flex items-center justify-center mb-6"
           >
-            <div className="relative w-full max-w-sm sm:max-w-md aspect-[9/16] rounded-3xl border border-white/15 overflow-hidden bg-black">
-              {/* Placeholder while video loads — only metadata is fetched until playback */}
-              {!videoReady && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-10">
-                  <div
-                    className="w-10 h-10 rounded-full border-2 border-white/30 border-t-amber-500 animate-spin"
-                    aria-hidden
-                  />
-                </div>
-              )}
-              <video
-                src="/assets/inherited.mp4"
-                className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
-                onCanPlay={() => setVideoReady(true)}
-                onError={() => setVideoReady(true)}
+            <div className="relative w-full max-w-sm sm:max-w-md rounded-3xl border border-white/15 overflow-hidden bg-black">
+              <Image
+                src="/sleep.png"
+                alt="Sleeping deeply to support growth"
+                width={480}
+                height={720}
+                className="w-full h-auto object-cover"
+                priority={false}
               />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pt-4 pb-1 sm:px-6 sm:pt-6 sm:pb-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent">
-                <div className="inline-block mx-auto rounded-2xl bg-black/75 px-3 py-2 sm:px-5 sm:py-3">
-                  <p className="text-white text-base sm:text-lg leading-relaxed text-center">
-                    <span>Sleeping 8+ hours a day</span>
-                    <br />
-                    <span>boosts growth hormone by up to 75%</span>
-                    <br />
-                    <span>and supports your overall height growth.</span>
-                  </p>
-                </div>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pt-3 pb-2 sm:px-6 sm:pt-4 sm:pb-3 bg-gradient-to-t from-black/85 via-black/50 to-transparent">
+                <p className="text-white text-sm sm:text-base leading-relaxed text-center">
+                  Sleeping 8+ hours a night boosts growth hormone and helps protect your height potential.
+                </p>
               </div>
             </div>
           </motion.div>
