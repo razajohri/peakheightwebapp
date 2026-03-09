@@ -59,9 +59,9 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="mb-4"
+            className="mb-2"
           >
-            <h1 className="text-white text-[22px] sm:text-[26px] font-bold leading-tight">
+            <h1 className="text-white text-[20px] sm:text-[24px] font-bold leading-tight">
               Height isn't inherited, it's earned.
             </h1>
           </motion.div>
@@ -71,9 +71,9 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex-1 flex items-center justify-center mb-4"
+            className="flex-1 flex items-center justify-center mb-3"
           >
-            <div className="w-3/4 sm:w-4/5 max-w-sm sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+            <div className="w-2/3 sm:w-3/4 max-w-xs sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
               <Image
                 src="/assets/height-diagram.png"
                 alt="How posture, load, sleep, and nutrition affect height potential"
@@ -90,9 +90,9 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            className="relative pl-4 border-l-2 border-white/80 mb-8"
+            className="relative pl-3 border-l-2 border-white/80 mb-5"
           >
-            <p className="text-white/80 text-base leading-relaxed">
+            <p className="text-white/80 text-sm leading-relaxed">
               {renderText()}
               {currentIndex < fullText.length && (
                 <span className="animate-pulse">|</span>

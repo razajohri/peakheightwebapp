@@ -27,9 +27,9 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-4"
+            className="text-center mb-2"
           >
-            <h1 className="text-white text-[24px] font-bold leading-tight">
+            <h1 className="text-white text-[20px] sm:text-[24px] font-bold leading-tight">
               Losing Height Potential Every Night?
             </h1>
           </motion.div>
@@ -39,9 +39,9 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex items-center justify-center mb-6"
+            className="flex items-center justify-center mb-4"
           >
-            <div className="relative w-full max-w-sm sm:max-w-md rounded-3xl border border-white/15 overflow-hidden bg-black">
+            <div className="relative w-11/12 max-w-xs sm:max-w-md rounded-3xl border border-white/15 overflow-hidden bg-black">
               <Image
                 src="/assets/sleep.png"
                 alt="Sleeping deeply to support growth"
@@ -50,8 +50,8 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
                 className="w-full h-auto object-cover"
                 priority={false}
               />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 pt-3 pb-2 sm:px-6 sm:pt-4 sm:pb-3 bg-gradient-to-t from-black/85 via-black/50 to-transparent">
-                <p className="text-white text-sm sm:text-base leading-relaxed text-center">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 px-3 pt-2 pb-1.5 sm:px-5 sm:pt-3 sm:pb-2.5 bg-gradient-to-t from-black/85 via-black/50 to-transparent">
+                <p className="text-white text-xs sm:text-sm leading-relaxed text-center">
                   Sleeping 8+ hours a night boosts growth hormone and helps protect your height potential.
                 </p>
               </div>
