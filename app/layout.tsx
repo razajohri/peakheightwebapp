@@ -3,13 +3,13 @@ import { Inter, Playfair_Display, Oswald } from 'next/font/google'
 import './globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 })
 
-const playfair = Playfair_Display({ 
+const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
@@ -33,6 +33,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://usepeakheight.com'),
   title: 'PeakHeight - Unlock Your Full Height Potential',
   description: 'Maximize your height potential naturally with the right daily habits and AI tools',
   appleWebApp: {
@@ -65,7 +66,8 @@ export default function RootLayout({
         }}
       >
         {/* Critical CSS when main stylesheet 404s — base + full onboarding step 1 */}
-        <style dangerouslySetInnerHTML={{ __html: `
+        <style dangerouslySetInnerHTML={{
+          __html: `
           *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
           html{background:#000;color:#fff;-webkit-text-size-adjust:100%}
           body{min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:system-ui,sans-serif}
@@ -111,9 +113,9 @@ export default function RootLayout({
           .h-1\\.5{height:.375rem}.h-full{height:100%}
         `}} />
         <noscript>
-          <div style={{minHeight:'100vh',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',backgroundColor:'#000',color:'#fff',padding:24,textAlign:'center'}}>
-            <p style={{fontSize:18,marginBottom:12}}>JavaScript is required.</p>
-            <a href="/onboarding" style={{color:'#f59e0b',textDecoration:'underline'}}>Reload page</a>
+          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', color: '#fff', padding: 24, textAlign: 'center' }}>
+            <p style={{ fontSize: 18, marginBottom: 12 }}>JavaScript is required.</p>
+            <a href="/onboarding" style={{ color: '#f59e0b', textDecoration: 'underline' }}>Reload page</a>
           </div>
         </noscript>
         <AuthProvider>
