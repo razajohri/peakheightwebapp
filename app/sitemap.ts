@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
         },
         {
+            url: 'https://usepeakheight.com/science',
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
             url: 'https://usepeakheight.com/privacy',
             lastModified: new Date(),
             changeFrequency: 'monthly',
@@ -20,11 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
             changeFrequency: 'monthly',
             priority: 0.5,
         },
-        {
-            url: 'https://usepeakheight.com/onboarding',
-            lastModified: new Date(),
-            changeFrequency: 'monthly',
-            priority: 0.8,
-        },
+        // /onboarding kept in codebase for later — not listed while store downloads are primary CTA
     ]
 }

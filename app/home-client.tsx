@@ -122,15 +122,7 @@ export default function HomeClient() {
               PeakHeight helps you grow taller - naturally.
             </p>
 
-            {/* CTA Button - Start onboarding */}
-            <Link href="/onboarding" className={styles.ctaButton}>
-              <span>Start Now — Get Your Plan</span>
-              <span className={styles.ctaButtonIcon} aria-hidden>
-                ✨
-              </span>
-            </Link>
-
-            {/* App Store Badges in Hero */}
+            {/* Download CTAs — web onboarding kept at /onboarding for later; not linked for now */}
             <div className={styles.heroStoreBadges}>
               <a
                 href="https://apps.apple.com/us/app/peak-height/id6752793377"
@@ -221,11 +213,24 @@ export default function HomeClient() {
           <div className={styles.finalCtaGlow} />
           <h2 className={styles.finalCtaTitle}>Ready to Reach Your Peak?</h2>
           <p className={styles.finalCtaSubtitle}>
-            Start your personalized growth journey today.
+            Download PeakHeight and start your personalized growth journey today.
           </p>
-          <Link href="/onboarding" className={styles.ctaButton}>
-            <span>Get Started Free</span>
-          </Link>
+          <div className={styles.heroStoreBadges}>
+            <a
+              href="https://apps.apple.com/us/app/peak-height/id6752793377"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeApple}`}
+              aria-label="Download on the App Store"
+            />
+            <a
+              href="https://play.google.com/store/apps/details?id=com.peakheight.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeGoogle}`}
+              aria-label="Get it on Google Play"
+            />
+          </div>
         </section>
       </main>
 
@@ -237,6 +242,7 @@ export default function HomeClient() {
             <span>PeakHeight</span>
           </div>
           <div className={styles.footerLinks}>
+            <Link href="/science">Science</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <a href="mailto:usepeakheight@gmail.com">Support</a>

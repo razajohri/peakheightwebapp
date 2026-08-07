@@ -1,0 +1,333 @@
+/* ============================================
+   PEAKHEIGHT SCIENCE & METHODOLOGY PAGE
+   ============================================ */
+
+.page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #000000;
+  color: #ffffff;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 12px 16px;
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px 16px;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.logoImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.logoText {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 140px 24px 80px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.heroWaveBg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.heroGlow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150%;
+  height: 60%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: contentFadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes contentFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.heroTitle {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin: 0 0 20px 0;
+}
+
+@media (min-width: 768px) {
+  .heroTitle {
+    font-size: 56px;
+  }
+}
+
+.heroTitleGradient {
+  background: linear-gradient(135deg, #ffffff 0%, #a8a8a8 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroSubtitle {
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.contentSection {
+  padding: 60px 24px;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.contentContainer {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sectionTag {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.paragraph {
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+}
+
+.pillarGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+@media (min-width: 768px) {
+  .pillarGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.pillarCard {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.pillarIcon {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.pillarTitle {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.pillarDesc {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+}
+
+.finalCta {
+  padding: 80px 24px;
+  text-align: center;
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 320px;
+  padding: 18px 32px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 17px;
+  font-weight: 700;
+  border-radius: 16px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.ctaButton:active {
+  transform: scale(0.98);
+}
+
+.storeBadges {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+}
+
+.storeBadge {
+  display: block;
+  width: 190px;
+  height: 56px;
+  background-image: url('/pngstores.png');
+  background-size: 100% 200%;
+  background-repeat: no-repeat;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.storeBadge:active {
+  transform: scale(0.97);
+  opacity: 0.9;
+}
+
+.storeBadgeGoogle {
+  background-position: 0 0;
+}
+
+.storeBadgeApple {
+  background-position: 0 100%;
+}
+
+.footer {
+  padding: 40px 20px;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.footerLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footerLinks a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+}
+
+.footerCopy {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+.medicalDisclaimer {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 2rem;
+  text-align: center;
+  max-width: 800px;
+  line-height: 1.5;
+}

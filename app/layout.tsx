@@ -115,7 +115,7 @@ export default function RootLayout({
         <noscript>
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', color: '#fff', padding: 24, textAlign: 'center' }}>
             <p style={{ fontSize: 18, marginBottom: 12 }}>JavaScript is required.</p>
-            <a href="/onboarding" style={{ color: '#f59e0b', textDecoration: 'underline' }}>Reload page</a>
+            <a href="/" style={{ color: '#f59e0b', textDecoration: 'underline' }}>Reload page</a>
           </div>
         </noscript>
         <AuthProvider>

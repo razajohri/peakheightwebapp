@@ -215,7 +215,7 @@
   display: flex;
   flex-direction: row;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 32px;
   justify-content: center;
   width: 100%;
 }
@@ -589,6 +589,10 @@
 
 .finalCta .ctaButton {
   margin: 0 auto;
+}
+
+.finalCta .heroStoreBadges {
+  margin-top: 8px;
 }
 
 /* ============================================
