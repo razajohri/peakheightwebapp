@@ -9,6 +9,7 @@ const tocItems = [
   { id: 'apple-health', title: 'Apple Health Data' },
   { id: 'international', title: 'International Transfers' },
   { id: 'retention', title: 'Data Retention' },
+  { id: 'deletion', title: 'How to Request Data Deletion' },
   { id: 'security', title: 'Data Security' },
   { id: 'children', title: "Children's Data" },
   { id: 'rights', title: 'Your Privacy Rights' },
@@ -25,7 +26,7 @@ export default function PrivacyPage() {
       <main className="mx-auto w-full max-w-5xl px-6 py-16">
         <div className="text-center">
           <h1 className="text-4xl font-semibold sm:text-5xl">Privacy Policy</h1>
-          <p className="mt-3 text-sm text-white/60">Last updated: September 17, 2025</p>
+          <p className="mt-3 text-sm text-white/60">Last updated: August 16, 2026</p>
         </div>
 
         <div className="mt-10 rounded-3xl border border-white/10 bg-white/5 p-6">
