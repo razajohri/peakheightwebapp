@@ -154,9 +154,77 @@ export default function PrivacyPage() {
           <section id="retention">
             <h2 className="text-xl font-semibold text-white">Data Retention</h2>
             <p className="mt-3">
-              We keep personal information as long as necessary. Account data is deleted within 30
-              days of account deletion unless required by law. Payment data is retained only for
-              transactions and audits. Analytics data may be kept for up to 12 months.
+              We retain personal information only for as long as needed to provide the Services and
+              for the purposes described in this Privacy Policy. Our retention practices are:
+            </p>
+            <ul className="mt-3 list-disc space-y-2 pl-6">
+              <li>
+                <strong className="text-white">Account and profile data</strong> (email, height
+                inputs, preferences, progress, and related app content): retained while your account
+                remains active.
+              </li>
+              <li>
+                <strong className="text-white">After you delete your account or request deletion</strong>:
+                we permanently delete or anonymize your personal account data within{' '}
+                <strong className="text-white">30 days</strong>, unless a longer period is required
+                by law (for example, tax, accounting, fraud prevention, or dispute resolution).
+              </li>
+              <li>
+                <strong className="text-white">Payment / subscription records</strong>: processed by
+                Apple or Google. We do not store card numbers. Limited subscription status records we
+                hold are retained only as needed for billing support, audits, and legal obligations.
+              </li>
+              <li>
+                <strong className="text-white">Analytics, crash, and diagnostic data</strong>: retained
+                for up to <strong className="text-white">12 months</strong>, then deleted or
+                aggregated so it no longer identifies you.
+              </li>
+              <li>
+                <strong className="text-white">Support emails</strong>: retained as needed to resolve
+                your request, then deleted or archived according to our support retention practices
+                (typically up to 24 months).
+              </li>
+            </ul>
+            <p className="mt-3">
+              If we anonymize data so it can no longer reasonably identify you, we may keep that
+              anonymized information without further notice.
+            </p>
+          </section>
+
+          <section id="deletion">
+            <h2 className="text-xl font-semibold text-white">How to Request Data Deletion</h2>
+            <p className="mt-3">
+              You can request deletion of your Peak Height account and personal data at any time.
+              There is a clear deletion process:
+            </p>
+            <ol className="mt-3 list-decimal space-y-2 pl-6">
+              <li>
+                <strong className="text-white">In the app (preferred):</strong> open Peak Height → Me
+                / Profile → account settings and use the delete-account option if available.
+              </li>
+              <li>
+                <strong className="text-white">By email:</strong> send a deletion request to{' '}
+                <a href="mailto:usepeakheight@gmail.com" className="text-white underline">
+                  usepeakheight@gmail.com
+                </a>{' '}
+                from the email address associated with your account. Use the subject line “Data
+                Deletion Request” and include your account email (and Apple/Google login identifier
+                if helpful).
+              </li>
+              <li>
+                We will verify the request and permanently delete or anonymize your personal data
+                within <strong className="text-white">30 days</strong>, except where we must retain
+                limited information to comply with law.
+              </li>
+              <li>
+                We will confirm by email when deletion is complete, or explain if any data must be
+                retained for legal reasons.
+              </li>
+            </ol>
+            <p className="mt-3">
+              Google Play users may also use Google Play’s account-deletion pathway linked from the
+              app’s store listing, where applicable. Deleting the app from your device alone does not
+              delete your server-side account data — please use one of the methods above.
             </p>
           </section>
 
@@ -238,8 +306,19 @@ export default function PrivacyPage() {
           <section id="manage">
             <h2 className="text-xl font-semibold text-white">Manage Your Data</h2>
             <p className="mt-3">
-              You can review or delete your data through account settings in the App. Data is
-              permanently deleted within 30 days of account deletion, unless required by law.
+              You can review profile information in the App under Me / Profile. To delete your
+              account and personal data, follow the steps in{' '}
+              <a href="#deletion" className="text-white underline">
+                How to Request Data Deletion
+              </a>
+              . After a verified deletion request or in-app account deletion, personal data is
+              permanently deleted or anonymized within 30 days, unless retention is required by law.
+            </p>
+            <p className="mt-3">
+              Full privacy policy URL (direct link to this page):{' '}
+              <a href="https://usepeakheight.com/privacy" className="text-white underline">
+                https://usepeakheight.com/privacy
+              </a>
             </p>
           </section>
         </div>
