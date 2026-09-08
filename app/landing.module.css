@@ -425,11 +425,6 @@
 }
 
 @media (min-width: 768px) {
-  .hero {
-    align-items: center;
-    padding: 120px 32px 80px;
-  }
-
   .heroGlow::before {
     filter: blur(88px);
   }
