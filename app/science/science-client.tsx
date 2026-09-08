@@ -98,16 +98,36 @@ export default function ScienceClient() {
                             href="https://apps.apple.com/us/app/peak-height/id6752793377"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`${styles.storeBadge} ${styles.storeBadgeApple}`}
+                            className={styles.storeBadge}
                             aria-label="Download on the App Store"
-                        />
+                        >
+                            <Image
+                                src="/badge-app-store.webp"
+                                alt="Download on the App Store"
+                                width={190}
+                                height={56}
+                                className={styles.storeBadgeImg}
+                                loading="lazy"
+                                sizes="190px"
+                            />
+                        </a>
                         <a
                             href="https://play.google.com/store/apps/details?id=com.peakheight.app"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`${styles.storeBadge} ${styles.storeBadgeGoogle}`}
+                            className={styles.storeBadge}
                             aria-label="Get it on Google Play"
-                        />
+                        >
+                            <Image
+                                src="/badge-google-play.webp"
+                                alt="Get it on Google Play"
+                                width={190}
+                                height={56}
+                                className={styles.storeBadgeImg}
+                                loading="lazy"
+                                sizes="190px"
+                            />
+                        </a>
                     </div>
                 </section>
             </main>

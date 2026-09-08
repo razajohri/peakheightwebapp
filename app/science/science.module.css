@@ -254,12 +254,11 @@
   display: block;
   width: 190px;
   height: 56px;
-  background-image: url('/pngstores.png');
-  background-size: 100% 200%;
-  background-repeat: no-repeat;
   border-radius: 10px;
-  transition: all 0.2s ease;
+  overflow: hidden;
+  transition: transform 0.2s ease, opacity 0.2s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: #000;
 }
 
 .storeBadge:active {
@@ -267,12 +266,11 @@
   opacity: 0.9;
 }
 
-.storeBadgeGoogle {
-  background-position: 0 0;
-}
-
-.storeBadgeApple {
-  background-position: 0 100%;
+.storeBadgeImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .footer {

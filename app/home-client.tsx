@@ -266,16 +266,36 @@ export default function HomeClient() {
                   href={APP_STORE}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeApple}`}
+                  className={styles.heroStoreBadge}
                   aria-label="Download on the App Store"
-                />
+                >
+                  <Image
+                    src="/badge-app-store.webp"
+                    alt="Download on the App Store"
+                    width={160}
+                    height={52}
+                    className={styles.heroStoreBadgeImg}
+                    priority
+                    sizes="160px"
+                  />
+                </a>
                 <a
                   href={PLAY_STORE}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeGoogle}`}
+                  className={styles.heroStoreBadge}
                   aria-label="Get it on Google Play"
-                />
+                >
+                  <Image
+                    src="/badge-google-play.webp"
+                    alt="Get it on Google Play"
+                    width={160}
+                    height={52}
+                    className={styles.heroStoreBadgeImg}
+                    priority
+                    sizes="160px"
+                  />
+                </a>
               </div>
               <a href="#how-it-works" className={styles.secondaryCta}>
                 See how it works
@@ -382,16 +402,36 @@ export default function HomeClient() {
               href={APP_STORE}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeApple}`}
+              className={styles.heroStoreBadge}
               aria-label="Download on the App Store"
-            />
+            >
+              <Image
+                src="/badge-app-store.webp"
+                alt="Download on the App Store"
+                width={160}
+                height={52}
+                className={styles.heroStoreBadgeImg}
+                loading="lazy"
+                sizes="160px"
+              />
+            </a>
             <a
               href={PLAY_STORE}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeGoogle}`}
+              className={styles.heroStoreBadge}
               aria-label="Get it on Google Play"
-            />
+            >
+              <Image
+                src="/badge-google-play.webp"
+                alt="Get it on Google Play"
+                width={160}
+                height={52}
+                className={styles.heroStoreBadgeImg}
+                loading="lazy"
+                sizes="160px"
+              />
+            </a>
           </div>
         </section>
       </main>
