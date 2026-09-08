@@ -260,49 +260,26 @@ export default function HomeClient() {
             </h1>
 
             <p className={styles.heroSubtitle}>
-              Analyze your height across 100+ metrics, get a personalized plan, and track your progress over time.
+              Analyze your height across 100+ metrics, get a personalized plan,
+              and track your progress over time.
             </p>
 
             <div className={styles.heroCtaRow}>
-              <div className={styles.heroStoreBadges} aria-label="Download PeakHeight">
-                <a
-                  href={APP_STORE}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.heroStoreBadge}
-                  aria-label="Download on the App Store"
-                >
-                  <Image
-                    src="/badge-app-store.webp"
-                    alt="Download on the App Store"
-                    width={160}
-                    height={52}
-                    className={styles.heroStoreBadgeImg}
-                    priority
-                    sizes="160px"
-                  />
-                </a>
-                <a
-                  href={PLAY_STORE}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.heroStoreBadge}
-                  aria-label="Get it on Google Play"
-                >
-                  <Image
-                    src="/badge-google-play.webp"
-                    alt="Get it on Google Play"
-                    width={160}
-                    height={52}
-                    className={styles.heroStoreBadgeImg}
-                    priority
-                    sizes="160px"
-                  />
-                </a>
-              </div>
+              <a
+                href={primaryStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.primaryCta}
+              >
+                Start Your Journey
+                <span className={styles.ctaArrow} aria-hidden>
+                  →
+                </span>
+              </a>
               <a href="#how-it-works" className={styles.secondaryCta}>
                 See how it works
               </a>
+              <p className={styles.heroTagline}>For those serious about growth.</p>
             </div>
           </div>
         </section>
