@@ -668,6 +668,19 @@
   transform: translateY(-1px);
 }
 
+.ctaPlatformIcon {
+  display: block;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.ctaPlatformPair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .heroStoreBadge {
   display: block;
   width: 140px;
