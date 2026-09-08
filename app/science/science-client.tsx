@@ -129,6 +129,14 @@ export default function ScienceClient() {
                             />
                         </a>
                     </div>
+                    <p className={styles.paragraph} style={{ marginTop: '28px' }}>
+                        Want practical guides next? Read our cluster on{' '}
+                        <Link href="/blog/how-to-grow-taller-after-18">growing taller after 18</Link>,{' '}
+                        <Link href="/blog/exercises-to-grow-taller">height exercises</Link>,{' '}
+                        <Link href="/blog/foods-that-help-you-grow-taller">nutrition</Link>, and{' '}
+                        <Link href="/blog/sleep-and-height-growth">sleep</Link> — or browse the full{' '}
+                        <Link href="/blog">PeakHeight blog</Link>.
+                    </p>
                 </section>
             </main>
 
@@ -140,6 +148,7 @@ export default function ScienceClient() {
                     </div>
                     <div className={styles.footerLinks}>
                         <Link href="/science">Science</Link>
+                        <Link href="/blog">Blog</Link>
                         <Link href="/privacy">Privacy</Link>
                         <Link href="/terms">Terms</Link>
                         <a href="mailto:usepeakheight@gmail.com">Support</a>

@@ -149,6 +149,9 @@ export default function HomeClient() {
               <Link href="/science" className={styles.navLink}>
                 Science
               </Link>
+              <Link href="/blog" className={styles.navLink}>
+                Blog
+              </Link>
               <Link href="/#how-it-works" className={styles.navLink}>
                 How it works
               </Link>
@@ -200,6 +203,9 @@ export default function HomeClient() {
           <div className={styles.navSheet}>
             <Link href="/science" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
               Science
+            </Link>
+            <Link href="/blog" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
+              Blog
             </Link>
             <Link href="/#how-it-works" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
               How it works
@@ -424,6 +430,7 @@ export default function HomeClient() {
           </div>
           <div className={styles.footerLinks}>
             <Link href="/science">Science</Link>
+            <Link href="/blog">Blog</Link>
             <Link href="/privacy">Privacy</Link>
             <Link href="/terms">Terms</Link>
             <a href="mailto:usepeakheight@gmail.com">Support</a>
