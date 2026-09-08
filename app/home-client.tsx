@@ -90,7 +90,10 @@ export default function HomeClient() {
   }, [])
 
   useEffect(() => {
-    if (!menuOpen) return
+    if (!menuOpen) {
+      document.body.style.overflow = ''
+      return
+    }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMenuOpen(false)
     }
@@ -245,15 +248,15 @@ export default function HomeClient() {
                   </svg>
                 ))}
               </span>
-              <span className={styles.socialItem}>Trusted by growers worldwide</span>
+              <span className={styles.socialItem}>Trusted worldwide</span>
               <span className={styles.socialSep} aria-hidden />
-              <span className={styles.socialItem}>100+ height metrics</span>
+              <span className={styles.socialItem}>100+ metrics</span>
             </div>
 
             <h1 className={styles.heroTitle}>
-              Your Height.
+              Your Height. Measured.
               <br />
-              Measured. Tracked. Improved.
+              Tracked. Improved.
             </h1>
 
             <p className={styles.heroSubtitle}>
