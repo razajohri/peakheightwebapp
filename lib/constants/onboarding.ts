@@ -5,7 +5,7 @@ export const ONBOARDING_TYPOGRAPHY = {
   // Page Titles
   PAGE_TITLE: {
     fontSize: '32px',
-    fontFamily: 'var(--font-inter)',
+    fontFamily: 'var(--font-manrope)',
     fontWeight: 'bold',
     lineHeight: '40px',
     letterSpacing: '-0.5px',
@@ -14,35 +14,35 @@ export const ONBOARDING_TYPOGRAPHY = {
   // Subtitles
   SUBTITLE: {
     fontSize: '16px',
-    fontFamily: 'var(--font-inter)',
+    fontFamily: 'var(--font-manrope)',
     lineHeight: '24px',
     color: '#9CA3AF',
   },
   // Body Text
   BODY: {
     fontSize: '16px',
-    fontFamily: 'var(--font-inter)',
+    fontFamily: 'var(--font-manrope)',
     lineHeight: '24px',
     color: '#FFFFFF',
   },
   // Option Text
   OPTION_TEXT: {
     fontSize: '18px',
-    fontFamily: 'var(--font-inter)',
+    fontFamily: 'var(--font-manrope)',
     lineHeight: '24px',
     color: '#FFFFFF',
   },
   // Button Text
   BUTTON_TEXT: {
     fontSize: '17px',
-    fontFamily: 'var(--font-inter)',
+    fontFamily: 'var(--font-manrope)',
     color: '#000000',
     fontWeight: '600',
   },
   // Progress Text
   PROGRESS_TEXT: {
     fontSize: '14px',
-    fontFamily: 'var(--font-inter)',
+    fontFamily: 'var(--font-manrope)',
     color: '#9CA3AF',
   },
 } as const;

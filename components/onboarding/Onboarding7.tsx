@@ -75,7 +75,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
           >
             <div className="w-2/3 sm:w-3/4 max-w-xs sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
               <Image
-                src="/assets/height-diagram.png"
+                src="/assets/height-diagram.webp"
                 alt="How posture, load, sleep, and nutrition affect height potential"
                 width={384}
                 height={684}

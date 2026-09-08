@@ -1,131 +1,467 @@
-/* ============================================
-   PEAKHEIGHT PREMIUM LANDING PAGE
-   Optimized for iPhone (375px - 430px)
-   ============================================ */
+/* PeakHeight landing — exact FaceIQ Labs color + type tokens
+   (from context.dev styleguide: faceiqlabs.com)
+   Landing only — do not reuse for onboarding until approved. */
 
-/* Base Page Styles */
 .page {
+  /* Exact FaceIQ Labs tokens (live CSS + brand.dev) */
+  --ink: #18181b; /* zinc-900 */
+  --black: #1c1c1c;
+  --accent: #000000;
+  --grey: #7c7c7c;
+  --mist: #c4c4c4;
+  --muted: #a1a1aa; /* zinc-400 — FaceIQ body/nav/subtitle */
+  --line: #e5e7eb;
+  --bg: #f4f7fc; /* FaceIQ gradient stop 0% */
+  --bg-mid: #edf3fb;
+  --bg-deep: #e4ecf7;
+  --bg-bottom: #dde7f4; /* FaceIQ gradient stop 100% */
+  --surface: #ffffff;
+  --zinc-50: #fafafa;
+  --wash: #edf3fb;
+  --wash-deep: #dde7f4;
+  --tap: 44px;
+  --radius-pill: 9999px;
+  --font-display: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-ui: var(--font-manrope), Manrope, ui-sans-serif, system-ui, sans-serif;
+
   min-height: 100vh;
   min-height: 100dvh;
-  background: #000000;
-  color: #ffffff;
+  min-height: -webkit-fill-available;
+  background: var(--surface);
+  color: var(--ink);
   overflow-x: hidden;
-  overflow-y: visible;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
+  text-rendering: optimizeLegibility;
+  font-family: var(--font-ui);
 }
 
-/* ============================================
-   HEADER - Floating Glass Effect
-   ============================================ */
-.header {
+/* ========== FaceIQ Labs navbar (live HTML from Context.dev) ==========
+   fixed top-4 left-4 right-4 … lg:left-20 / right-20
+   rounded-full, transparent → frosted on scroll
+   logo 20px + text-sm semibold
+   desktop: text-xs tracking-wide zinc-400 links, gap-8, CTA px-5 py-2
+   mobile: compact CTA + hamburger
+*/
+.nav {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  padding: 12px 16px;
-  padding-top: max(12px, env(safe-area-inset-top));
+  top: max(16px, env(safe-area-inset-top));
+  left: 16px;
+  right: 16px;
+  z-index: 50;
+  transition:
+    background-color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease,
+    backdrop-filter 0.5s ease;
 }
 
-.headerInner {
+.navBar {
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+  transition: inherit;
+}
+
+.navScrolled .navBar,
+.navMenuOpen .navBar {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(228, 228, 231, 0.95);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  box-shadow: 0 8px 30px rgba(24, 24, 27, 0.06);
+}
+
+.navMenuOpen .navBar {
+  border-radius: 24px 24px 0 0;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.navInner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 10px 16px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  height: 48px;
+  padding: 0 16px;
 }
 
 .logoLink {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
+  min-width: 0;
+  flex-shrink: 0;
   text-decoration: none;
+  color: #18181b;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .logoImage {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  opacity: 0.9;
 }
 
-.logoText {
-  font-size: 17px;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.3px;
+.logoTextFull {
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  display: none;
 }
 
-.headerLinks {
-  display: flex;
+.logoTextShort {
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.navDesktop {
+  display: none;
   align-items: center;
-  gap: 16px;
+  gap: 32px; /* gap-8 */
 }
 
-.headerLink {
-  font-size: 14px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.8);
+.navLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px; /* text-xs */
+  font-weight: 400;
+  letter-spacing: 0.05em; /* tracking-wide */
+  color: #a1a1aa; /* zinc-400 */
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.headerLink:active {
+.navLink::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.05em;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navLink:hover {
+  color: #18181b; /* zinc-900 */
+}
+
+.navLink:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.navCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
   color: #ffffff;
+  background: #18181b;
+  padding: 8px 20px; /* py-2 px-5 */
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.headerLang {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 6px 10px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+.navCta:hover {
+  background: #27272a;
 }
 
-/* ============================================
-   HERO SECTION
-   ============================================ */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  min-height: 100dvh;
+.navMobile {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.navCtaMobile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #18181b;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  text-decoration: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navMenuBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #a1a1aa;
+  cursor: pointer;
+  border-radius: 9999px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.navMenuBtn:hover,
+.navMenuBtn:active {
+  color: #18181b;
+}
+
+.navSheet {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 90px 24px 60px;
-  padding-top: max(90px, calc(75px + env(safe-area-inset-top)));
-  overflow: hidden;
+  gap: 2px;
+  padding: 8px 12px 14px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(228, 228, 231, 0.95);
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 24px 24px;
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  box-shadow: 0 16px 40px rgba(24, 24, 27, 0.1);
 }
 
-.heroWaveBg {
+.navSheetLink {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #18181b;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.navSheetLink:active {
+  background: #f4f4f5;
+}
+
+.navSheetCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  background: #18181b;
+  border-radius: 9999px;
+  text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .nav {
+    left: 24px;
+    right: 24px;
+  }
+
+  .navInner {
+    padding: 0 24px;
+  }
+
+  .logoLink {
+    gap: 8px;
+  }
+
+  .logoTextFull {
+    display: inline;
+  }
+
+  .logoTextShort {
+    display: none;
+  }
+
+  .navMobile {
+    gap: 8px;
+  }
+
+  .navCtaMobile {
+    font-size: 11px;
+    padding: 6px 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .nav {
+    left: 48px;
+    right: 48px;
+  }
+
+  .navDesktop {
+    display: flex;
+  }
+
+  .navMobile {
+    display: none;
+  }
+
+  .navSheet {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav {
+    left: 80px;
+    right: 80px;
+  }
+}
+
+/* ========== Hero — vertically centered, clean ========== */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+  padding:
+    calc(88px + env(safe-area-inset-top))
+    max(20px, env(safe-area-inset-right))
+    48px
+    max(20px, env(safe-area-inset-left));
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Exact FaceIQ Labs hero wash (copied from faceiqlabs.com live classes) */
+.heroAtmosphere {
   position: absolute;
   inset: 0;
   z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, #f4f7fc 0%, #edf3fb 32%, #e4ecf7 58%, #dde7f4 100%);
 }
 
 .heroGlow {
   position: absolute;
-  top: -20%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150%;
-  height: 60%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.03) 40%,
-    transparent 70%
-  );
+  inset: 0;
+  z-index: 0;
   pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 14%, rgba(255, 255, 255, 0.98), transparent 18%),
+    radial-gradient(circle at 78% 16%, rgba(197, 231, 255, 0.42), transparent 24%),
+    radial-gradient(circle at 74% 54%, rgba(186, 198, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 30% 84%, rgba(161, 216, 255, 0.14), transparent 30%);
+}
+
+.heroGlow::before,
+.heroGlow::after {
+  content: '';
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+/* FaceIQ white bloom — left/top (no filter blur on phones — GPU killer) */
+.heroGlow::before {
+  left: 6%;
+  top: 8%;
+  height: 26rem;
+  width: 44rem;
+  opacity: 0.8;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.74),
+    rgba(255, 255, 255, 0.08) 54%,
+    transparent 74%
+  );
+}
+
+/* FaceIQ cyan bloom — right/top */
+.heroGlow::after {
+  right: 4%;
+  top: 14%;
+  height: 22rem;
+  width: 32rem;
+  opacity: 0.75;
+  background: radial-gradient(
+    circle,
+    rgba(191, 234, 255, 0.36),
+    rgba(255, 255, 255, 0.06) 56%,
+    transparent 76%
+  );
+}
+
+.heroBloom {
+  position: absolute;
+  right: 10%;
+  bottom: 8%;
+  z-index: 0;
+  height: 20rem;
+  width: 34rem;
+  border-radius: 9999px;
+  pointer-events: none;
+  opacity: 0.7;
+  background: radial-gradient(
+    circle,
+    rgba(198, 197, 255, 0.24),
+    rgba(255, 255, 255, 0.04) 58%,
+    transparent 76%
+  );
+}
+
+@media (min-width: 768px) {
+  .heroGlow::before {
+    filter: blur(88px);
+  }
+  .heroGlow::after {
+    filter: blur(80px);
+  }
+  .heroBloom {
+    filter: blur(88px);
+  }
+}
+
+@media (max-width: 767px) {
+  .heroBloom {
+    display: none;
+  }
+  .heroGlow::before,
+  .heroGlow::after {
+    opacity: 0.55;
+  }
+}
+
+.heroFade {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 0;
+  height: 18rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    #ffffff 0%,
+    #ffffff 8%,
+    rgba(255, 255, 255, 0.92) 20%,
+    rgba(255, 255, 255, 0.7) 38%,
+    rgba(255, 255, 255, 0.4) 55%,
+    rgba(255, 255, 255, 0.15) 72%,
+    transparent 100%
+  );
+}
+
+.heroWaveBg {
+  display: none;
 }
 
 .heroContent {
@@ -135,101 +471,185 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 100%;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  max-width: 780px;
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+  .heroContent {
+    animation: heroIn 0.45s ease both;
+  }
+}
+
+@keyframes heroIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 .heroVisible {
-  opacity: 1;
-  transform: translateY(0);
+  /* kept for compatibility; content is visible by default */
 }
 
-/* Hero Title */
-.heroTitle {
-  font-size: 36px;
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -1.5px;
-  margin: 0 0 16px 0;
-  max-width: 340px;
-}
-
-.heroTitleGradient {
-  background: linear-gradient(135deg, #ffffff 0%, #a8a8a8 50%, #ffffff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.heroSubtitle {
-  font-size: 16px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 28px 0;
-  max-width: 320px;
-}
-
-/* CTA Button */
-.ctaButton {
-  display: inline-flex;
+.socialProof {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 320px;
-  padding: 18px 32px;
-  background: #ffffff;
-  color: #000000;
-  font-size: 17px;
-  font-weight: 700;
-  border-radius: 16px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 20px 40px rgba(0, 0, 0, 0.4),
-    0 0 60px rgba(255, 255, 255, 0.1);
+  gap: 8px 12px;
+  margin-bottom: 32px;
 }
 
-.ctaButton:active {
-  transform: scale(0.98);
-  box-shadow: 
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 10px 20px rgba(0, 0, 0, 0.3);
+.socialStars {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1;
+  color: #18181b;
 }
 
-.ctaButtonIcon {
+.socialStar {
+  width: 12px;
+  height: 12px;
+  display: block;
   flex-shrink: 0;
 }
 
-.ctaSubtext {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-  margin: 16px 0 0 0;
+.socialItem {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a1a1aa;
 }
 
-/* Hero Store Badges */
+.socialSep {
+  width: 1px;
+  height: 11px;
+  background: #d4d4d8;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(42px, 8.5vw, 64px);
+  font-weight: 400; /* FaceIQ Playfair 400 */
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin: 0 0 24px;
+  color: #18181b; /* zinc-900 — FaceIQ exact */
+  text-wrap: balance;
+  font-optical-sizing: auto;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.heroSubtitle {
+  font-family: var(--font-ui);
+  font-size: clamp(16px, 2.2vw, 20px); /* FaceIQ body ~20px */
+  line-height: 1.4; /* FaceIQ 28/20 */
+  font-weight: 400;
+  letter-spacing: 0;
+  color: #a1a1aa; /* zinc-400 — FaceIQ exact */
+  margin: 0 0 40px;
+  max-width: 36ch;
+  text-wrap: pretty;
+}
+
+/* Store badges as primary hero CTA */
+.heroCtaRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 420px;
+}
+
 .heroStoreBadges {
   display: flex;
   flex-direction: row;
-  gap: 12px;
-  margin-top: 32px;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 12px;
   width: 100%;
+}
+
+.secondaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.secondaryCta:hover {
+  color: var(--grey);
+}
+
+.primaryCta,
+.finalPrimaryCta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 228px;
+  min-height: 52px;
+  padding: 14px 32px;
+  background: var(--ink);
+  color: #ffffff;
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  box-shadow: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.primaryCta:hover,
+.finalPrimaryCta:hover {
+  opacity: 0.92;
+}
+
+.primaryCta:active,
+.finalPrimaryCta:active {
+  transform: scale(0.98);
+}
+
+.ctaArrow {
+  font-size: 18px;
+  line-height: 1;
+  transform: translateY(-1px);
 }
 
 .heroStoreBadge {
   display: block;
-  width: 190px;
-  height: 56px;
+  width: 160px;
+  height: 52px;
+  flex: 0 0 auto;
   background-image: url('/pngstores.png');
   background-size: 100% 200%;
   background-repeat: no-repeat;
   border-radius: 10px;
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--line);
+  background-color: #fff;
+  box-shadow: 0 6px 16px rgba(24, 24, 27, 0.06);
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 
 .heroStoreBadge:active {
@@ -245,15 +665,331 @@
   background-position: 0 100%;
 }
 
-/* App Store Popup */
+/* Product preview — below fold */
+.productSection {
+  display: flex;
+  justify-content: center;
+  padding: 24px 20px 64px;
+  background: transparent;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+.phoneContainer {
+  position: relative;
+  width: min(70vw, 280px);
+}
+
+.phoneGlow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 140%;
+  height: 120%;
+  background: radial-gradient(ellipse at center, rgba(180, 190, 210, 0.35), transparent 60%);
+  pointer-events: none;
+}
+
+.phoneImage {
+  position: relative;
+  width: 100%;
+  height: auto;
+  border-radius: 28px;
+  box-shadow:
+    0 24px 48px rgba(24, 24, 27, 0.12),
+    0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+/* Sections */
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 32px;
+  padding: 0 8px;
+}
+
+.sectionTag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 4px 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--grey);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 7vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.9px;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--ink);
+}
+
+.featuresSection,
+.videoSection,
+.stepsSection {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 680px;
+  padding: 72px max(20px, env(safe-area-inset-left)) 72px max(20px, env(safe-area-inset-right));
+}
+
+.featuresSection,
+.stepsSection {
+  background: #eef2f7;
+}
+
+.videoSection {
+  background: var(--bg);
+}
+
+.footer {
+  padding: 40px max(20px, env(safe-area-inset-left)) max(40px, calc(20px + env(safe-area-inset-bottom))) max(20px, env(safe-area-inset-right));
+  background: #ffffff;
+  border-top: 1px solid var(--line);
+}
+
+.featuresGrid,
+.stepsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.featureCard,
+.stepCard {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-align: left;
+  box-shadow: none;
+  color: var(--ink);
+}
+
+.featuresSection .featureCard,
+.stepsSection .stepCard {
+  background: var(--surface);
+}
+
+.featureIcon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-ui);
+  margin-bottom: 14px;
+}
+
+.featureTitle,
+.stepTitle {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  color: var(--ink);
+}
+
+.featureDescription,
+.stepDescription {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--grey);
+  margin: 0;
+}
+
+.stepNumber {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--mist);
+  margin-bottom: 10px;
+  line-height: 1;
+}
+
+.videoContainer {
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  aspect-ratio: 16 / 9;
+  background: #111;
+}
+
+.videoIframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.videoPoster {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+  border: 0;
+  cursor: pointer;
+}
+
+.videoPlay {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  min-height: var(--tap);
+  padding: 0 22px;
+  border-radius: var(--radius-pill);
+  background: #fff;
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.finalCta {
+  position: relative;
+  padding: 80px max(20px, env(safe-area-inset-left)) 88px max(20px, env(safe-area-inset-right));
+  background: #18181b;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
+}
+
+.finalCtaGlow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.08), transparent 55%);
+  pointer-events: none;
+}
+
+.finalCtaTitle {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 8vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.9px;
+  margin: 0 0 12px;
+}
+
+.finalCtaSubtitle {
+  position: relative;
+  font-size: 16px;
+  color: var(--mist);
+  margin: 0 auto 28px;
+  max-width: 32ch;
+  line-height: 1.5;
+}
+
+.finalPrimaryCta {
+  position: relative;
+  background: #fff;
+  color: var(--black);
+  margin: 0 auto 20px;
+  max-width: 280px;
+  width: 100%;
+}
+
+.finalStores {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.finalStores .heroStoreBadge {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.footer {
+  padding: 40px max(20px, env(safe-area-inset-left)) max(40px, calc(20px + env(safe-area-inset-bottom))) max(20px, env(safe-area-inset-right));
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+
+.footerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.footerBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.footerLogo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.footerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.footerLinks a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 12px;
+  font-size: 14px;
+  color: var(--grey);
+  text-decoration: none;
+}
+
+.footerDisclaimer {
+  font-size: 12px;
+  color: var(--grey);
+  text-align: center;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.footerCopy {
+  font-size: 12px;
+  color: var(--mist);
+  margin: 0;
+}
+
+/* App popup — iOS */
 .appStorePopup {
   position: fixed;
-  bottom: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   z-index: 200;
-  padding: 0 16px;
-  padding-bottom: max(20px, env(safe-area-inset-bottom));
+  padding: 0 12px max(12px, env(safe-area-inset-bottom));
   pointer-events: none;
   display: flex;
   justify-content: center;
@@ -261,29 +997,29 @@
 
 .appStorePopupInner {
   pointer-events: auto;
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 16px;
-  box-shadow: 
-    0 10px 40px rgba(0, 0, 0, 0.3),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
-  max-width: 360px;
   width: 100%;
-  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 400px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 40px rgba(24, 24, 27, 0.16);
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(100%);
+    transform: translate3d(0, 110%, 0);
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 }
@@ -302,453 +1038,178 @@
 
 .appStorePopupTitle {
   font-size: 15px;
-  font-weight: 700;
-  color: #000000;
-  margin: 0 0 2px 0;
+  font-weight: 600;
+  margin: 0 0 2px;
 }
 
 .appStorePopupSubtitle {
   font-size: 13px;
-  color: #666666;
+  color: var(--grey);
   margin: 0;
 }
 
 .appStorePopupButton {
-  padding: 10px 18px;
-  background: #007AFF;
-  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  min-height: 36px;
+  padding: 0 16px;
+  background: var(--black);
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  border-radius: var(--radius-pill);
   text-decoration: none;
-  white-space: nowrap;
-}
-
-.appStorePopupButton:active {
-  transform: scale(0.96);
-  background: #0066DD;
 }
 
 .appStorePopupClose {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  width: 24px;
-  height: 24px;
-  background: #000000;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Phone Mockup */
-.phoneContainer {
-  position: relative;
-  margin-top: 20px;
-  width: 100%;
-  max-width: 300px;
-}
-
-.phoneGlow {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.06) 0%,
-    transparent 50%
-  );
-  pointer-events: none;
-}
-
-.phoneImage {
-  position: relative;
-  width: 100%;
-  height: auto;
-  border-radius: 32px;
-  box-shadow: 
-    0 40px 80px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-}
-
-/* ============================================
-   SECTION HEADERS
-   ============================================ */
-.sectionHeader {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.sectionTag {
-  display: inline-block;
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
-}
-
-.sectionTitle {
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  margin: 0;
-}
-
-/* ============================================
-   FEATURES SECTION
-   ============================================ */
-.featuresSection {
-  padding: 60px 20px;
-  background: #0a0a0a;
-}
-
-.featuresGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.featureCard {
-  padding: 24px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.02) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
-  transition: all 0.3s ease;
-}
-
-.featureCard:active {
-  transform: scale(0.98);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.featureIcon {
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  font-size: 22px;
-  margin-bottom: 16px;
-}
-
-.featureTitle {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 0 8px 0;
-  letter-spacing: -0.3px;
-}
-
-.featureDescription {
-  font-size: 14px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.6);
-  margin: 0;
-}
-
-/* ============================================
-   VIDEO SECTION
-   ============================================ */
-.videoSection {
-  padding: 60px 20px;
-  background: #000000;
-}
-
-.videoContainer {
-  max-width: 400px;
-  margin: 0 auto;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 30px 60px rgba(0, 0, 0, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
-  aspect-ratio: 16 / 9;
-}
-
-.videoIframe {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* ============================================
-   STEPS SECTION
-   ============================================ */
-.stepsSection {
-  padding: 60px 20px;
-  background: #000000;
-}
-
-.stepsGrid {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.stepCard {
-  position: relative;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 20px;
-}
-
-.stepNumber {
-  font-size: 32px;
-  font-weight: 800;
-  color: rgba(255, 255, 255, 0.15);
-  margin-bottom: 12px;
-  letter-spacing: -1px;
-}
-
-.stepTitle {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 0 8px 0;
-  letter-spacing: -0.3px;
-}
-
-.stepDescription {
-  font-size: 14px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.6);
-  margin: 0;
-}
-
-.stepConnector {
-  display: none; /* Hidden on mobile for cleaner look */
-}
-
-/* ============================================
-   FINAL CTA SECTION
-   ============================================ */
-.finalCta {
-  position: relative;
-  padding: 80px 24px;
-  background: #000000;
-  text-align: center;
-  overflow: hidden;
-}
-
-.finalCtaGlow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150%;
-  height: 100%;
-  background: radial-gradient(
-    ellipse at top center,
-    rgba(255, 255, 255, 0.05) 0%,
-    transparent 60%
-  );
-  pointer-events: none;
-}
-
-.finalCtaTitle {
-  position: relative;
-  font-size: 32px;
-  font-weight: 800;
-  letter-spacing: -1px;
-  margin: 0 0 16px 0;
-}
-
-.finalCtaSubtitle {
-  position: relative;
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.6);
-  margin: 0 0 32px 0;
-  max-width: 300px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.finalCta .ctaButton {
-  margin: 0 auto;
-}
-
-.finalCta .heroStoreBadges {
-  margin-top: 8px;
-}
-
-/* ============================================
-   FOOTER
-   ============================================ */
-.footer {
-  padding: 40px 20px;
-  padding-bottom: max(40px, calc(20px + env(safe-area-inset-bottom)));
-  background: #0a0a0a;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.footerContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.footerBrand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.footerLogo {
+  top: -10px;
+  right: -6px;
   width: 28px;
   height: 28px;
-  border-radius: 6px;
+  background: var(--black);
+  border: 2px solid #fff;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
 }
 
-.footerLinks {
-  display: flex;
-  gap: 24px;
-}
-
-.footerLinks a {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footerLinks a:active {
-  color: #ffffff;
-}
-
-.footerCopy {
-  font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
-  margin: 0;
-}
-
-/* ============================================
-   LARGER PHONES (390px+)
-   ============================================ */
-@media (min-width: 390px) {
-  .heroTitle {
-    font-size: 40px;
-    max-width: 360px;
-  }
-
-  .heroSubtitle {
-    font-size: 17px;
-    max-width: 340px;
-  }
-
-  .heroStoreBadge {
-    width: 200px;
-    height: 60px;
-  }
-
-  .phoneContainer {
-    max-width: 320px;
-  }
-
-  .sectionTitle {
-    font-size: 32px;
-  }
-
-  .finalCtaTitle {
-    font-size: 36px;
-  }
-}
-
-/* ============================================
-   TABLET & DESKTOP (for completeness)
-   ============================================ */
+/* ========== Desktop / PC ========== */
 @media (min-width: 768px) {
+  .hero {
+    padding: 112px 32px 64px;
+  }
+
+  .socialProof {
+    margin-bottom: 36px;
+    gap: 10px 16px;
+  }
+
   .heroTitle {
-    font-size: 52px;
-    max-width: 500px;
+    font-size: 64px;
+    line-height: 1.05;
+    letter-spacing: -0.032em;
+    margin-bottom: 28px;
   }
 
   .heroSubtitle {
     font-size: 18px;
-    max-width: 400px;
+    line-height: 1.55;
+    max-width: 38ch;
+    margin-bottom: 44px;
   }
 
-  .phoneContainer {
-    max-width: 340px;
-    margin-top: 24px;
-  }
-
-  .heroStoreBadges {
-    gap: 16px;
+  .heroCtaRow {
+    flex-direction: column;
+    align-items: center;
+    max-width: 460px;
+    gap: 20px;
   }
 
   .heroStoreBadge {
-    width: 235px;
-    height: 72px;
+    width: 180px;
+    height: 56px;
+  }
+
+  .secondaryCta {
+    min-height: auto;
+    white-space: nowrap;
+  }
+
+  .productSection {
+    padding: 0 32px 96px;
+  }
+
+  .phoneContainer {
+    width: 300px;
+  }
+
+  .featuresSection,
+  .videoSection,
+  .stepsSection {
+    padding: 96px 32px;
   }
 
   .featuresGrid {
     grid-template-columns: repeat(2, 1fr);
-    max-width: 600px;
-  }
-
-  .videoContainer {
-    max-width: 600px;
+    max-width: 720px;
+    gap: 16px;
   }
 
   .stepsGrid {
-    flex-direction: row;
-    max-width: 800px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    gap: 16px;
   }
 
-  .stepCard {
-    flex: 1;
+  .videoContainer {
+    max-width: 720px;
+  }
+
+  .finalCta {
+    padding: 112px 32px;
   }
 }
 
 @media (min-width: 1024px) {
   .heroTitle {
-    font-size: 64px;
-    max-width: 600px;
-  }
-
-  .sectionTitle {
-    font-size: 40px;
-  }
-
-  .finalCtaTitle {
-    font-size: 48px;
+    font-size: 72px;
+    letter-spacing: -0.035em;
   }
 
   .featuresGrid {
     grid-template-columns: repeat(4, 1fr);
-    max-width: 1000px;
+    max-width: 1100px;
   }
 
   .videoContainer {
-    max-width: 800px;
+    max-width: 860px;
+  }
+
+  .phoneContainer {
+    width: 320px;
+  }
+}
+
+/* ========== Small phones ========== */
+@media (max-width: 374px) {
+  .navCtaMobile {
+    font-size: 10px;
+    padding: 6px 12px;
+  }
+
+  .heroTitle {
+    font-size: 34px;
+  }
+
+  .heroSubtitle {
+    font-size: 15px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heroContent {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .appStorePopupInner,
+  .primaryCta,
+  .finalPrimaryCta {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .page,
+  .hero {
+    min-height: -webkit-fill-available;
   }
 }

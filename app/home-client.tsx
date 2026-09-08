@@ -4,36 +4,36 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import logo from '../peakheight-logo.jpg'
-import { Waves } from '@/components/ui/wave-background'
 import styles from './landing.module.css'
 
-// Detect if user is on iOS or Android
 function getMobileOS(): 'ios' | 'android' | 'other' {
   if (typeof window === 'undefined') return 'other'
-  const userAgent = navigator.userAgent || navigator.vendor
+  const userAgent = navigator.userAgent || navigator.vendor || ''
   if (/android/i.test(userAgent)) return 'android'
-  if (/iPad|iPhone|iPod/.test(userAgent)) return 'ios'
+  if (/iPad|iPhone|iPod/.test(userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+    return 'ios'
+  }
   return 'other'
 }
 
 const features = [
   {
-    icon: '🎯',
+    mark: '01',
     title: 'AI-Powered Analysis',
     description: 'Get your personalized growth potential calculated by our advanced AI.',
   },
   {
-    icon: '📊',
+    mark: '02',
     title: 'Track Progress',
     description: 'Monitor your height journey with detailed analytics and insights.',
   },
   {
-    icon: '🏋️',
+    mark: '03',
     title: '200+ Exercises',
     description: 'Science-backed stretches and workouts designed for maximum growth.',
   },
   {
-    icon: '🥗',
+    mark: '04',
     title: 'Nutrition Plans',
     description: 'Meal plans rich in growth-promoting nutrients tailored to you.',
   },
@@ -57,174 +57,336 @@ const steps = [
   },
 ]
 
+const APP_STORE = 'https://apps.apple.com/us/app/peak-height/id6752793377'
+const PLAY_STORE = 'https://play.google.com/store/apps/details?id=com.peakheight.app'
+
 export default function HomeClient() {
-  const [isVisible, setIsVisible] = useState(false)
   const [showAppPopup, setShowAppPopup] = useState(false)
   const [mobileOS, setMobileOS] = useState<'ios' | 'android' | 'other'>('other')
-  const heroRef = useRef<HTMLDivElement>(null)
+  const [loadVideo, setLoadVideo] = useState(false)
+  const [navScrolled, setNavScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const videoRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setIsVisible(true)
-
-    // Show app store popup after 3 seconds on mobile
     const os = getMobileOS()
     setMobileOS(os)
 
+    let popupTimer: ReturnType<typeof setTimeout> | undefined
     if (os !== 'other') {
-      const timer = setTimeout(() => {
-        setShowAppPopup(true)
-      }, 3000)
-      return () => clearTimeout(timer)
+      popupTimer = setTimeout(() => setShowAppPopup(true), 4500)
+    }
+
+    return () => {
+      if (popupTimer) clearTimeout(popupTimer)
     }
   }, [])
 
+  useEffect(() => {
+    const onScroll = () => setNavScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  useEffect(() => {
+    const node = videoRef.current
+    if (!node) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLoadVideo(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '160px' }
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
+  const primaryStore = mobileOS === 'android' ? PLAY_STORE : APP_STORE
+
   return (
     <div className={styles.page}>
-      {/* Floating Header */}
-      <header className={styles.header}>
-        <div className={styles.headerInner}>
-          <Link href="/" className={styles.logoLink}>
-            <Image
-              src={logo}
-              alt="PeakHeight"
-              width={32}
-              height={32}
-              className={styles.logoImage}
-            />
-            <span className={styles.logoText}>PeakHeight</span>
-          </Link>
-          <div className={styles.headerLinks}>
-            <span className={styles.headerLang}>EN</span>
+      <nav
+        className={`${styles.nav} ${navScrolled ? styles.navScrolled : ''} ${menuOpen ? styles.navMenuOpen : ''}`}
+        aria-label="Primary"
+      >
+        <div className={styles.navBar}>
+          <div className={styles.navInner}>
+            <Link href="/" className={styles.logoLink} aria-label="PeakHeight home">
+              <Image
+                src={logo}
+                alt=""
+                width={20}
+                height={20}
+                className={styles.logoImage}
+                priority
+              />
+              <span className={styles.logoTextFull}>PeakHeight</span>
+              <span className={styles.logoTextShort}>PeakHeight</span>
+            </Link>
+
+            {/* Desktop — FaceIQ: text-xs zinc-400 links, gap-8, pill CTA */}
+            <div className={styles.navDesktop}>
+              <Link href="/science" className={styles.navLink}>
+                Science
+              </Link>
+              <Link href="/#how-it-works" className={styles.navLink}>
+                How it works
+              </Link>
+              <a href="mailto:usepeakheight@gmail.com" className={styles.navLink}>
+                Support
+              </a>
+              <a
+                href={primaryStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.navCta}
+              >
+                Get the app
+              </a>
+            </div>
+
+            {/* Mobile — FaceIQ: compact CTA + menu */}
+            <div className={styles.navMobile}>
+              <a
+                href={primaryStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.navCtaMobile}
+              >
+                Get the app
+              </a>
+              <button
+                type="button"
+                className={styles.navMenuBtn}
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen((v) => !v)}
+              >
+                {menuOpen ? (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                    <path d="M4 5h16M4 12h16M4 19h16" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
-      </header>
+
+        {menuOpen ? (
+          <div className={styles.navSheet}>
+            <Link href="/science" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
+              Science
+            </Link>
+            <Link href="/#how-it-works" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
+              How it works
+            </Link>
+            <Link href="/privacy" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
+              Privacy
+            </Link>
+            <Link href="/terms" className={styles.navSheetLink} onClick={() => setMenuOpen(false)}>
+              Terms
+            </Link>
+            <a
+              href={primaryStore}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.navSheetCta}
+              onClick={() => setMenuOpen(false)}
+            >
+              Get the app
+            </a>
+          </div>
+        ) : null}
+      </nav>
 
       <main>
-        {/* Hero Section */}
-        <section className={styles.hero} ref={heroRef}>
-          <div className={styles.heroWaveBg} aria-hidden>
-            <Waves
-              strokeColor="rgba(255,255,255,0.2)"
-              backgroundColor="#000000"
-              pointerSize={0}
-            />
-          </div>
-          <div className={styles.heroGlow} />
-          <div className={`${styles.heroContent} ${isVisible ? styles.heroVisible : ''}`}>
-            {/* Main Headline */}
+        {/* FaceIQ-style centered hero — no phone, no waves, no duplicate badges */}
+        <section className={styles.hero}>
+          <div className={styles.heroAtmosphere} aria-hidden />
+          {/* Exact FaceIQ aurora stack — cyan + lavender blooms, no line waves */}
+          <div className={styles.heroGlow} aria-hidden />
+          <div className={styles.heroBloom} aria-hidden />
+          <div className={styles.heroFade} aria-hidden />
+          <div className={styles.heroContent}>
+            <div className={styles.socialProof}>
+              <span className={styles.socialStars} aria-label="5 out of 5 stars">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <svg
+                    key={i}
+                    className={styles.socialStar}
+                    viewBox="0 0 20 20"
+                    aria-hidden
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"
+                    />
+                  </svg>
+                ))}
+              </span>
+              <span className={styles.socialItem}>Trusted by growers worldwide</span>
+              <span className={styles.socialSep} aria-hidden />
+              <span className={styles.socialItem}>100+ height metrics</span>
+            </div>
+
             <h1 className={styles.heroTitle}>
-              Unlock Your
-              <span className={styles.heroTitleGradient}> Maximum </span>
-              Height Potential
+              Your Height.
+              <br />
+              Measured. Tracked. Improved.
             </h1>
 
             <p className={styles.heroSubtitle}>
-              PeakHeight helps you grow taller - naturally.
+              Analyze your height across 100+ metrics, get a personalized plan, and track your progress over time.
             </p>
 
-            {/* Download CTAs — web onboarding kept at /onboarding for later; not linked for now */}
-            <div className={styles.heroStoreBadges}>
-              <a
-                href="https://apps.apple.com/us/app/peak-height/id6752793377"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeApple}`}
-                aria-label="Download on the App Store"
-              />
-              <a
-                href="https://play.google.com/store/apps/details?id=com.peakheight.app"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeGoogle}`}
-                aria-label="Get it on Google Play"
-              />
-            </div>
-
-            {/* Phone Mockup */}
-            <div className={styles.phoneContainer}>
-              <div className={styles.phoneGlow} />
-              <Image
-                src="/assets/imnotnew.webp"
-                alt="PeakHeight App"
-                width={320}
-                height={640}
-                className={styles.phoneImage}
-                priority
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Features Section */}
-        <section className={styles.featuresSection}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>Features</span>
-            <h2 className={styles.sectionTitle}>Everything You Need to Grow</h2>
-          </div>
-          <div className={styles.featuresGrid}>
-            {features.map((feature) => (
-              <div key={feature.title} className={styles.featureCard}>
-                <div className={styles.featureIcon}>{feature.icon}</div>
-                <h3 className={styles.featureTitle}>{feature.title}</h3>
-                <p className={styles.featureDescription}>{feature.description}</p>
+            <div className={styles.heroCtaRow}>
+              <div className={styles.heroStoreBadges} aria-label="Download PeakHeight">
+                <a
+                  href={APP_STORE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeApple}`}
+                  aria-label="Download on the App Store"
+                />
+                <a
+                  href={PLAY_STORE}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeGoogle}`}
+                  aria-label="Get it on Google Play"
+                />
               </div>
-            ))}
+              <a href="#how-it-works" className={styles.secondaryCta}>
+                See how it works
+              </a>
+            </div>
           </div>
         </section>
 
-        {/* Video Section */}
-        <section className={styles.videoSection}>
-          <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>See It In Action</span>
-            <h2 className={styles.sectionTitle}>Watch How It Works</h2>
-          </div>
-          <div className={styles.videoContainer}>
-            <iframe
-              className={styles.videoIframe}
-              src="https://www.youtube.com/embed/n_nawi0zbFM"
-              title="PeakHeight walkthrough"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+        {/* Product visual below the fold */}
+        <section className={styles.productSection} aria-label="App preview">
+          <div className={styles.phoneContainer}>
+            <div className={styles.phoneGlow} aria-hidden />
+            <Image
+              src="/assets/imnotnew.webp"
+              alt="PeakHeight app preview"
+              width={320}
+              height={640}
+              className={styles.phoneImage}
+              sizes="(max-width: 430px) 70vw, 300px"
+              loading="lazy"
             />
           </div>
         </section>
 
-        {/* How It Works */}
-        <section className={styles.stepsSection}>
+        <section className={styles.featuresSection}>
           <div className={styles.sectionHeader}>
-            <span className={styles.sectionTag}>How It Works</span>
-            <h2 className={styles.sectionTitle}>3 Simple Steps</h2>
+            <span className={styles.sectionTag}>Features</span>
+            <h2 className={styles.sectionTitle}>Everything you need to grow</h2>
           </div>
-          <div className={styles.stepsGrid}>
-            {steps.map((step, index) => (
-              <div key={step.number} className={styles.stepCard}>
-                <div className={styles.stepNumber}>{step.number}</div>
-                <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepDescription}>{step.description}</p>
-                {index < steps.length - 1 && <div className={styles.stepConnector} />}
-              </div>
+          <div className={styles.featuresGrid}>
+            {features.map((feature) => (
+              <article key={feature.title} className={styles.featureCard}>
+                <div className={styles.featureIcon}>{feature.mark}</div>
+                <h3 className={styles.featureTitle}>{feature.title}</h3>
+                <p className={styles.featureDescription}>{feature.description}</p>
+              </article>
             ))}
           </div>
         </section>
 
-        {/* Final CTA */}
+        <section className={styles.videoSection} ref={videoRef}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionTag}>See it in action</span>
+            <h2 className={styles.sectionTitle}>Watch how it works</h2>
+          </div>
+          <div className={styles.videoContainer}>
+            {loadVideo ? (
+              <iframe
+                className={styles.videoIframe}
+                src="https://www.youtube.com/embed/n_nawi0zbFM"
+                title="PeakHeight walkthrough"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <button
+                type="button"
+                className={styles.videoPoster}
+                onClick={() => setLoadVideo(true)}
+                aria-label="Play PeakHeight walkthrough"
+              >
+                <span className={styles.videoPlay}>Play</span>
+              </button>
+            )}
+          </div>
+        </section>
+
+        <section className={styles.stepsSection} id="how-it-works">
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionTag}>How it works</span>
+            <h2 className={styles.sectionTitle}>Three simple steps</h2>
+          </div>
+          <div className={styles.stepsGrid}>
+            {steps.map((step) => (
+              <article key={step.number} className={styles.stepCard}>
+                <div className={styles.stepNumber}>{step.number}</div>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepDescription}>{step.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className={styles.finalCta}>
-          <div className={styles.finalCtaGlow} />
-          <h2 className={styles.finalCtaTitle}>Ready to Reach Your Peak?</h2>
+          <div className={styles.finalCtaGlow} aria-hidden />
+          <h2 className={styles.finalCtaTitle}>Ready to reach your peak?</h2>
           <p className={styles.finalCtaSubtitle}>
             Download PeakHeight and start your personalized growth journey today.
           </p>
-          <div className={styles.heroStoreBadges}>
+          <a
+            href={primaryStore}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.finalPrimaryCta}
+          >
+            Start Your Journey
+            <span className={styles.ctaArrow} aria-hidden>
+              →
+            </span>
+          </a>
+          <div className={styles.finalStores}>
             <a
-              href="https://apps.apple.com/us/app/peak-height/id6752793377"
+              href={APP_STORE}
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeApple}`}
               aria-label="Download on the App Store"
             />
             <a
-              href="https://play.google.com/store/apps/details?id=com.peakheight.app"
+              href={PLAY_STORE}
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.heroStoreBadge} ${styles.heroStoreBadgeGoogle}`}
@@ -234,11 +396,10 @@ export default function HomeClient() {
         </section>
       </main>
 
-      {/* Footer */}
       <footer className={styles.footer}>
         <div className={styles.footerContent}>
           <div className={styles.footerBrand}>
-            <Image src={logo} alt="PeakHeight" width={28} height={28} className={styles.footerLogo} />
+            <Image src={logo} alt="" width={28} height={28} className={styles.footerLogo} />
             <span>PeakHeight</span>
           </div>
           <div className={styles.footerLinks}>
@@ -247,18 +408,18 @@ export default function HomeClient() {
             <Link href="/terms">Terms</Link>
             <a href="mailto:usepeakheight@gmail.com">Support</a>
           </div>
-          <p style={{ fontSize: '0.75rem', opacity: 0.7, marginTop: '2rem', textAlign: 'center', maxWidth: '800px', margin: '2rem auto 1rem auto' }}>
+          <p className={styles.footerDisclaimer}>
             Disclaimer: PeakHeight is intended for informational and fitness purposes only and does not constitute professional medical advice, diagnosis, or treatment. Always consult with a healthcare provider before starting any new fitness or nutrition program.
           </p>
           <p className={styles.footerCopy}>© {new Date().getFullYear()} PeakHeight. All rights reserved.</p>
         </div>
       </footer>
 
-      {/* App Store Popup */}
       {showAppPopup && (
-        <div className={styles.appStorePopup}>
-          <div className={styles.appStorePopupInner} style={{ position: 'relative' }}>
+        <div className={styles.appStorePopup} role="dialog" aria-label="Get the PeakHeight app">
+          <div className={styles.appStorePopupInner}>
             <button
+              type="button"
               className={styles.appStorePopupClose}
               onClick={() => setShowAppPopup(false)}
               aria-label="Close"
@@ -267,22 +428,19 @@ export default function HomeClient() {
             </button>
             <Image
               src={logo}
-              alt="PeakHeight"
+              alt=""
               width={48}
               height={48}
               className={styles.appStorePopupIcon}
             />
             <div className={styles.appStorePopupContent}>
-              <p className={styles.appStorePopupTitle}>PeakHeight App</p>
+              <p className={styles.appStorePopupTitle}>PeakHeight</p>
               <p className={styles.appStorePopupSubtitle}>
-                {mobileOS === 'ios' ? 'Search "PeakHeight" on App Store or Copy Link' : 'Get it on Google Play'}
+                {mobileOS === 'ios' ? 'Available on the App Store' : 'Get it on Google Play'}
               </p>
             </div>
             <a
-              href={mobileOS === 'ios'
-                ? 'https://apps.apple.com/us/app/peak-height/id6752793377'
-                : 'https://play.google.com/store/apps/details?id=com.peakheight.app'
-              }
+              href={primaryStore}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.appStorePopupButton}

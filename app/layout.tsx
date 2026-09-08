@@ -1,26 +1,24 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display, Oswald } from 'next/font/google'
+import { Manrope, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import { AuthProvider } from '@/contexts/AuthContext'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
+import CookieConsent from '@/components/CookieConsent'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
-  weight: ['400', '700', '900'],
+  weight: ['400', '500'],
+  style: ['normal'],
+  preload: true,
+  adjustFontFallback: true,
 })
 
-const oswald = Oswald({
+const manrope = Manrope({
   subsets: ['latin'],
-  variable: '--font-oswald',
+  variable: '--font-manrope',
   display: 'swap',
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600'],
+  preload: true,
 })
 
 export const viewport: Viewport = {
@@ -29,7 +27,7 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   viewportFit: 'cover',
-  themeColor: '#000000',
+  themeColor: '#ffffff',
 }
 
 export const metadata: Metadata = {
@@ -38,7 +36,7 @@ export const metadata: Metadata = {
   description: 'Maximize your height potential naturally with the right daily habits and AI tools',
   appleWebApp: {
     capable: true,
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
   },
   other: {
     'mobile-web-app-capable': 'yes',
@@ -55,12 +53,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable} ${oswald.variable}`}>
+    <html lang="en" className={`${manrope.variable} ${playfair.variable}`}>
       <body
-        className="antialiased"
+        className={`${manrope.className} antialiased`}
         style={{
-          backgroundColor: '#000000',
-          color: '#ffffff',
+          backgroundColor: '#ffffff',
+          color: '#18181b',
           margin: 0,
           minHeight: '100vh',
         }}
@@ -69,8 +67,8 @@ export default function RootLayout({
         <style dangerouslySetInnerHTML={{
           __html: `
           *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-          html{background:#000;color:#fff;-webkit-text-size-adjust:100%}
-          body{min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:system-ui,sans-serif}
+          html{background:#fff;color:#18181b;-webkit-text-size-adjust:100%}
+          body{min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:var(--font-manrope),Manrope,system-ui,sans-serif}
           button,a,[role=button]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           @keyframes ph-spin{to{transform:rotate(360deg)}}
           .ph-critical-spinner{animation:ph-spin .8s linear infinite}
@@ -118,9 +116,8 @@ export default function RootLayout({
             <a href="/" style={{ color: '#f59e0b', textDecoration: 'underline' }}>Reload page</a>
           </div>
         </noscript>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+        {children}
+        <CookieConsent />
       </body>
     </html>
   )

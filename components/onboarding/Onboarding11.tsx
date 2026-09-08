@@ -43,7 +43,7 @@ export default function Onboarding11({ data, updateData, onNext, onBack }: Onboa
           >
             <div className="relative w-11/12 max-w-xs sm:max-w-md rounded-3xl border border-white/15 overflow-hidden bg-black">
               <Image
-                src="/assets/sleep.png"
+                src="/assets/sleep.webp"
                 alt="Sleeping deeply to support growth"
                 width={480}
                 height={720}
