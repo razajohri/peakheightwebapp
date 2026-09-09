@@ -14,7 +14,7 @@ export default function OnboardingShell({
 }) {
   return (
     <div
-      className="relative flex min-h-screen min-h-dvh items-center justify-center overflow-hidden p-3 sm:p-5"
+      className="relative min-h-screen min-h-dvh overflow-hidden"
       style={{
         backgroundImage: `${ONBOARDING_COLORS.AURORA}, ${ONBOARDING_COLORS.WASH}`,
         backgroundColor: '#f4f7fc',
@@ -29,7 +29,7 @@ export default function OnboardingShell({
 export function OnboardingMotionColumn({ children }: { children: ReactNode }) {
   return (
     <motion.div
-      className="relative z-10 flex min-h-0 w-full flex-1 flex-col"
+      className="relative z-10 flex min-h-screen min-h-dvh w-full flex-1 flex-col"
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{
         opacity: 1,

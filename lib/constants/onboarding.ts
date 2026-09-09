@@ -101,9 +101,9 @@ export const ONBOARDING_ANIMATIONS = {
 /** Shared Tailwind class snippets for FaceIQ onboarding screens */
 export const ONBOARDING_UI = {
   page: 'min-h-screen min-h-dvh relative overflow-hidden bg-[#f4f7fc]',
-  /** White phone card on mist — visible on mobile + desktop like FaceIQ */
+  /** Full-bleed on mist — no inset phone card */
   frame:
-    'relative z-10 mx-auto flex w-full max-w-[400px] flex-col overflow-hidden rounded-[28px] border border-white/80 bg-white shadow-[0_28px_80px_-28px_rgba(24,24,27,0.18)] min-h-[calc(100dvh-1.5rem)] sm:min-h-[min(860px,calc(100dvh-2.5rem))]',
+    'relative z-10 mx-auto flex w-full min-h-screen min-h-dvh flex-col',
   title:
     'text-[#18181b] font-playfair font-normal text-[28px] sm:text-[32px] leading-[1.15] tracking-[-0.03em]',
   subtitle: 'text-[#a1a1aa] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em]',
