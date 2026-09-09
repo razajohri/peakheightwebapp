@@ -12,7 +12,11 @@ interface AuthContextType {
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>
   signUpWithEmail: (email: string, password: string, name?: string) => Promise<{ error: AuthError | null }>
   sendEmailOtp: (email: string, options?: { name?: string; returnTo?: string }) => Promise<{ error: AuthError | null }>
-  verifyEmailOtp: (email: string, token: string, name?: string) => Promise<{ error: AuthError | null }>
+  verifyEmailOtp: (
+    email: string,
+    token: string,
+    name?: string
+  ) => Promise<{ error: AuthError | null; session: Session | null; user: User | null }>
   signOut: () => Promise<void>
   isPremium: boolean
 }
@@ -82,22 +86,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, nextSession) => {
         if (cancelled) return
-        try {
-          setSession(session)
-          setUser(session?.user ?? null)
-          if (session?.user) {
-            await checkPremiumStatus(session.user.id)
-          } else {
-            setIsPremium(false)
-          }
-        } catch (err: unknown) {
-          const isAbort = err instanceof Error && err.name === 'AbortError'
-          const isAbortLike = typeof err === 'object' && err !== null && (err as { name?: string }).name === 'AbortError'
-          if (!isAbort && !isAbortLike) console.error('[Auth] onAuthStateChange error:', err)
-        } finally {
-          if (!cancelled) setLoading(false)
+        setSession(nextSession)
+        setUser(nextSession?.user ?? null)
+        setLoading(false)
+        if (nextSession?.user) {
+          void checkPremiumStatus(nextSession.user.id)
+        } else {
+          setIsPremium(false)
         }
       }
     )
@@ -193,7 +190,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error }
   }
 
-  /** Verify the 6-digit code from email. */
+  /** Verify email OTP and establish session in context immediately. */
   const verifyEmailOtp = async (email: string, token: string, name?: string) => {
     const { data, error } = await supabase.auth.verifyOtp({
       email: email.trim().toLowerCase(),
@@ -201,17 +198,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       type: 'email',
     })
 
-    if (!error && data.user) {
-      await createUserProfile(
-        data.user.id,
-        data.user.email ?? email,
+    if (error) {
+      return { error, session: null as Session | null, user: null as User | null }
+    }
+
+    const nextSession = data.session
+    const nextUser = data.user ?? data.session?.user ?? null
+
+    // Persist into React state right away so /paywall does not race onAuthStateChange
+    if (nextSession) setSession(nextSession)
+    if (nextUser) setUser(nextUser)
+    setLoading(false)
+
+    if (nextUser) {
+      // Don't block navigation on profile upsert
+      void createUserProfile(
+        nextUser.id,
+        nextUser.email ?? email,
         name ||
-          data.user.user_metadata?.display_name ||
-          data.user.user_metadata?.full_name
+          nextUser.user_metadata?.display_name ||
+          nextUser.user_metadata?.full_name
       )
     }
 
-    return { error }
+    return { error: null, session: nextSession, user: nextUser }
   }
 
   /** Ensure a user row exists (e.g. after sign-in). Only sets id, email, updated_at so existing profile is not overwritten. */

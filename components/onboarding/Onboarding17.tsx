@@ -86,6 +86,34 @@ function FeatureIcon({ kind }: { kind: string }) {
           <path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5Z" />
         </svg>
       )
+    case 'scan':
+      return (
+        <svg {...common}>
+          <path d="M4 7V5a1 1 0 0 1 1-1h2M20 7V5a1 1 0 0 0-1-1h-2M4 17v2a1 1 0 0 0 1 1h2M20 17v2a1 1 0 0 1-1 1h-2" />
+          <path d="M8 12h8" />
+        </svg>
+      )
+    case 'community':
+      return (
+        <svg {...common}>
+          <circle cx="9" cy="8" r="2.5" />
+          <circle cx="16" cy="9" r="2" />
+          <path d="M3.5 18c.6-2.5 2.6-4 5.5-4s4.9 1.5 5.5 4M14 14c2.2.2 3.8 1.4 4.5 4" />
+        </svg>
+      )
+    case 'ai':
+      return (
+        <svg {...common}>
+          <path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5L12 3z" />
+          <path d="M18 14l.8 2.2L21 17l-2.2.8L18 20l-.8-2.2L15 17l2.2-.8L18 14z" />
+        </svg>
+      )
+    case 'tips':
+      return (
+        <svg {...common}>
+          <path d="M9 18h6M10 21h4M12 3a6 6 0 0 1 3.5 10.8V16H8.5v-2.2A6 6 0 0 1 12 3z" />
+        </svg>
+      )
     default:
       return (
         <svg {...common}>
@@ -122,17 +150,19 @@ function FeaturePill({
 }
 
 const BASIC_FEATURES = [
-  { kind: 'height', label: 'Current vs goal height summary' },
-  { kind: 'body', label: 'Body & habit assessment' },
+  { kind: 'height', label: 'Basic height tracking' },
+  { kind: 'tips', label: 'Daily tips' },
+  { kind: 'track', label: 'Simple progress charts' },
   { kind: 'ratio', label: 'Growth potential estimate' },
-  { kind: 'track', label: 'Baseline progress snapshot' },
 ]
 
 const PRO_FEATURES = [
-  { kind: 'plan', label: 'Personalized daily growth plan' },
-  { kind: 'workout', label: '200+ stretches & exercises' },
-  { kind: 'food', label: 'Nutrition & sleep optimization' },
-  { kind: 'spark', label: 'Reminders & progress tracking' },
+  { kind: 'plan', label: 'Science-backed growth plan' },
+  { kind: 'workout', label: 'Daily mobility tasks' },
+  { kind: 'ai', label: 'Nutrition coach (AI)' },
+  { kind: 'body', label: 'Personalized exercises' },
+  { kind: 'scan', label: 'AI-powered food scanner' },
+  { kind: 'community', label: 'Member community' },
 ]
 
 export default function Onboarding17({

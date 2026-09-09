@@ -369,11 +369,13 @@ export default function PeakHeightPaywall({
             {showCompare ? (
               <div className="mt-4 space-y-2 rounded-2xl bg-white/5 p-3 font-manrope text-[12px] text-white/75">
                 <p>
-                  <span className="font-semibold text-white">Basic:</span> assessment snapshot
+                  <span className="font-semibold text-white">Basic:</span> height tracking, daily
+                  tips, simple progress charts
                 </p>
                 <p>
-                  <span className="font-semibold text-white">Pro:</span> personalized plan,
-                  exercises, nutrition, sleep, tracking
+                  <span className="font-semibold text-white">Pro:</span> science-backed growth
+                  plan, daily mobility, AI nutrition coach, personalized exercises, food scanner,
+                  member community
                 </p>
               </div>
             ) : null}

@@ -1,9 +1,11 @@
 'use client'
 
-import { AuthProvider } from '@/contexts/AuthContext'
 import type { ReactNode } from 'react'
 
-/** Shared layout wrapper for routes that need Supabase auth. */
+/**
+ * Route-group layout for authenticated app areas.
+ * AuthProvider lives in root Providers so navigating /auth → /paywall keeps session.
+ */
 export default function AppAuthLayout({ children }: { children: ReactNode }) {
-  return <AuthProvider>{children}</AuthProvider>
+  return <>{children}</>
 }

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Playfair_Display } from 'next/font/google'
+import Providers from '@/components/Providers'
 import './globals.css'
 
 const playfair = Playfair_Display({
@@ -117,7 +118,7 @@ export default function RootLayout({
             <a href="/" style={{ color: '#18181b', textDecoration: 'underline' }}>Reload page</a>
           </div>
         </noscript>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )

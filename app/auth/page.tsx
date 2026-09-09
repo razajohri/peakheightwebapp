@@ -4,6 +4,7 @@ import { Suspense, useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
+import { supabase } from '@/lib/supabase/client'
 
 function AuthShell({ children }: { children: React.ReactNode }) {
   return (
@@ -91,7 +92,7 @@ function AuthPageContent() {
         setEmailStep('code')
         setCode('')
         setResendIn(30)
-        setInfo(`We sent a 6-digit code to ${email.trim().toLowerCase()}`)
+        setInfo(`We sent a verification email to ${email.trim().toLowerCase()}`)
       }
     } catch {
       setError('Something went wrong. Please try again.')
@@ -125,7 +126,17 @@ function AuthPageContent() {
         } catch {
           /* ignore */
         }
-        router.replace(redirectTo)
+        // Only leave auth once we know a session exists
+        if (result.session || result.user) {
+          router.replace(redirectTo)
+        } else {
+          const { data } = await supabase.auth.getSession()
+          if (data.session) {
+            router.replace(redirectTo)
+          } else {
+            setError('Signed in, but session did not save. Please try again.')
+          }
+        }
       }
     } catch {
       setError('Something went wrong. Please try again.')
@@ -194,12 +205,12 @@ function AuthPageContent() {
         </div>
 
         <h1 className="font-manrope text-[26px] font-bold tracking-tight text-[#18181b]">
-          {emailStep === 'code' ? 'Enter your code' : 'Sign up for PeakHeight'}
+          {emailStep === 'code' ? 'Verify your email' : 'Sign up for PeakHeight'}
         </h1>
         <p className="mt-2 font-manrope text-[14px] text-[#a1a1aa]">
           {emailStep === 'code'
-            ? `Check ${email.trim().toLowerCase()} for a 6-digit code`
-            : 'Enter your email and we’ll send a 6-digit code'}
+            ? `Enter the code we sent to ${email.trim().toLowerCase()}`
+            : 'Enter your email and we’ll verify your email'}
         </p>
       </div>
 
@@ -219,13 +230,13 @@ function AuthPageContent() {
         <form onSubmit={handleSendCode} className="space-y-3">
           <div>
             <label className="mb-1.5 block font-manrope text-[12px] font-medium text-[#a1a1aa]">
-              Name <span className="font-normal">(optional)</span>
+              Full Name
             </label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
+              placeholder="Full name"
               className="h-[48px] w-full rounded-xl border border-zinc-200 bg-white px-4 font-manrope text-[15px] text-[#18181b] placeholder:text-zinc-300 focus:border-[#18181b] focus:outline-none"
             />
           </div>
@@ -253,7 +264,7 @@ function AuthPageContent() {
             {isLoading ? (
               <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-500 border-t-white" />
             ) : (
-              'Send 6-digit code →'
+              'Continue →'
             )}
           </button>
         </form>
@@ -261,7 +272,7 @@ function AuthPageContent() {
         <form onSubmit={handleVerifyCode} className="space-y-3">
           <div>
             <label className="mb-1.5 block font-manrope text-[12px] font-medium text-[#a1a1aa]">
-              6-digit code
+              Verification code
             </label>
             <input
               ref={codeInputRef}

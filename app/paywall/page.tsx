@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
+import { supabase } from '@/lib/supabase/client'
 import PeakHeightPaywall from '@/components/paywall/PeakHeightPaywall'
 import {
   initializeRevenueCat,
@@ -20,6 +21,7 @@ export default function PaywallPage() {
   const [status, setStatus] = useState<'loading' | 'paywall' | 'error'>('loading')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const onboardingSaveAttempted = useRef(false)
+  const redirectedToAuth = useRef(false)
 
   // Save onboarding data from localStorage to DB when user lands from onboarding+auth (same as mobile)
   useEffect(() => {
@@ -50,19 +52,31 @@ export default function PaywallPage() {
 
     let cancelled = false
 
-    // Give session a short moment to hydrate after OTP before bouncing to auth
-    if (!user) {
-      const t = setTimeout(() => {
-        if (cancelled) return
-        router.replace('/auth?redirect=/paywall&from=onboarding')
-      }, 800)
-      return () => {
-        cancelled = true
-        clearTimeout(t)
+    const resolveUserId = async (): Promise<string | null> => {
+      if (user?.id) return user.id
+
+      // Context can lag behind verifyOtp — read session from Supabase storage
+      for (let attempt = 0; attempt < 8; attempt++) {
+        if (cancelled) return null
+        const { data } = await supabase.auth.getSession()
+        if (data.session?.user?.id) return data.session.user.id
+        await new Promise((r) => setTimeout(r, 250))
       }
+      return null
     }
 
     const loadPaywall = async () => {
+      const userId = await resolveUserId()
+      if (cancelled) return
+
+      if (!userId) {
+        if (!redirectedToAuth.current) {
+          redirectedToAuth.current = true
+          router.replace('/auth?redirect=/paywall&from=onboarding')
+        }
+        return
+      }
+
       if (!isRevenueCatConfigured()) {
         setErrorMessage(
           'Subscription options aren’t available on this site yet. If you’re the site owner, add NEXT_PUBLIC_REVENUECAT_API_KEY in Netlify (or your host) and redeploy.'
@@ -70,8 +84,9 @@ export default function PaywallPage() {
         setStatus('error')
         return
       }
+
       try {
-        await initializeRevenueCat(user.id)
+        await initializeRevenueCat(userId)
         if (cancelled) return
         const info = await getCustomerInfo()
         if (cancelled) return

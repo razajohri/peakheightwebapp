@@ -70,7 +70,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
         setEmailStep('code')
         setCode('')
         setResendIn(30)
-        setInfo(`We sent a 6-digit code to ${email.trim().toLowerCase()}`)
+        setInfo(`We sent a verification email to ${email.trim().toLowerCase()}`)
         updateData({
           userEmail: email.trim().toLowerCase(),
           userName: name || email.split('@')[0],
@@ -127,12 +127,12 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
               className="mb-6 text-center"
             >
               <h1 className="mb-2 font-playfair text-[28px] font-normal leading-[1.2] tracking-[-0.02em] text-[#18181b]">
-                {emailStep === 'code' ? 'Enter your code' : 'Create Account'}
+                {emailStep === 'code' ? 'Verify your email' : 'Create Account'}
               </h1>
               <p className="font-manrope text-[15px] text-[#a1a1aa]">
                 {emailStep === 'code'
-                  ? `Check ${email.trim().toLowerCase()} for a 6-digit code`
-                  : 'Enter your email and we’ll send a 6-digit code'}
+                  ? `Enter the code we sent to ${email.trim().toLowerCase()}`
+                  : 'Enter your email and we’ll verify your email'}
               </p>
             </motion.div>
 
@@ -162,13 +162,13 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
               >
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium text-[#a1a1aa]">
-                    Name <span className="font-normal">(optional)</span>
+                    Full Name
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
+                    placeholder="Full name"
                     className="h-[48px] w-full rounded-xl border border-zinc-200 bg-white px-4 text-[15px] text-[#18181b] placeholder:text-zinc-300 transition-colors focus:border-[#18181b] focus:outline-none"
                   />
                 </div>
@@ -194,7 +194,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
                   {isLoading ? (
                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-300 border-t-white" />
                   ) : (
-                    'Send 6-digit code'
+                    'Continue'
                   )}
                 </button>
               </motion.form>
@@ -207,7 +207,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
               >
                 <div>
                   <label className="mb-1.5 block text-[12px] font-medium text-[#a1a1aa]">
-                    6-digit code
+                    Verification code
                   </label>
                   <input
                     ref={codeInputRef}
