@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --font-manrope: 'Manrope', ui-sans-serif, system-ui, sans-serif;
-  --font-playfair: 'Playfair Display', Georgia, serif;
-
+  /* next/font sets --font-manrope / --font-playfair on <html> — do not override here */
   --ph-bg: #ffffff;
   --ph-surface: #fafafa;
   --ph-ink: #18181b;
@@ -44,7 +42,7 @@ body {
   max-width: 100%;
   background-color: var(--ph-bg);
   color: var(--ph-ink);
-  font-family: var(--font-manrope);
+  font-family: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {

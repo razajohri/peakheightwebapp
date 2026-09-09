@@ -78,7 +78,7 @@ export default function OptionCard({
       <SelectionMark selected={selected} multi={multi} />
       {icon ? <span className="shrink-0 text-[#a1a1aa]">{icon}</span> : null}
       <span className="min-w-0 flex-1">
-        <span className="block font-manrope text-[16px] font-semibold leading-snug tracking-[-0.01em] text-[#18181b]">
+        <span className="block font-manrope text-[15px] font-medium leading-snug tracking-[-0.01em] text-[#18181b]">
           {label}
         </span>
         {description ? (
@@ -102,11 +102,13 @@ export function OptionTitle({
 }) {
   return (
     <div className={`text-center ${className}`}>
-      <h1 className="font-playfair font-medium text-[28px] sm:text-[30px] leading-[1.2] tracking-[-0.02em] text-[#18181b]">
+      <h1 className="font-playfair font-normal text-[28px] sm:text-[32px] leading-[1.15] tracking-[-0.03em] text-[#18181b]">
         {children}
       </h1>
       {subtitle ? (
-        <p className="mt-2.5 font-manrope text-[15px] leading-relaxed text-[#a1a1aa]">{subtitle}</p>
+        <p className="mt-2.5 font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em] text-[#a1a1aa]">
+          {subtitle}
+        </p>
       ) : null}
     </div>
   )

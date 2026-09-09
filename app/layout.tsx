@@ -7,7 +7,7 @@ const playfair = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
-  weight: ['400', '500'],
+  weight: ['400', '500', '600', '700'],
   style: ['normal'],
   preload: true,
   adjustFontFallback: true,
@@ -17,7 +17,7 @@ const manrope = Manrope({
   subsets: ['latin'],
   variable: '--font-manrope',
   display: 'swap',
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700'],
   preload: true,
 })
 
@@ -68,7 +68,9 @@ export default function RootLayout({
           __html: `
           *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
           html{background:#fff;color:#18181b;-webkit-text-size-adjust:100%}
-          body{min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:var(--font-manrope),Manrope,system-ui,sans-serif}
+          body{min-height:100vh;min-height:100dvh;overflow-x:hidden;font-family:var(--font-manrope),ui-sans-serif,system-ui,sans-serif}
+          .font-playfair{font-family:var(--font-playfair),Georgia,serif}
+          .font-manrope{font-family:var(--font-manrope),ui-sans-serif,system-ui,sans-serif}
           button,a,[role=button]{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           @keyframes ph-spin{to{transform:rotate(360deg)}}
           .ph-critical-spinner{animation:ph-spin .8s linear infinite}

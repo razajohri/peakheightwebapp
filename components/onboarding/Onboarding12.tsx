@@ -34,7 +34,7 @@ function YesNo({
             key={opt.label}
             type="button"
             onClick={() => onChange(opt.v)}
-            className={`flex-1 rounded-2xl py-4 font-manrope text-[15px] font-semibold transition-all ${
+            className={`flex-1 rounded-2xl py-4 font-manrope text-[15px] font-medium transition-all ${
               selected ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
             }`}
           >

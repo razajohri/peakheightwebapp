@@ -28,7 +28,7 @@ export default function OnboardingNameReveal({ name, onNext, onBack }: Onboardin
         <ProgressHeader currentStep={1} totalSteps={21} onBack={onBack} showBackButton />
 
         <div className="flex flex-1 flex-col items-center justify-center px-8 pb-16">
-          <p className="max-w-md text-center font-playfair text-[30px] font-medium leading-[1.25] tracking-[-0.02em] text-[#18181b] sm:text-[34px]">
+          <p className="max-w-md text-center font-playfair text-[30px] font-normal leading-[1.25] tracking-[-0.03em] text-[#18181b] sm:text-[34px]">
             <EncryptedText
               text={line}
               revealDelayMs={45}

@@ -84,7 +84,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
                 key={id}
                 type="button"
                 onClick={() => setMeasurementSystem(id)}
-                className={`flex-1 py-3 rounded-lg text-center font-manrope font-semibold transition-all ${
+                className={`flex-1 py-3 rounded-lg text-center font-manrope font-medium transition-all ${
                   measurementSystem === id ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
                 }`}
               >

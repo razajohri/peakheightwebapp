@@ -116,7 +116,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 text-center"
           >
-            <h1 className="mb-2 font-playfair text-[28px] font-medium leading-[1.2] tracking-[-0.02em] text-[#18181b]">
+            <h1 className="mb-2 font-playfair text-[28px] font-normal leading-[1.2] tracking-[-0.02em] text-[#18181b]">
               {mode === 'signup' ? 'Create Account' : 'Welcome Back'}
             </h1>
             <p className="font-manrope text-[15px] text-[#a1a1aa]">

@@ -50,13 +50,13 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
               />
             </div>
 
-            <h1 className="max-w-[320px] font-playfair text-[34px] font-medium leading-[1.15] tracking-[-0.03em] text-[#18181b] sm:text-[36px]">
+            <h1 className="max-w-[320px] font-playfair text-[34px] font-normal leading-[1.15] tracking-[-0.03em] text-[#18181b] sm:text-[36px]">
               Welcome to
               <br />
               PeakHeight.
             </h1>
 
-            <p className="mt-4 max-w-[280px] font-manrope text-[14px] leading-relaxed tracking-[0.01em] text-[#a1a1aa]">
+            <p className="mt-4 max-w-[280px] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em] text-[#a1a1aa]">
               The best system for unlocking your height potential.
             </p>
           </motion.div>

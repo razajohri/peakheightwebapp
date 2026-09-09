@@ -97,8 +97,8 @@ export const ONBOARDING_UI = {
   frame:
     'relative z-10 mx-auto flex w-full min-h-screen min-h-dvh flex-col bg-white md:my-5 md:min-h-[min(860px,calc(100dvh-2.5rem))] md:max-w-[400px] md:overflow-hidden md:rounded-[28px] md:border md:border-zinc-200/80 md:bg-white md:shadow-[0_28px_80px_-28px_rgba(24,24,27,0.2)]',
   title:
-    'text-[#18181b] font-playfair font-medium text-[28px] sm:text-[30px] leading-[1.2] tracking-[-0.02em]',
-  subtitle: 'text-[#a1a1aa] font-manrope text-[15px] leading-relaxed',
+    'text-[#18181b] font-playfair font-normal text-[28px] sm:text-[32px] leading-[1.15] tracking-[-0.03em]',
+  subtitle: 'text-[#a1a1aa] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em]',
   /** FaceIQ: keep white fill; select with thick ink border */
   optionSelected: 'border-2 border-[#18181b] bg-white',
   optionIdle: 'border border-zinc-200 bg-white hover:border-zinc-300',
