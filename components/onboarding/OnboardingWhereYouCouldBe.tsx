@@ -16,32 +16,28 @@ interface OnboardingWhereYouCouldBeProps {
 }
 
 /**
- * Drop your before/after images here later:
- * public/assets/results-1-before.webp
- * public/assets/results-1-after.webp
- * public/assets/results-2-before.webp
- * public/assets/results-2-after.webp
- * public/assets/results-3-before.webp
- * public/assets/results-3-after.webp
+ * Before/after images:
+ * public/assets/results-{1,2,3}-before.jpg
+ * public/assets/results-{1,2,3}-after.jpg
  */
 const RESULTS = [
   {
     id: '1',
     caption: 'Consistent habits · 4 months',
-    before: '/assets/results-1-before.webp',
-    after: '/assets/results-1-after.webp',
+    before: '/assets/results-1-before.jpg',
+    after: '/assets/results-1-after.jpg',
   },
   {
     id: '2',
     caption: 'Training + sleep · 6 months',
-    before: '/assets/results-2-before.webp',
-    after: '/assets/results-2-after.webp',
+    before: '/assets/results-2-before.jpg',
+    after: '/assets/results-2-after.jpg',
   },
   {
     id: '3',
     caption: 'Full PeakHeight plan · 8 months',
-    before: '/assets/results-3-before.webp',
-    after: '/assets/results-3-after.webp',
+    before: '/assets/results-3-before.jpg',
+    after: '/assets/results-3-after.jpg',
   },
 ]
 
