@@ -26,24 +26,23 @@ export default function OnboardingButton({
         disabled={disabled}
         className={`
           relative w-full
-          min-h-[56px] sm:min-h-[60px] md:min-h-[64px]
+          min-h-[52px] sm:min-h-[56px]
           px-6 sm:px-8
           rounded-full
-          bg-white
-          text-black
-          font-bold
+          bg-[#18181b]
+          text-white
+          font-medium
           tracking-wide
-          ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+          ${disabled ? 'opacity-45 cursor-not-allowed' : 'cursor-pointer'}
           touch-manipulation
           ${className}
         `}
       >
-        <span className="text-base sm:text-lg md:text-xl">{title}</span>
+        <span className="text-base sm:text-lg">{title}</span>
       </motion.button>
     )
   }
 
-  // Secondary variant
   return (
     <motion.button
       whileHover={disabled ? {} : { scale: 1.02 }}
@@ -52,22 +51,21 @@ export default function OnboardingButton({
       disabled={disabled}
       className={`
         w-full
-        min-h-[56px] sm:min-h-[60px] md:min-h-[64px]
+        min-h-[52px] sm:min-h-[56px]
         px-6 sm:px-8
         rounded-full
         border
-        ${disabled 
-          ? 'opacity-50 cursor-not-allowed border-white/15' 
-          : 'border-white/30 hover:border-white/60 active:border-white/80'
+        ${
+          disabled
+            ? 'opacity-45 cursor-not-allowed border-zinc-200'
+            : 'border-zinc-300 hover:border-[#18181b] active:border-[#18181b]'
         }
-        bg-transparent
+        bg-white
         transition-all touch-manipulation
         ${className}
       `}
     >
-      <span className="text-white font-semibold text-base sm:text-lg md:text-xl">
-        {title}
-      </span>
+      <span className="text-[#18181b] font-medium text-base sm:text-lg">{title}</span>
     </motion.button>
   )
 }

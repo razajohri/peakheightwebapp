@@ -32,10 +32,10 @@ export default function ProgressHeader({
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={onBack}
-            className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all touch-manipulation"
+            className="w-10 h-10 sm:w-11 sm:h-11 flex items-center justify-center rounded-full bg-white border border-zinc-200 hover:bg-zinc-50 transition-all touch-manipulation shadow-sm"
             aria-label="Go back"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-white">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-[#18181b]">
               <path
                 d="M15 18L9 12L15 6"
                 stroke="currentColor"
@@ -48,10 +48,12 @@ export default function ProgressHeader({
         )}
 
         <div className="flex-1">
-          <p className="text-white/70 text-xs sm:text-sm">Step {currentStep} of {totalSteps}</p>
-          <div className="mt-2 h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden">
+          <p className="text-[#a1a1aa] text-xs sm:text-sm">
+            Step {currentStep} of {totalSteps}
+          </p>
+          <div className="mt-2 h-1.5 sm:h-2 bg-zinc-200 rounded-full overflow-hidden">
             <motion.div
-              className="h-full bg-white rounded-full"
+              className="h-full bg-[#18181b] rounded-full"
               style={{ width: progressWidth }}
             />
           </div>

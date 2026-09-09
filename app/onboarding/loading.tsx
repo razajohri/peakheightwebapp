@@ -8,12 +8,12 @@ export default function OnboardingLoading() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000',
+        backgroundColor: '#f4f7fc',
         gap: 12,
       }}
     >
-      <span style={{ fontSize: 64, fontWeight: 700, color: '#fff' }}>3</span>
-      <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.5)' }}>Getting ready…</span>
+      <span style={{ fontSize: 64, fontWeight: 700, color: '#18181b' }}>3</span>
+      <span style={{ fontSize: 14, color: '#a1a1aa' }}>Getting ready…</span>
     </div>
   )
 }

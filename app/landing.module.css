@@ -1,6 +1,6 @@
 /* PeakHeight landing — exact FaceIQ Labs color + type tokens
    (from context.dev styleguide: faceiqlabs.com)
-   Landing only — do not reuse for onboarding until approved. */
+/* FaceIQ Labs light theme — shared with onboarding via tokens in lib/constants/onboarding.ts */
 
 .page {
   /* Exact FaceIQ Labs tokens (live CSS + brand.dev) */

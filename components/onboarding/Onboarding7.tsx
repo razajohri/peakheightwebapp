@@ -36,7 +36,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
       return (
         <>
           {parts[0]}
-          <span className="bg-white/10 px-2 py-0.5 rounded border border-white/20">
+          <span className="bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200">
             {highlight}
           </span>
           {parts[1]}
@@ -47,7 +47,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -61,7 +61,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="mb-2"
           >
-            <h1 className="text-white text-[20px] sm:text-[24px] font-bold leading-tight">
+            <h1 className="text-[#18181b] text-[20px] sm:text-[24px] font-bold leading-tight">
               Height isn't inherited, it's earned.
             </h1>
           </motion.div>
@@ -73,7 +73,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex-1 flex items-center justify-center mb-3"
           >
-            <div className="w-2/3 sm:w-3/4 max-w-xs sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 flex items-center justify-center overflow-hidden">
+            <div className="w-2/3 sm:w-3/4 max-w-xs sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-zinc-200 flex items-center justify-center overflow-hidden">
               <Image
                 src="/assets/height-diagram.webp"
                 alt="How posture, load, sleep, and nutrition affect height potential"
@@ -90,9 +90,9 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            className="relative pl-3 border-l-2 border-white/80 mb-5"
+            className="relative pl-3 border-l-2 border-[#18181b]/80 mb-5"
           >
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-zinc-600 text-sm leading-relaxed">
               {renderText()}
               {currentIndex < fullText.length && (
                 <span className="animate-pulse">|</span>

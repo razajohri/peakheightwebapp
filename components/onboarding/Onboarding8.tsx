@@ -43,7 +43,7 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -57,10 +57,10 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="text-center mb-6"
           >
-            <h1 className="text-white text-[28px] font-bold mb-2">
+            <h1 className="text-[#18181b] font-playfair font-normal text-[28px] mb-2">
               What is your foot size?
             </h1>
-            <p className="text-white/60 text-base">
+            <p className="text-[#a1a1aa] text-base">
               This helps us track your growth progress
             </p>
           </motion.div>
@@ -70,7 +70,7 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex rounded-xl border border-white/15 overflow-hidden mb-10 max-w-md mx-auto w-full"
+            className="flex rounded-xl border border-zinc-200 overflow-hidden mb-10 max-w-md mx-auto w-full"
           >
             {['us', 'eu', 'uk'].map((system) => (
               <button
@@ -78,8 +78,8 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
                 onClick={() => handleSystemChange(system)}
                 className={`flex-1 py-3 text-center font-medium transition-all uppercase ${
                   sizeSystem === system
-                    ? 'bg-white/10 text-white'
-                    : 'text-white/60'
+                    ? 'bg-[#18181b] text-white'
+                    : 'text-[#a1a1aa]'
                 }`}
               >
                 {system}
@@ -94,8 +94,8 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-10"
           >
-            <p className="text-white text-6xl font-bold">{footSize}</p>
-            <p className="text-white/50 text-sm mt-2 uppercase">{sizeSystem}</p>
+            <p className="text-[#18181b] text-6xl font-bold">{footSize}</p>
+            <p className="text-zinc-400 text-sm mt-2 uppercase">{sizeSystem}</p>
           </motion.div>
 
           {/* Slider */}
@@ -112,9 +112,9 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
               step="0.5"
               value={footSize}
               onChange={(e) => setFootSize(Number(e.target.value))}
-              className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
+              className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
             />
-            <div className="flex justify-between text-white/50 text-sm mt-2">
+            <div className="flex justify-between text-zinc-400 text-sm mt-2">
               <span>{min}</span>
               <span>{max}</span>
             </div>

@@ -64,11 +64,11 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
   }, [])
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <WavyBackground
         containerClassName="absolute inset-0 z-0 min-h-screen min-h-dvh"
         className="pointer-events-none absolute inset-0 min-h-screen min-h-dvh"
-        backgroundFill="#000000"
+        backgroundFill="#f4f7fc"
         waveOpacity={0.2}
         blur={12}
         speed="slow"
@@ -90,14 +90,14 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
               >
                 {/* Percentage */}
                 <motion.p
-                  className="text-white text-7xl font-bold text-center mb-4"
+                  className="text-[#18181b] text-7xl font-bold text-center mb-4"
                   style={{ letterSpacing: '-2px' }}
                 >
                   {Math.round(progress)}%
                 </motion.p>
 
                 {/* Title */}
-                <p className="text-white text-2xl font-semibold text-center mb-8 leading-relaxed">
+                <p className="text-[#18181b] text-2xl font-semibold text-center mb-8 leading-relaxed">
                   We're setting everything<br />up for you
                 </p>
 
@@ -110,7 +110,7 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                 </div>
 
                 {/* Current Step */}
-                <p className="text-white/50 text-center mb-10">
+                <p className="text-zinc-400 text-center mb-10">
                   {currentStep}
                 </p>
 
@@ -127,7 +127,7 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                           <span className="text-gray-800">{item}</span>
                           {isComplete && (
                             <div className="w-5 h-5 rounded-full bg-gray-800 flex items-center justify-center">
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M5 12l5 5L20 7" />
                               </svg>
                             </div>
@@ -155,12 +155,12 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                 </div>
 
                 {/* Title */}
-                <h1 className="text-white text-4xl font-black text-center mb-6">
+                <h1 className="text-[#18181b] text-4xl font-black text-center mb-6">
                   Analysis Complete!
                 </h1>
 
                 {/* Completion Card */}
-                <div className="w-full bg-[#050505] border border-white/10 rounded-2xl p-5">
+                <div className="w-full bg-[#f4f7fc] border border-zinc-200 rounded-2xl p-5">
                   {completionPoints.map((point, index) => (
                     <motion.div
                       key={point}
@@ -174,7 +174,7 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                           <path d="M5 12l5 5L20 7" />
                         </svg>
                       </div>
-                      <span className="text-white">{point}</span>
+                      <span className="text-[#18181b]">{point}</span>
                     </motion.div>
                   ))}
                 </div>

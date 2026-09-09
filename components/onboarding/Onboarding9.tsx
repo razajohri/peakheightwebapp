@@ -61,7 +61,7 @@ export default function Onboarding9({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -75,7 +75,7 @@ export default function Onboarding9({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-white text-[28px] font-bold">
+            <h1 className="text-[#18181b] font-playfair font-normal text-[28px]">
               How often do you work out?
             </h1>
           </motion.div>
@@ -94,14 +94,14 @@ export default function Onboarding9({ data, updateData, onNext, onBack }: Onboar
                     onClick={() => handleSelect(freq.id)}
                     className={`w-full flex items-center gap-4 rounded-2xl border p-5 transition-all duration-200 ${
                       isSelected
-                        ? 'border-white bg-white/10'
-                        : 'border-white/15 bg-white/5 hover:border-white/25'
+                        ? 'border-[#18181b] bg-zinc-100'
+                        : 'border-zinc-200 bg-white hover:border-zinc-300'
                     }`}
                   >
                     <div className="w-12 h-12 flex items-center justify-center">
                       <DotIcon count={freq.dots} selected={isSelected} />
                     </div>
-                    <span className={`text-lg font-medium ${isSelected ? 'text-white' : 'text-white/70'}`}>
+                    <span className={`text-lg font-medium ${isSelected ? 'text-white' : 'text-[#18181b]'}`}>
                       {freq.label}
                     </span>
                   </motion.button>
@@ -109,7 +109,7 @@ export default function Onboarding9({ data, updateData, onNext, onBack }: Onboar
               })}
             </div>
 
-            <p className="text-white/60 text-base text-center mt-8">
+            <p className="text-[#a1a1aa] text-base text-center mt-8">
               This will be used to calibrate your custom plan.
             </p>
           </div>

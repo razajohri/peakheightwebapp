@@ -37,7 +37,7 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -51,7 +51,7 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-white text-[24px] font-bold">
+            <h1 className="text-[#18181b] text-[24px] font-bold">
               Do you smoke or drink alcohol?
             </h1>
           </motion.div>
@@ -64,18 +64,18 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
               transition={{ duration: 0.4, delay: 0.1 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="2">
                   <path d="M18 12H2v4h16v-4zM22 12v4M22 10c0-1.5-1-3-3-3V4" />
                 </svg>
-                <span className="text-white font-semibold text-base">Do you smoke?</span>
+                <span className="text-[#18181b] font-semibold text-base">Do you smoke?</span>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => handleSmokingChange(true)}
                   className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
                     smokingStatus === true
-                      ? 'border-white bg-white/10 text-white'
-                      : 'border-white/15 bg-white/5 text-white/70'
+                      ? 'border-[#18181b] bg-[#18181b] text-white'
+                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
                   }`}
                 >
                   Yes
@@ -84,8 +84,8 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
                   onClick={() => handleSmokingChange(false)}
                   className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
                     smokingStatus === false
-                      ? 'border-white bg-white/10 text-white'
-                      : 'border-white/15 bg-white/5 text-white/70'
+                      ? 'border-[#18181b] bg-[#18181b] text-white'
+                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
                   }`}
                 >
                   No
@@ -100,18 +100,18 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
               transition={{ duration: 0.4, delay: 0.2 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="2">
                   <path d="M8 22h8M12 11v11M7 2h10l-3 9H10L7 2z" />
                 </svg>
-                <span className="text-white font-semibold text-base">Do you drink alcohol?</span>
+                <span className="text-[#18181b] font-semibold text-base">Do you drink alcohol?</span>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => handleDrinkingChange(true)}
                   className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
                     drinkingStatus === true
-                      ? 'border-white bg-white/10 text-white'
-                      : 'border-white/15 bg-white/5 text-white/70'
+                      ? 'border-[#18181b] bg-[#18181b] text-white'
+                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
                   }`}
                 >
                   Yes
@@ -120,8 +120,8 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
                   onClick={() => handleDrinkingChange(false)}
                   className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
                     drinkingStatus === false
-                      ? 'border-white bg-white/10 text-white'
-                      : 'border-white/15 bg-white/5 text-white/70'
+                      ? 'border-[#18181b] bg-[#18181b] text-white'
+                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
                   }`}
                 >
                   No
@@ -134,13 +134,13 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="flex gap-3 p-5 rounded-2xl bg-white/5 border border-white/10 mb-4"
+              className="flex gap-3 p-5 rounded-2xl bg-white border border-zinc-200 mb-4"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" className="flex-shrink-0 opacity-50 mt-0.5">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="1.5" className="flex-shrink-0 opacity-50 mt-0.5">
                 <circle cx="12" cy="12" r="10" />
                 <path d="M12 16v-4M12 8h.01" />
               </svg>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-[#a1a1aa] text-sm leading-relaxed">
                 {getInfoText()}
               </p>
             </motion.div>

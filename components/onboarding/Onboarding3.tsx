@@ -56,7 +56,7 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -70,10 +70,10 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-white text-[28px] font-bold mb-2">
+            <h1 className="text-[#18181b] font-playfair font-normal text-[28px] mb-2">
               How old are you?
             </h1>
-            <p className="text-white/60 text-base">
+            <p className="text-[#a1a1aa] text-base">
               Choose your date of birth
             </p>
           </motion.div>
@@ -86,10 +86,10 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
               transition={{ duration: 0.4, delay: 0.1 }}
               className="max-w-md mx-auto w-full"
             >
-              <div className="flex items-center gap-4 rounded-2xl border border-white/15 bg-white/5 p-5">
+              <div className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5">
                 {/* Calendar Icon */}
-                <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <div className="w-14 h-14 rounded-xl bg-zinc-100 flex items-center justify-center">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                     <line x1="16" y1="2" x2="16" y2="6" />
                     <line x1="8" y1="2" x2="8" y2="6" />
@@ -99,8 +99,8 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
 
                 {/* Date Display & Input */}
                 <div className="flex-1">
-                  <p className="text-white/60 text-sm mb-1">Date of Birth</p>
-                  <p className="text-white text-xl font-medium">{formatDate(date)}</p>
+                  <p className="text-[#a1a1aa] text-sm mb-1">Date of Birth</p>
+                  <p className="text-[#18181b] text-xl font-medium">{formatDate(date)}</p>
                 </div>
               </div>
 
@@ -111,14 +111,14 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
                 onChange={handleDateChange}
                 max={new Date().toISOString().split('T')[0]}
                 min="1920-01-01"
-                className="w-full mt-4 p-4 rounded-xl bg-white/5 border border-white/15 text-white text-lg appearance-none cursor-pointer [color-scheme:dark]"
+                className="w-full mt-4 p-4 rounded-xl bg-white border border-zinc-200 text-[#18181b] text-lg appearance-none cursor-pointer [color-scheme:light]"
               />
 
               {isUnder18() && (
                 <motion.p
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="text-white/50 text-sm text-center mt-4"
+                  className="text-zinc-400 text-sm text-center mt-4"
                 >
                   Parent/guardian consent required for users under 18
                 </motion.p>

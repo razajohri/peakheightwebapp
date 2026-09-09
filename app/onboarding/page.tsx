@@ -27,7 +27,7 @@ function IntroCountdown({ onComplete }: { onComplete: () => void }) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000',
+        backgroundColor: '#f4f7fc',
         gap: 8,
       }}
     >
@@ -35,7 +35,7 @@ function IntroCountdown({ onComplete }: { onComplete: () => void }) {
         style={{
           fontSize: 72,
           fontWeight: 700,
-          color: '#fff',
+          color: '#18181b',
           lineHeight: 1,
         }}
       >
@@ -54,7 +54,7 @@ function StepLoading() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#000',
+        backgroundColor: '#f4f7fc',
       }}
     >
       <div
@@ -63,8 +63,8 @@ function StepLoading() {
           width: 32,
           height: 32,
           borderRadius: '50%',
-          border: '2px solid rgba(255,255,255,0.3)',
-          borderTopColor: '#fff',
+          border: '2px solid #e5e7eb',
+          borderTopColor: '#18181b',
         }}
       />
     </div>
@@ -99,9 +99,9 @@ function OnboardingPaywallRedirect() {
     router.replace('/paywall')
   }, [router])
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4">
-      <div className="w-8 h-8 border-2 border-white/30 border-t-amber-500 rounded-full animate-spin" />
-      <p className="text-white/60 text-sm">Taking you to subscription…</p>
+    <div className="min-h-screen bg-[#f4f7fc] flex flex-col items-center justify-center gap-4">
+      <div className="w-8 h-8 border-2 border-zinc-200 border-t-[#18181b] rounded-full animate-spin" />
+      <p className="text-[#a1a1aa] text-sm">Taking you to subscription…</p>
     </div>
   )
 }
@@ -233,7 +233,7 @@ export default function OnboardingPage() {
   return (
     <div
       className="min-h-screen min-h-dvh bg-black"
-      style={{ minHeight: '100vh', backgroundColor: '#000' }}
+      style={{ minHeight: '100vh', backgroundColor: '#f4f7fc' }}
     >
       <OnboardingProvider>
         <OnboardingFlow />

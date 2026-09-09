@@ -47,7 +47,7 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -60,10 +60,10 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-white text-[30px] font-extrabold mb-2">
+            <h1 className="text-[#18181b] text-[30px] font-extrabold mb-2">
               Leave a Rating
             </h1>
-            <p className="text-white/60 text-base">
+            <p className="text-[#a1a1aa] text-base">
               This helps us bring you more of what you love
             </p>
           </motion.div>
@@ -76,7 +76,7 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="rounded-3xl bg-[#050505] border border-white/10 p-6"
+                className="rounded-3xl bg-[#f4f7fc] border border-zinc-200 p-6"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
@@ -88,8 +88,8 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
                       />
                     </div>
                     <div>
-                      <p className="text-white font-semibold text-sm">{review.name}</p>
-                      <p className="text-white/50 text-sm">{review.handle}</p>
+                      <p className="text-[#18181b] font-semibold text-sm">{review.name}</p>
+                      <p className="text-zinc-400 text-sm">{review.handle}</p>
                     </div>
                   </div>
                   <div className="flex gap-0.5">
@@ -100,7 +100,7 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
                     ))}
                   </div>
                 </div>
-                <p className="text-white/80 text-base italic">"{review.text}"</p>
+                <p className="text-zinc-600 text-base italic">"{review.text}"</p>
               </motion.div>
             ))}
           </div>
@@ -119,17 +119,17 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181b]/40 p-6"
             onClick={() => setShowRatingModal(false)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-black rounded-2xl border border-white/15 p-6 w-full max-w-xs"
+              className="bg-[#f4f7fc] rounded-2xl border border-zinc-200 p-6 w-full max-w-xs"
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-white text-lg font-semibold text-center mb-6">
+              <h3 className="text-[#18181b] text-lg font-semibold text-center mb-6">
                 How would you rate PeakHeight?
               </h3>
               
@@ -157,7 +157,7 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
               <div className="flex gap-3">
                 <button
                   onClick={() => setShowRatingModal(false)}
-                  className="flex-1 py-3 text-white/50 text-sm"
+                  className="flex-1 py-3 text-zinc-400 text-sm"
                 >
                   Later
                 </button>
@@ -166,8 +166,8 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
                   disabled={selectedRating === 0}
                   className={`flex-1 py-3 rounded-xl font-medium ${
                     selectedRating > 0
-                      ? 'bg-white text-black'
-                      : 'bg-white/20 text-white/50'
+                      ? 'bg-[#18181b] text-white'
+                      : 'bg-white/20 text-zinc-400'
                   }`}
                 >
                   Submit

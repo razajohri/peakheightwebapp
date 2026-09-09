@@ -80,7 +80,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
 
   return (
     <div 
-      className="fixed inset-0 bg-gradient-to-b from-[#0A0A0A] via-[#1a1a2e] to-[#0A0A0A] flex flex-col"
+      className="fixed inset-0 bg-gradient-to-b from-[#f4f7fc] via-[#edf3fb] to-[#dde7f4] flex flex-col"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       {/* Confetti Effect */}
@@ -122,7 +122,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           transition={{ type: 'spring', duration: 0.6 }}
           className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mb-6 shadow-[0_8px_30px_rgba(34,197,94,0.4)]"
         >
-          <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          <svg className="w-12 h-12 text-[#18181b]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </motion.div>
@@ -131,7 +131,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="text-white text-[28px] font-bold text-center mb-3"
+          className="text-[#18181b] font-playfair font-normal text-[28px] text-center mb-3"
         >
           You're All Set!
         </motion.h1>
@@ -140,7 +140,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-white/60 text-[15px] text-center max-w-[300px] mb-8"
+          className="text-[#a1a1aa] text-[15px] text-center max-w-[300px] mb-8"
         >
           {authLoading
             ? 'Checking sign-in...'
@@ -158,7 +158,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
             animate={{ opacity: 1 }}
             className="mb-6"
           >
-            <div className="w-6 h-6 border-2 border-white/30 border-t-amber-500 rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-zinc-300 border-t-[#18181b] rounded-full animate-spin" />
           </motion.div>
         )}
 
@@ -169,13 +169,13 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
             animate={{ opacity: 1, y: 0 }}
             className="w-full max-w-[320px] flex flex-col gap-3 mb-4"
           >
-            <p className="text-white/50 text-[13px] text-center">
+            <p className="text-zinc-400 text-[13px] text-center">
               Sign in to save your plan to your account and use it on the app.
             </p>
             <button
               type="button"
               onClick={() => router.push('/auth')}
-              className="w-full h-[54px] rounded-2xl bg-white text-black font-bold text-[16px] active:scale-[0.98] transition-transform"
+              className="w-full h-[54px] rounded-full bg-[#18181b] text-white font-medium text-[16px] active:scale-[0.98] transition-transform"
             >
               Sign in
             </button>
@@ -187,7 +187,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-amber-300 text-sm mb-4 text-center max-w-[300px]"
+            className="text-[#a1a1aa] text-sm mb-4 text-center max-w-[300px]"
           >
             {saveError}
           </motion.p>
@@ -200,7 +200,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           transition={{ delay: 0.4 }}
           onClick={goToDashboard}
           disabled={authLoading || isSaving}
-          className="w-full max-w-[320px] h-[54px] rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[16px] flex items-center justify-center shadow-[0_8px_30px_rgba(245,158,11,0.3)] active:scale-[0.98] transition-transform disabled:opacity-50 mb-6"
+          className="w-full max-w-[320px] h-[54px] rounded-full bg-[#18181b] text-white font-medium text-[16px] flex items-center justify-center active:scale-[0.98] transition-transform disabled:opacity-45 mb-6"
         >
           {authLoading ? 'Please wait...' : isSaving ? 'Please wait...' : 'Go to Dashboard'}
         </motion.button>
@@ -210,9 +210,9 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="w-full max-w-[320px] bg-white/5 border border-white/10 rounded-2xl p-5"
+          className="w-full max-w-[320px] bg-white border border-zinc-200 rounded-2xl p-5"
         >
-          <p className="text-white/40 text-[11px] font-semibold tracking-wider text-center mb-4">
+          <p className="text-zinc-400 text-[11px] font-semibold tracking-wider text-center mb-4">
             OR DOWNLOAD THE APP NOW
           </p>
 
@@ -224,8 +224,8 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
               rel="noopener noreferrer"
               className="flex items-center gap-4 bg-white rounded-xl p-3 active:scale-[0.98] transition-transform"
             >
-              <div className="w-12 h-12 bg-black rounded-xl flex items-center justify-center">
-                <svg className="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <div className="w-12 h-12 bg-[#f4f7fc] rounded-xl flex items-center justify-center">
+                <svg className="w-7 h-7 text-[#18181b]" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
                 </svg>
               </div>
@@ -243,9 +243,9 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
               href="https://play.google.com/store/apps/details?id=com.peakheight.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-4 bg-white/10 border border-white/10 rounded-xl p-3 active:scale-[0.98] transition-transform"
+              className="flex items-center gap-4 bg-zinc-100 border border-zinc-200 rounded-xl p-3 active:scale-[0.98] transition-transform"
             >
-              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-zinc-100 rounded-xl flex items-center justify-center">
                 <svg className="w-6 h-6" viewBox="0 0 24 24">
                   <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
                   <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -254,10 +254,10 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
                 </svg>
               </div>
               <div className="flex-1">
-                <p className="text-white/50 text-[11px]">Get it on</p>
-                <p className="text-white font-bold text-[16px]">Google Play</p>
+                <p className="text-zinc-400 text-[11px]">Get it on</p>
+                <p className="text-[#18181b] font-semibold text-[16px]">Google Play</p>
               </div>
-              <svg className="w-5 h-5 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg className="w-5 h-5 text-zinc-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </a>
@@ -269,7 +269,7 @@ export default function OnboardingComplete({ data }: OnboardingCompleteProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-white/40 text-[12px] text-center mt-6 max-w-[280px]"
+          className="text-zinc-400 text-[12px] text-center mt-6 max-w-[280px]"
         >
           Sign in with {user?.email || 'the same account'} in the app to access your personalized plan
         </motion.p>

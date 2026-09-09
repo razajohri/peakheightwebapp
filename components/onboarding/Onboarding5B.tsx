@@ -54,7 +54,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -68,7 +68,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-white text-[28px] font-bold">
+            <h1 className="text-[#18181b] font-playfair font-normal text-[28px]">
               What's your Dream Height?
             </h1>
           </motion.div>
@@ -84,8 +84,8 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
               onClick={() => setMeasurementSystem('imperial')}
               className={`flex-1 py-3 rounded-lg text-center font-semibold transition-all ${
                 measurementSystem === 'imperial'
-                  ? 'bg-white text-black'
-                  : 'bg-white/10 text-white/60'
+                  ? 'bg-[#18181b] text-white'
+                  : 'bg-zinc-100 text-[#a1a1aa]'
               }`}
             >
               ft/in
@@ -94,8 +94,8 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
               onClick={() => setMeasurementSystem('metric')}
               className={`flex-1 py-3 rounded-lg text-center font-semibold transition-all ${
                 measurementSystem === 'metric'
-                  ? 'bg-white text-black'
-                  : 'bg-white/10 text-white/60'
+                  ? 'bg-[#18181b] text-white'
+                  : 'bg-zinc-100 text-[#a1a1aa]'
               }`}
             >
               cm
@@ -109,8 +109,8 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-10"
           >
-            <p className="text-white/60 text-base mb-2">Dream Height</p>
-            <p className="text-white text-5xl font-bold">{displayHeight()}</p>
+            <p className="text-[#a1a1aa] text-base mb-2">Dream Height</p>
+            <p className="text-[#18181b] text-5xl font-bold">{displayHeight()}</p>
           </motion.div>
 
           {/* Slider */}
@@ -124,7 +124,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
               <div className="space-y-6">
                 {/* Feet Slider */}
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Feet</span>
                     <span>{dreamFeet} ft</span>
                   </div>
@@ -135,13 +135,13 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
                     step="1"
                     value={dreamFeet}
                     onChange={(e) => setDreamFeet(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
                   />
                 </div>
                 
                 {/* Inches Slider */}
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Inches</span>
                     <span>{dreamInches} in</span>
                   </div>
@@ -152,13 +152,13 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
                     step="1"
                     value={dreamInches}
                     onChange={(e) => setDreamInches(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
                   />
                 </div>
               </div>
             ) : (
               <div>
-                <div className="flex justify-between text-white/60 text-sm mb-2">
+                <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                   <span>Centimeters</span>
                   <span>{dreamCm} cm</span>
                 </div>
@@ -169,12 +169,12 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
                   step="1"
                   value={dreamCm}
                   onChange={(e) => setDreamCm(Number(e.target.value))}
-                  className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
+                  className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
                 />
               </div>
             )}
 
-            <p className="text-white/50 text-sm text-center mt-8">
+            <p className="text-zinc-400 text-sm text-center mt-8">
               This will be used to create your personal plan
             </p>
           </motion.div>

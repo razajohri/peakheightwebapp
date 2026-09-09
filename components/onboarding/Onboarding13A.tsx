@@ -27,7 +27,7 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
     ? formatHeight(targetHeightValue)
     : 'Not set'
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -39,10 +39,10 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="rounded-3xl bg-[#050505] border border-white/10 p-6 shadow-[0_0_30px_rgba(0,255,198,0.15)]"
+            className="rounded-3xl bg-[#f4f7fc] border border-zinc-200 p-6 shadow-[0_0_30px_rgba(0,255,198,0.15)]"
           >
             {/* Title */}
-            <h1 className="text-white text-3xl font-bold text-center mb-6 leading-tight" style={{ textShadow: '0 0 20px rgba(0, 255, 198, 0.5)' }}>
+            <h1 className="text-[#18181b] font-playfair font-normal text-3xl text-center mb-6 leading-tight" style={{}}>
               How tall will you actually grow?
             </h1>
 
@@ -86,8 +86,8 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
                 />
 
                 {/* Height gain indicator */}
-                <line x1="280" y1="25" x2="280" y2="128" stroke="#00FFC6" strokeWidth="1.5" strokeDasharray="4 4" />
-                <text x="290" y="80" fill="#00FFC6" fontSize="14" fontWeight="bold">+4"</text>
+                <line x1="280" y1="25" x2="280" y2="128" stroke="#18181b" strokeWidth="1.5" strokeDasharray="4 4" />
+                <text x="290" y="80" fill="#18181b" fontSize="14" fontWeight="bold">+4"</text>
 
                 <defs>
                   <linearGradient id="badGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -95,7 +95,7 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
                     <stop offset="100%" stopColor="#FF8A00" />
                   </linearGradient>
                   <linearGradient id="goodGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#00FFC6" />
+                    <stop offset="0%" stopColor="#18181b" />
                     <stop offset="100%" stopColor="#00A0FF" />
                   </linearGradient>
                 </defs>
@@ -106,11 +106,11 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
             <div className="flex justify-between px-2">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#FF2D55]" />
-                <span className="text-white text-sm">Without optimization</span>
+                <span className="text-[#18181b] text-sm">Without optimization</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#00FFC6]" />
-                <span className="text-white text-sm">With Peak Habits</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#18181b]" />
+                <span className="text-[#18181b] text-sm">With Peak Habits</span>
               </div>
             </div>
           </motion.div>
@@ -124,16 +124,16 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
           >
             <div className="flex justify-around mb-5">
               <div className="text-center">
-                <p className="text-[#00FFC6] text-2xl font-bold">4.8</p>
-                <p className="text-white/50 text-sm">Average Rating</p>
+                <p className="text-[#18181b] text-2xl font-bold">4.8</p>
+                <p className="text-zinc-400 text-sm">Average Rating</p>
               </div>
               <div className="text-center">
-                <p className="text-[#00FFC6] text-2xl font-bold">{targetHeightFormatted}</p>
-                <p className="text-white/50 text-sm">Your target height</p>
+                <p className="text-[#18181b] text-2xl font-bold">{targetHeightFormatted}</p>
+                <p className="text-zinc-400 text-sm">Your target height</p>
               </div>
             </div>
             
-            <p className="text-white text-center text-base leading-relaxed">
+            <p className="text-[#18181b] text-center text-base leading-relaxed">
               See how dialing in your daily habits can move you closer to your true height potential.
             </p>
           </motion.div>

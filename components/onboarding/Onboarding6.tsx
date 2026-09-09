@@ -70,7 +70,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -84,7 +84,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="text-center mb-4"
           >
-            <h1 className="text-white text-[24px] font-bold">
+            <h1 className="text-[#18181b] text-[24px] font-bold">
               How tall are your parents?
             </h1>
           </motion.div>
@@ -94,14 +94,14 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex rounded-xl border border-white/15 overflow-hidden mb-6 max-w-md mx-auto w-full"
+            className="flex rounded-xl border border-zinc-200 overflow-hidden mb-6 max-w-md mx-auto w-full"
           >
             <button
               onClick={() => setMeasurementSystem('imperial')}
               className={`flex-1 py-3 text-center font-medium transition-all ${
                 measurementSystem === 'imperial'
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/60'
+                  ? 'bg-zinc-100 text-[#18181b]'
+                  : 'text-[#a1a1aa]'
               }`}
             >
               Imperial
@@ -110,8 +110,8 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               onClick={() => setMeasurementSystem('metric')}
               className={`flex-1 py-3 text-center font-medium transition-all ${
                 measurementSystem === 'metric'
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/60'
+                  ? 'bg-zinc-100 text-[#18181b]'
+                  : 'text-[#a1a1aa]'
               }`}
             >
               Metric
@@ -125,12 +125,12 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
             >
-              <h2 className="text-white text-lg font-bold mb-4">Father's height</h2>
+              <h2 className="text-[#18181b] text-lg font-bold mb-4">Father's height</h2>
               
               {measurementSystem === 'imperial' ? (
                 <div className="space-y-3">
                   <div>
-                    <div className="flex justify-between text-white/60 text-sm mb-2">
+                    <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Feet</span>
                       <span>{fatherFeet} ft</span>
                     </div>
@@ -141,11 +141,11 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
                       step="1"
                       value={fatherFeet}
                       onChange={(e) => setFatherFeet(Number(e.target.value))}
-                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                      className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                     />
                   </div>
                   <div>
-                    <div className="flex justify-between text-white/60 text-sm mb-2">
+                    <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Inches</span>
                       <span>{fatherInches} in</span>
                     </div>
@@ -156,13 +156,13 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
                       step="1"
                       value={fatherInches}
                       onChange={(e) => setFatherInches(Number(e.target.value))}
-                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                      className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                     />
                   </div>
                 </div>
               ) : (
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Centimeters</span>
                     <span>{fatherCm} cm</span>
                   </div>
@@ -173,7 +173,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
                     step="1"
                     value={fatherCm}
                     onChange={(e) => setFatherCm(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                   />
                 </div>
               )}
@@ -185,12 +185,12 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
             >
-              <h2 className="text-white text-lg font-bold mb-4">Mother's height</h2>
+              <h2 className="text-[#18181b] text-lg font-bold mb-4">Mother's height</h2>
               
               {measurementSystem === 'imperial' ? (
                 <div className="space-y-3">
                   <div>
-                    <div className="flex justify-between text-white/60 text-sm mb-2">
+                    <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Feet</span>
                       <span>{motherFeet} ft</span>
                     </div>
@@ -201,11 +201,11 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
                       step="1"
                       value={motherFeet}
                       onChange={(e) => setMotherFeet(Number(e.target.value))}
-                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                      className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                     />
                   </div>
                   <div>
-                    <div className="flex justify-between text-white/60 text-sm mb-2">
+                    <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Inches</span>
                       <span>{motherInches} in</span>
                     </div>
@@ -216,13 +216,13 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
                       step="1"
                       value={motherInches}
                       onChange={(e) => setMotherInches(Number(e.target.value))}
-                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                      className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                     />
                   </div>
                 </div>
               ) : (
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Centimeters</span>
                     <span>{motherCm} cm</span>
                   </div>
@@ -233,7 +233,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
                     step="1"
                     value={motherCm}
                     onChange={(e) => setMotherCm(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                   />
                 </div>
               )}
@@ -245,7 +245,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               animate={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.4 }}
               onClick={handleSkip}
-              className="text-white/50 text-base py-2 mx-auto block"
+              className="text-zinc-400 text-base py-2 mx-auto block"
             >
               I don't know
             </motion.button>
@@ -265,7 +265,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-6"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#18181b]/70 p-6"
             onClick={() => setShowInfoModal(false)}
           >
             <motion.div
@@ -276,8 +276,8 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               className="bg-gradient-to-br from-white to-gray-100 rounded-3xl p-8 max-w-sm w-full text-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center mx-auto mb-6">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
+              <div className="w-20 h-20 rounded-full bg-[#f4f7fc] flex items-center justify-center mx-auto mb-6">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="1.5">
                   <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
                   <circle cx="9" cy="7" r="4" />
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
@@ -295,7 +295,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
               
               <button
                 onClick={() => setShowInfoModal(false)}
-                className="w-full bg-black text-white font-semibold py-4 rounded-xl"
+                className="w-full bg-[#18181b] text-white font-medium py-4 rounded-full"
               >
                 Got it
               </button>

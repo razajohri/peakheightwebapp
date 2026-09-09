@@ -88,25 +88,25 @@ export default function PaywallPage() {
 
   if (loading || status === 'loading') {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6">
-        <div className="w-10 h-10 border-2 border-white/30 border-t-amber-500 rounded-full animate-spin" />
-        <p className="text-white/60 text-sm mt-4">Loading subscription options…</p>
+      <div className="min-h-screen bg-[#f4f7fc] flex flex-col items-center justify-center px-6">
+        <div className="w-10 h-10 border-2 border-zinc-200 border-t-[#18181b] rounded-full animate-spin" />
+        <p className="text-[#a1a1aa] text-sm mt-4">Loading subscription options…</p>
       </div>
     )
   }
 
   if (status === 'error') {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6">
-        <p className="text-amber-200 text-center mb-2 max-w-md">
+      <div className="min-h-screen bg-[#f4f7fc] flex flex-col items-center justify-center px-6">
+        <p className="text-[#18181b] text-center mb-2 max-w-md font-medium">
           Subscription isn’t available on this site yet.
         </p>
-        <p className="text-white/50 text-center text-sm mb-6 max-w-md">
+        <p className="text-[#a1a1aa] text-center text-sm mb-6 max-w-md">
           {errorMessage}
         </p>
         <Link
           href="/dashboard"
-          className="px-6 py-3 rounded-xl bg-white text-black font-semibold"
+          className="px-6 py-3 rounded-full bg-[#18181b] text-white font-medium"
         >
           Go to Dashboard
         </Link>
@@ -116,7 +116,7 @@ export default function PaywallPage() {
 
   // When status === 'paywall', immediately show the hosted paywall (no intermediate screen)
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center px-6">
+    <div className="min-h-screen bg-[#f4f7fc] flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-md">
         <RevenueCatPaywall
           onPurchaseSuccess={handlePurchaseSuccess}

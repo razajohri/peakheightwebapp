@@ -104,14 +104,14 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
 
   return (
     <div 
-      className="fixed inset-0 bg-gradient-to-b from-[#0A0A0A] via-[#1a1a2e] to-[#0A0A0A] flex flex-col"
+      className="fixed inset-0 bg-gradient-to-b from-[#f4f7fc] via-[#edf3fb] to-[#dde7f4] flex flex-col"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
       {/* Back Button */}
       <div className="flex-shrink-0 px-4 pt-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-white/60 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-[#a1a1aa] hover:text-[#18181b] transition-colors"
         >
           <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
@@ -130,13 +130,13 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-6"
           >
-            <h1 className="text-white text-[26px] font-bold mb-2">
+            <h1 className="text-[#18181b] font-playfair font-normal text-[26px] mb-2">
               {mode === 'signup' ? 'Create Account' : 'Welcome Back'}
             </h1>
-            <p className="text-white/60 text-[14px]">
+            <p className="text-[#a1a1aa] text-[14px]">
               {mode === 'signup' 
                 ? 'Sign up to save your progress' 
-                : 'Sign in to continue your journey'}
+                : 'Sign in to continue your program'}
             </p>
           </motion.div>
 
@@ -169,10 +169,10 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             <button
               onClick={handleGoogleSignIn}
               disabled={isLoading || loadingProvider !== null}
-              className="w-full h-[52px] bg-white/10 border border-white/20 rounded-xl flex items-center justify-center gap-3 font-semibold text-[15px] text-white active:scale-[0.98] transition-transform disabled:opacity-50"
+              className="w-full h-[52px] bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center gap-3 font-semibold text-[15px] text-[#18181b] active:scale-[0.98] transition-transform disabled:opacity-50"
             >
               {loadingProvider === 'google' ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-zinc-300 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
                   <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -194,9 +194,9 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             transition={{ delay: 0.2 }}
             className="flex items-center gap-4 mb-6"
           >
-            <div className="flex-1 h-px bg-white/10" />
-            <span className="text-white/40 text-[12px]">or</span>
-            <div className="flex-1 h-px bg-white/10" />
+            <div className="flex-1 h-px bg-zinc-100" />
+            <span className="text-zinc-400 text-[12px]">or</span>
+            <div className="flex-1 h-px bg-zinc-100" />
           </motion.div>
 
           {/* Email Form */}
@@ -209,31 +209,31 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
           >
             {mode === 'signup' && (
               <div>
-                <label className="text-white/60 text-[12px] font-medium mb-1.5 block">Name</label>
+                <label className="text-[#a1a1aa] text-[12px] font-medium mb-1.5 block">Name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your name"
-                  className="w-full h-[48px] bg-white/5 border border-white/10 rounded-xl px-4 text-white text-[15px] placeholder:text-white/30 focus:outline-none focus:border-amber-500/50 transition-colors"
+                  className="w-full h-[48px] bg-white border border-zinc-200 rounded-xl px-4 text-[#18181b] text-[15px] placeholder:text-zinc-300 focus:outline-none focus:border-[#18181b] transition-colors"
                 />
               </div>
             )}
 
             <div>
-              <label className="text-white/60 text-[12px] font-medium mb-1.5 block">Email</label>
+              <label className="text-[#a1a1aa] text-[12px] font-medium mb-1.5 block">Email</label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="w-full h-[48px] bg-white/5 border border-white/10 rounded-xl px-4 text-white text-[15px] placeholder:text-white/30 focus:outline-none focus:border-amber-500/50 transition-colors"
+                className="w-full h-[48px] bg-white border border-zinc-200 rounded-xl px-4 text-[#18181b] text-[15px] placeholder:text-zinc-300 focus:outline-none focus:border-[#18181b] transition-colors"
               />
             </div>
 
             <div>
-              <label className="text-white/60 text-[12px] font-medium mb-1.5 block">Password</label>
+              <label className="text-[#a1a1aa] text-[12px] font-medium mb-1.5 block">Password</label>
               <input
                 type="password"
                 value={password}
@@ -241,7 +241,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
                 placeholder="••••••••"
                 required
                 minLength={6}
-                className="w-full h-[48px] bg-white/5 border border-white/10 rounded-xl px-4 text-white text-[15px] placeholder:text-white/30 focus:outline-none focus:border-amber-500/50 transition-colors"
+                className="w-full h-[48px] bg-white border border-zinc-200 rounded-xl px-4 text-[#18181b] text-[15px] placeholder:text-zinc-300 focus:outline-none focus:border-[#18181b] transition-colors"
               />
             </div>
 
@@ -258,10 +258,10 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             <button
               type="submit"
               disabled={isLoading || loadingProvider !== null || !email || !password}
-              className="w-full h-[52px] rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-[15px] flex items-center justify-center shadow-[0_8px_30px_rgba(245,158,11,0.3)] active:scale-[0.98] transition-transform disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-[52px] rounded-full bg-[#18181b] text-white font-medium text-[15px] flex items-center justify-center active:scale-[0.98] transition-transform disabled:opacity-45 disabled:cursor-not-allowed"
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-zinc-300 border-t-white rounded-full animate-spin" />
               ) : (
                 mode === 'signup' ? 'Create Account' : 'Sign In'
               )}
@@ -275,7 +275,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             transition={{ delay: 0.3 }}
             className="text-center mt-6 text-[14px]"
           >
-            <span className="text-white/50">
+            <span className="text-zinc-400">
               {mode === 'signup' ? 'Already have an account?' : "Don't have an account?"}
             </span>
             {' '}
@@ -284,7 +284,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
                 setMode(mode === 'signup' ? 'signin' : 'signup')
                 setError('')
               }}
-              className="text-amber-400 font-semibold"
+              className="text-[#18181b] font-semibold underline"
             >
               {mode === 'signup' ? 'Sign In' : 'Sign Up'}
             </button>
@@ -295,12 +295,12 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.35 }}
-            className="text-center mt-4 text-[11px] text-white/30 leading-relaxed"
+            className="text-center mt-4 text-[11px] text-zinc-300 leading-relaxed"
           >
             By continuing, you agree to our{' '}
-            <a href="/terms" className="text-white/50 underline">Terms of Service</a>
+            <a href="/terms" className="text-zinc-400 underline">Terms of Service</a>
             {' '}and{' '}
-            <a href="/privacy" className="text-white/50 underline">Privacy Policy</a>
+            <a href="/privacy" className="text-zinc-400 underline">Privacy Policy</a>
           </motion.p>
 
         </div>

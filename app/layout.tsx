@@ -76,9 +76,9 @@ export default function RootLayout({
           .flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}
           .items-center{align-items:center}.justify-center{justify-content:center}
           .justify-between{justify-content:space-between}
-          .bg-black{background:#000}.text-white{color:#fff}.bg-white{background:#fff}.text-black{color:#000}
-          .text-white\\/60{color:rgba(255,255,255,.6)}
-          .text-white\\/70{color:rgba(255,255,255,.7)}
+          .bg-black{background:#f4f7fc}.text-white{color:#fff}.bg-white{background:#fff}.text-black{color:#18181b}
+          .text-white\\/60{color:#a1a1aa}
+          .text-white\\/70{color:#a1a1aa}
           .relative{position:relative}.overflow-hidden{overflow:hidden}
           .fixed{position:fixed}.absolute{position:absolute}
           .inset-0{top:0;right:0;bottom:0;left:0}
@@ -99,10 +99,10 @@ export default function RootLayout({
           .w-full{width:100%}.max-w-md{max-width:28rem}.mx-auto{margin-left:auto;margin-right:auto}
           .rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}
           .border{border-width:1px}
-          .border-white\\/10,.border-white\\/15{border-color:rgba(255,255,255,.15)}
-          .border-white\\/50{border-color:rgba(255,255,255,.5)}
-          .bg-white\\/5{background-color:rgba(255,255,255,.05)}
-          .bg-white\\/10{background-color:rgba(255,255,255,.1)}
+          .border-white\\/10,.border-white\\/15{border-color:#e5e7eb}
+          .border-white\\/50{border-color:#18181b}
+          .bg-white\\/5{background-color:#fff}
+          .bg-white\\/10{background-color:#f4f4f5}
           .p-4{padding:1rem}.gap-3,.gap-4{gap:.75rem}
           .space-y-3>*+*{margin-top:.75rem}
           .min-h-\\[56px\\]{min-height:56px}
@@ -111,9 +111,9 @@ export default function RootLayout({
           .h-1\\.5{height:.375rem}.h-full{height:100%}
         `}} />
         <noscript>
-          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#000', color: '#fff', padding: 24, textAlign: 'center' }}>
+          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f4f7fc', color: '#18181b', padding: 24, textAlign: 'center' }}>
             <p style={{ fontSize: 18, marginBottom: 12 }}>JavaScript is required.</p>
-            <a href="/" style={{ color: '#f59e0b', textDecoration: 'underline' }}>Reload page</a>
+            <a href="/" style={{ color: '#18181b', textDecoration: 'underline' }}>Reload page</a>
           </div>
         </noscript>
         {children}

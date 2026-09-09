@@ -31,7 +31,7 @@ export default function Onboarding4({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -45,10 +45,10 @@ export default function Onboarding4({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-white text-[28px] font-bold mb-2">
+            <h1 className="text-[#18181b] font-playfair font-normal text-[28px] mb-2">
               What is your ethnicity?
             </h1>
-            <p className="text-white/60 text-base">
+            <p className="text-[#a1a1aa] text-base">
               This helps us personalize your growth plan
             </p>
           </motion.div>
@@ -67,11 +67,11 @@ export default function Onboarding4({ data, updateData, onNext, onBack }: Onboar
                     onClick={() => handleSelect(ethnicity)}
                     className={`w-full flex items-center justify-between rounded-2xl border p-4 transition-all duration-200 ${
                       isSelected
-                        ? 'border-white/50 bg-white/10'
-                        : 'border-white/15 bg-white/5 hover:border-white/25'
+                        ? 'border-[#18181b] bg-[#18181b]'
+                        : 'border-zinc-200 bg-white hover:border-zinc-300'
                     }`}
                   >
-                    <span className={`text-lg font-medium ${isSelected ? 'text-white' : 'text-white/70'}`}>
+                    <span className={`text-lg font-medium ${isSelected ? 'text-white' : 'text-[#18181b]'}`}>
                       {ethnicity}
                     </span>
                     
@@ -82,8 +82,7 @@ export default function Onboarding4({ data, updateData, onNext, onBack }: Onboar
                         transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                       >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                          <circle cx="12" cy="12" r="10" fill="white" />
-                          <path d="M8 12l3 3 5-6" stroke="black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <circle cx="12" cy="12" r="10" fill="white" /><path d="M8 12l3 3 5-6" stroke="#18181b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
                       </motion.div>
                     )}

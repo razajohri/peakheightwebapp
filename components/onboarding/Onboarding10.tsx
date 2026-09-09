@@ -31,7 +31,7 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -45,10 +45,10 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="text-center mb-6"
           >
-            <h1 className="text-white text-[26px] font-bold mb-2">
+            <h1 className="text-[#18181b] text-[26px] font-bold mb-2">
               How many hours do you sleep?
             </h1>
-            <p className="text-white/60 text-base">
+            <p className="text-[#a1a1aa] text-base">
               This helps us optimize your growth plan
             </p>
           </motion.div>
@@ -60,9 +60,9 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4, delay: 0.2 }}
             className="flex justify-center my-8"
           >
-            <div className="w-60 h-40 rounded-full border border-white/15 bg-white/5 flex flex-col items-center justify-center">
-              <span className="text-white text-6xl font-bold">{sleepHours}</span>
-              <span className="text-white/50 text-base mt-1">
+            <div className="w-60 h-40 rounded-full border border-zinc-200 bg-white flex flex-col items-center justify-center">
+              <span className="text-[#18181b] text-6xl font-bold">{sleepHours}</span>
+              <span className="text-zinc-400 text-base mt-1">
                 {sleepHours === 1 ? 'hour per night' : 'hours per night'}
               </span>
             </div>
@@ -82,9 +82,9 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
               step="0.5"
               value={sleepHours}
               onChange={(e) => setSleepHours(Number(e.target.value))}
-              className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
+              className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
             />
-            <div className="flex justify-between text-white/50 text-sm mt-2">
+            <div className="flex justify-between text-zinc-400 text-sm mt-2">
               <span>3 hrs</span>
               <span>12 hrs</span>
             </div>
@@ -97,8 +97,8 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4, delay: 0.4 }}
             className="max-w-md mx-auto w-full"
           >
-            <div className="p-4 rounded-xl border border-white/15 bg-white/5">
-              <p className="text-white text-base leading-relaxed">
+            <div className="p-4 rounded-xl border border-zinc-200 bg-white">
+              <p className="text-[#18181b] text-base leading-relaxed">
                 {getSleepFeedback()}
               </p>
             </div>

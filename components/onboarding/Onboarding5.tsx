@@ -76,7 +76,7 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-black relative overflow-hidden">
+    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
@@ -90,7 +90,7 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="text-center mb-6"
           >
-            <h1 className="text-white text-[24px] font-bold">
+            <h1 className="text-[#18181b] text-[24px] font-bold">
               What is your height & weight?
             </h1>
           </motion.div>
@@ -100,14 +100,14 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex rounded-xl border border-white/15 overflow-hidden mb-6 max-w-md mx-auto w-full"
+            className="flex rounded-xl border border-zinc-200 overflow-hidden mb-6 max-w-md mx-auto w-full"
           >
             <button
               onClick={() => setMeasurementSystem('imperial')}
               className={`flex-1 py-3 text-center font-medium transition-all ${
                 measurementSystem === 'imperial'
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/60'
+                  ? 'bg-[#18181b] text-white'
+                  : 'text-[#a1a1aa]'
               }`}
             >
               Imperial
@@ -116,8 +116,8 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               onClick={() => setMeasurementSystem('metric')}
               className={`flex-1 py-3 text-center font-medium transition-all ${
                 measurementSystem === 'metric'
-                  ? 'bg-white/10 text-white'
-                  : 'text-white/60'
+                  ? 'bg-[#18181b] text-white'
+                  : 'text-[#a1a1aa]'
               }`}
             >
               Metric
@@ -131,13 +131,13 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
             >
-              <h2 className="text-white text-lg font-semibold mb-4">Height</h2>
+              <h2 className="text-[#18181b] text-lg font-semibold mb-4">Height</h2>
               
               {measurementSystem === 'imperial' ? (
                 <div className="space-y-4">
                   {/* Feet */}
                   <div>
-                    <div className="flex justify-between text-white/60 text-sm mb-2">
+                    <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Feet</span>
                       <span>{feet} ft</span>
                     </div>
@@ -148,13 +148,13 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                       step="1"
                       value={feet}
                       onChange={(e) => setFeet(Number(e.target.value))}
-                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                      className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                     />
                   </div>
                   
                   {/* Inches */}
                   <div>
-                    <div className="flex justify-between text-white/60 text-sm mb-2">
+                    <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Inches</span>
                       <span>{inches} in</span>
                     </div>
@@ -165,13 +165,13 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                       step="1"
                       value={inches}
                       onChange={(e) => setInches(Number(e.target.value))}
-                      className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                      className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                     />
                   </div>
                 </div>
               ) : (
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Centimeters</span>
                     <span>{cm} cm</span>
                   </div>
@@ -182,7 +182,7 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                     step="1"
                     value={cm}
                     onChange={(e) => setCm(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                   />
                 </div>
               )}
@@ -194,11 +194,11 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
             >
-              <h2 className="text-white text-lg font-semibold mb-4">Weight</h2>
+              <h2 className="text-[#18181b] text-lg font-semibold mb-4">Weight</h2>
               
               {measurementSystem === 'imperial' ? (
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Pounds</span>
                     <span>{pounds} lbs</span>
                   </div>
@@ -209,12 +209,12 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                     step="1"
                     value={pounds}
                     onChange={(e) => setPounds(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                   />
                 </div>
               ) : (
                 <div>
-                  <div className="flex justify-between text-white/60 text-sm mb-2">
+                  <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Kilograms</span>
                     <span>{kg} kg</span>
                   </div>
@@ -225,13 +225,13 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                     step="1"
                     value={kg}
                     onChange={(e) => setKg(Number(e.target.value))}
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
+                    className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer"
                   />
                 </div>
               )}
             </motion.div>
 
-            <p className="text-white/50 text-sm text-center pt-4">
+            <p className="text-zinc-400 text-sm text-center pt-4">
               This will be used to create your personal plan
             </p>
           </div>
