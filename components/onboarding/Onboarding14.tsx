@@ -69,18 +69,18 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
           </motion.div>
 
           {/* Reviews */}
-          <div className="space-y-4">
+          <div className="space-y-4 pb-2">
             {reviews.map((review, index) => (
               <motion.div
                 key={review.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="rounded-3xl bg-[#f4f7fc] border border-zinc-200 p-6"
+                className="rounded-3xl bg-white border border-zinc-200 p-6"
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-zinc-100 flex items-center justify-center shrink-0">
                       <img
                         src={review.image}
                         alt={review.name}
@@ -107,7 +107,10 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
         </div>
 
         {/* Button */}
-        <div className="px-6 pb-10">
+        <div
+          className="px-6 pt-6"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+        >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>
