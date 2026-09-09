@@ -54,7 +54,14 @@ export const ONBOARDING_COLORS = {
   BUTTON_DISABLED: 'rgba(24, 24, 27, 0.45)',
   PROGRESS_BAR: '#e5e7eb',
   PROGRESS_FILL: '#18181b',
-  WASH: 'linear-gradient(180deg, #f4f7fc 0%, #edf3fb 32%, #e4ecf7 58%, #dde7f4 100%)',
+  /** Same FaceIQ mist as landing.module.css `.heroWash` + aurora */
+  WASH: `linear-gradient(180deg, #f4f7fc 0%, #edf3fb 32%, #e4ecf7 58%, #dde7f4 100%)`,
+  AURORA: `
+    radial-gradient(circle at 16% 14%, rgba(255, 255, 255, 0.98), transparent 18%),
+    radial-gradient(circle at 78% 16%, rgba(197, 231, 255, 0.42), transparent 24%),
+    radial-gradient(circle at 74% 54%, rgba(186, 198, 255, 0.22), transparent 28%),
+    radial-gradient(circle at 30% 84%, rgba(161, 216, 255, 0.14), transparent 30%)
+  `,
 } as const
 
 export const ONBOARDING_SPACING = {
@@ -94,8 +101,9 @@ export const ONBOARDING_ANIMATIONS = {
 /** Shared Tailwind class snippets for FaceIQ onboarding screens */
 export const ONBOARDING_UI = {
   page: 'min-h-screen min-h-dvh relative overflow-hidden bg-[#f4f7fc]',
+  /** White phone card on mist — visible on mobile + desktop like FaceIQ */
   frame:
-    'relative z-10 mx-auto flex w-full min-h-screen min-h-dvh flex-col bg-white md:my-5 md:min-h-[min(860px,calc(100dvh-2.5rem))] md:max-w-[400px] md:overflow-hidden md:rounded-[28px] md:border md:border-zinc-200/80 md:bg-white md:shadow-[0_28px_80px_-28px_rgba(24,24,27,0.2)]',
+    'relative z-10 mx-auto flex w-full max-w-[400px] flex-col overflow-hidden rounded-[28px] border border-white/80 bg-white shadow-[0_28px_80px_-28px_rgba(24,24,27,0.18)] min-h-[calc(100dvh-1.5rem)] sm:min-h-[min(860px,calc(100dvh-2.5rem))]',
   title:
     'text-[#18181b] font-playfair font-normal text-[28px] sm:text-[32px] leading-[1.15] tracking-[-0.03em]',
   subtitle: 'text-[#a1a1aa] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em]',

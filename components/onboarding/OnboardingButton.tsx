@@ -26,23 +26,34 @@ export default function OnboardingButton({
         whileTap={disabled ? {} : { scale: 0.98 }}
         onClick={onPress}
         disabled={disabled}
+        type="button"
         className={`
-          relative w-full
-          min-h-[52px] sm:min-h-[54px]
-          px-6 sm:px-8
+          relative flex w-full items-center justify-center
+          h-[52px] sm:h-[54px]
+          px-8
           rounded-full
-          bg-[#18181b]
           text-white
           font-manrope font-medium
+          text-[16px]
           tracking-[-0.01em]
+          shadow-[0_1px_0_rgba(255,255,255,0.08)_inset]
           ${disabled ? 'opacity-45 cursor-not-allowed' : 'cursor-pointer'}
           touch-manipulation
           ${className}
         `}
+        style={{
+          background: disabled
+            ? 'rgba(24, 24, 27, 0.45)'
+            : 'linear-gradient(180deg, #27272a 0%, #18181b 100%)',
+        }}
       >
-        <span className="inline-flex items-center justify-center gap-2 text-[16px] sm:text-[17px]">
+        <span className="inline-flex items-center justify-center gap-2">
           {title}
-          {showArrow && !disabled ? <span aria-hidden className="translate-y-px">→</span> : null}
+          {showArrow && !disabled ? (
+            <span aria-hidden className="text-[17px] leading-none">
+              →
+            </span>
+          ) : null}
         </span>
       </motion.button>
     )
@@ -54,10 +65,11 @@ export default function OnboardingButton({
       whileTap={disabled ? {} : { scale: 0.98 }}
       onClick={onPress}
       disabled={disabled}
+      type="button"
       className={`
-        w-full
-        min-h-[52px] sm:min-h-[54px]
-        px-6 sm:px-8
+        flex w-full items-center justify-center
+        h-[52px] sm:h-[54px]
+        px-8
         rounded-full
         border
         font-manrope
@@ -71,7 +83,7 @@ export default function OnboardingButton({
         ${className}
       `}
     >
-      <span className="text-[#18181b] font-medium text-[16px] sm:text-[17px]">{title}</span>
+      <span className="text-[#18181b] font-medium text-[16px]">{title}</span>
     </motion.button>
   )
 }

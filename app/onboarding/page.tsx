@@ -30,6 +30,8 @@ function IntroCountdown({ onComplete }: { onComplete: () => void }) {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundImage:
+          'radial-gradient(circle at 78% 16%, rgba(197, 231, 255, 0.42), transparent 24%), radial-gradient(circle at 30% 84%, rgba(161, 216, 255, 0.14), transparent 30%), linear-gradient(180deg, #f4f7fc 0%, #edf3fb 32%, #e4ecf7 58%, #dde7f4 100%)',
         backgroundColor: '#f4f7fc',
         gap: 8,
       }}
@@ -321,8 +323,13 @@ function OnboardingFlow() {
 export default function OnboardingPage() {
   return (
     <div
-      className="min-h-screen min-h-dvh bg-black"
-      style={{ minHeight: '100vh', backgroundColor: '#f4f7fc' }}
+      className="min-h-screen min-h-dvh"
+      style={{
+        minHeight: '100vh',
+        backgroundImage:
+          'radial-gradient(circle at 78% 16%, rgba(197, 231, 255, 0.42), transparent 24%), linear-gradient(180deg, #f4f7fc 0%, #edf3fb 32%, #e4ecf7 58%, #dde7f4 100%)',
+        backgroundColor: '#f4f7fc',
+      }}
     >
       <OnboardingProvider>
         <OnboardingFlow />
