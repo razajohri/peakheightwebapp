@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
 
 interface Onboarding14Props {
   data: any
@@ -43,32 +44,24 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
 
   const handleSubmitRating = () => {
     setShowRatingModal(false)
-    // In a real app, you'd handle the rating submission here
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={16} totalSteps={21} onBack={onBack} />
         <div className="flex-1 flex flex-col px-6 pt-4">
-          {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-8"
+            className="mb-8"
           >
-            <h1 className="text-[#18181b] text-[30px] font-extrabold mb-2">
+            <OptionTitle subtitle="This helps us bring you more of what you love">
               Leave a Rating
-            </h1>
-            <p className="text-[#a1a1aa] text-base">
-              This helps us bring you more of what you love
-            </p>
+            </OptionTitle>
           </motion.div>
 
-          {/* Reviews */}
           <div className="space-y-4 pb-2">
             {reviews.map((review, index) => (
               <motion.div
@@ -106,16 +99,14 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
           </div>
         </div>
 
-        {/* Button */}
         <div
           className="px-6 pt-6"
           style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
         >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
+      </OnboardingMotionColumn>
 
-      {/* Rating Modal */}
       <AnimatePresence>
         {showRatingModal && (
           <motion.div
@@ -180,6 +171,6 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </OnboardingShell>
   )
 }

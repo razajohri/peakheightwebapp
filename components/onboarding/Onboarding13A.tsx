@@ -1,9 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
 
 interface Onboarding13AProps {
   data: any
@@ -27,41 +28,31 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
     ? formatHeight(targetHeightValue)
     : 'Not set'
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={15} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-4">
-          {/* Chart Card */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             className="rounded-3xl bg-[#f4f7fc] border border-zinc-200 p-6 shadow-[0_0_30px_rgba(0,255,198,0.15)]"
           >
-            {/* Title */}
-            <h1 className="text-[#18181b] font-playfair font-normal text-3xl text-center mb-6 leading-tight" style={{}}>
-              How tall will you actually grow?
-            </h1>
+            <OptionTitle className="mb-6">How tall will you actually grow?</OptionTitle>
 
-            {/* Chart Placeholder */}
             <div className="relative h-48 mb-6">
               <svg width="100%" height="100%" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid meet">
-                {/* Y-axis labels */}
-                <text x="10" y="25" fill="#9CA3AF" fontSize="11">6'2"</text>
-                <text x="10" y="55" fill="#9CA3AF" fontSize="11">6'0"</text>
-                <text x="10" y="90" fill="#9CA3AF" fontSize="11">5'10"</text>
-                <text x="10" y="125" fill="#9CA3AF" fontSize="11">5'8"</text>
-                <text x="10" y="160" fill="#9CA3AF" fontSize="11">5'6"</text>
+                <text x="10" y="25" fill="#9CA3AF" fontSize="11">6&apos;2&quot;</text>
+                <text x="10" y="55" fill="#9CA3AF" fontSize="11">6&apos;0&quot;</text>
+                <text x="10" y="90" fill="#9CA3AF" fontSize="11">5&apos;10&quot;</text>
+                <text x="10" y="125" fill="#9CA3AF" fontSize="11">5&apos;8&quot;</text>
+                <text x="10" y="160" fill="#9CA3AF" fontSize="11">5&apos;6&quot;</text>
                 
-                {/* Grid lines */}
                 <path d="M40 160 L300 160" stroke="#1f1f1f" strokeWidth="1" />
                 <path d="M40 110 L300 110" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="4 4" />
                 <path d="M40 60 L300 60" stroke="rgba(255,255,255,0.05)" strokeWidth="1" strokeDasharray="4 4" />
 
-                {/* Bad habits line */}
                 <motion.path
                   d="M40 150 Q140 120 200 118 T300 128"
                   stroke="url(#badGradient)"
@@ -73,7 +64,6 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
                   transition={{ duration: 1, delay: 0.3 }}
                 />
 
-                {/* Good habits line */}
                 <motion.path
                   d="M40 150 Q140 70 200 40 T300 25"
                   stroke="url(#goodGradient)"
@@ -85,9 +75,8 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
                   transition={{ duration: 1.2, delay: 0.5 }}
                 />
 
-                {/* Height gain indicator */}
                 <line x1="280" y1="25" x2="280" y2="128" stroke="#18181b" strokeWidth="1.5" strokeDasharray="4 4" />
-                <text x="290" y="80" fill="#18181b" fontSize="14" fontWeight="bold">+4"</text>
+                <text x="290" y="80" fill="#18181b" fontSize="14" fontWeight="bold">+4&quot;</text>
 
                 <defs>
                   <linearGradient id="badGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -102,7 +91,6 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
               </svg>
             </div>
 
-            {/* Legend */}
             <div className="flex justify-between px-2">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full bg-[#FF2D55]" />
@@ -115,7 +103,6 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
             </div>
           </motion.div>
 
-          {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -124,12 +111,12 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
           >
             <div className="flex justify-around mb-5">
               <div className="text-center">
-                <p className="text-[#18181b] text-2xl font-bold">4.8</p>
-                <p className="text-zinc-400 text-sm">Average Rating</p>
+                <p className="text-[#18181b] text-2xl font-playfair font-normal">4.8</p>
+                <p className="font-manrope text-[15px] text-[#a1a1aa]">Average Rating</p>
               </div>
               <div className="text-center">
-                <p className="text-[#18181b] text-2xl font-bold">{targetHeightFormatted}</p>
-                <p className="text-zinc-400 text-sm">Your target height</p>
+                <p className="text-[#18181b] text-2xl font-playfair font-normal">{targetHeightFormatted}</p>
+                <p className="font-manrope text-[15px] text-[#a1a1aa]">Your target height</p>
               </div>
             </div>
             
@@ -139,14 +126,13 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
           </motion.div>
         </div>
 
-        {/* Button */}
         <div
           className="px-6 pt-6"
           style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
         >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

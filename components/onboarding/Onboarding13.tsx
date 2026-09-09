@@ -1,9 +1,10 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
 
 interface Onboarding13Props {
   data: any
@@ -22,26 +23,20 @@ const facts = [
 
 export default function Onboarding13({ data, updateData, onNext, onBack }: Onboarding13Props) {
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={14} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-4">
-          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-8"
+            className="mb-8"
           >
-            <h1 className="text-[#18181b] text-[24px] font-extrabold">
-              The reality of being short
-            </h1>
+            <OptionTitle>The reality of being short</OptionTitle>
           </motion.div>
 
-          {/* Facts */}
           <div className="space-y-3 max-w-md mx-auto w-full">
             {facts.map((fact, index) => (
               <motion.div
@@ -59,24 +54,22 @@ export default function Onboarding13({ data, updateData, onNext, onBack }: Onboa
             ))}
           </div>
 
-          {/* Founder Message */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.6 }}
             className="text-center mt-6 mb-6"
           >
-            <p className="text-zinc-400 text-sm italic">
+            <p className="font-manrope text-[15px] text-[#a1a1aa] italic">
               "We built this app because we faced the same issues growing up."
             </p>
           </motion.div>
         </div>
 
-        {/* Button */}
         <div className="px-6 pb-10">
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

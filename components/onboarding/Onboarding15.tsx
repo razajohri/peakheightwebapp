@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { WavyBackground } from '@/components/ui/wavy-background'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
 
@@ -64,9 +64,9 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
   }, [])
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
+    <OnboardingShell stars={false}>
       <WavyBackground
-        containerClassName="absolute inset-0 z-0 min-h-screen min-h-dvh"
+        containerClassName="absolute inset-0 z-0 min-h-screen min-h-dvh pointer-events-none"
         className="pointer-events-none absolute inset-0 min-h-screen min-h-dvh"
         backgroundFill="#f4f7fc"
         waveOpacity={0.2}
@@ -74,9 +74,7 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
         speed="slow"
         colors={['#22d3ee', '#818cf8', '#c084fc', '#38bdf8', '#e879f9']}
       />
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={17} totalSteps={21} onBack={onBack} />
         <div className="flex-1 flex flex-col px-6 pt-4">
           <AnimatePresence mode="wait">
@@ -88,20 +86,17 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                 exit={{ opacity: 0 }}
                 className="flex-1 flex flex-col"
               >
-                {/* Percentage */}
                 <motion.p
-                  className="text-[#18181b] text-7xl font-bold text-center mb-4"
+                  className="text-[#18181b] text-7xl font-playfair font-normal text-center mb-4"
                   style={{ letterSpacing: '-2px' }}
                 >
                   {Math.round(progress)}%
                 </motion.p>
 
-                {/* Title */}
-                <p className="text-[#18181b] text-2xl font-semibold text-center mb-8 leading-relaxed">
+                <p className="text-[#18181b] font-playfair font-normal text-2xl text-center mb-8 leading-relaxed">
                   We're setting everything<br />up for you
                 </p>
 
-                {/* Progress Bar */}
                 <div className="h-2 bg-gray-200 rounded-full overflow-hidden mb-6">
                   <motion.div
                     className="h-full bg-gradient-to-r from-[#FF6B6B] via-[#4ECDC4] to-[#95E1D3]"
@@ -109,12 +104,10 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                   />
                 </div>
 
-                {/* Current Step */}
-                <p className="text-zinc-400 text-center mb-10">
+                <p className="font-manrope text-[15px] text-[#a1a1aa] text-center mb-10">
                   {currentStep}
                 </p>
 
-                {/* Recommendation Card */}
                 <div className="bg-gray-100 rounded-2xl p-5 mt-auto mb-6">
                   <p className="text-gray-800 font-bold text-lg mb-4">
                     Daily recommendation for
@@ -145,7 +138,6 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                 animate={{ opacity: 1 }}
                 className="flex-1 flex flex-col items-center justify-center"
               >
-                {/* Success Badge */}
                 <div className="w-20 h-20 rounded-full bg-green-500/15 flex items-center justify-center mb-4">
                   <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center shadow-[0_0_20px_rgba(74,222,128,0.5)]">
                     <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0D1F12" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
@@ -154,12 +146,10 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
                   </div>
                 </div>
 
-                {/* Title */}
-                <h1 className="text-[#18181b] text-4xl font-black text-center mb-6">
+                <h1 className="text-[#18181b] font-playfair font-normal text-4xl text-center mb-6">
                   Analysis Complete!
                 </h1>
 
-                {/* Completion Card */}
                 <div className="w-full bg-[#f4f7fc] border border-zinc-200 rounded-2xl p-5">
                   {completionPoints.map((point, index) => (
                     <motion.div
@@ -183,7 +173,6 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
           </AnimatePresence>
         </div>
 
-        {/* Button */}
         <div className="px-6 pb-10">
           <OnboardingButton 
             title={analyzing ? 'Continue' : 'See my report'} 
@@ -191,7 +180,7 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
             disabled={analyzing} 
           />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

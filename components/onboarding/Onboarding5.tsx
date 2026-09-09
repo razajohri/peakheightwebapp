@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
+import { ONBOARDING_UI } from '@/lib/constants/onboarding'
 
 interface Onboarding5Props {
   data: any
@@ -76,56 +78,41 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={5} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-6 overflow-y-auto">
-          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-6"
+            className="mb-6"
           >
-            <h1 className="text-[#18181b] text-[24px] font-bold">
-              What is your height & weight?
-            </h1>
+            <OptionTitle>What is your height & weight?</OptionTitle>
           </motion.div>
 
-          {/* Unit Toggle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex rounded-xl border border-zinc-200 overflow-hidden mb-6 max-w-md mx-auto w-full"
+            className="flex gap-3 mb-6 max-w-md mx-auto w-full"
           >
-            <button
-              onClick={() => setMeasurementSystem('imperial')}
-              className={`flex-1 py-3 text-center font-medium transition-all ${
-                measurementSystem === 'imperial'
-                  ? 'bg-[#18181b] text-white'
-                  : 'text-[#a1a1aa]'
-              }`}
-            >
-              Imperial
-            </button>
-            <button
-              onClick={() => setMeasurementSystem('metric')}
-              className={`flex-1 py-3 text-center font-medium transition-all ${
-                measurementSystem === 'metric'
-                  ? 'bg-[#18181b] text-white'
-                  : 'text-[#a1a1aa]'
-              }`}
-            >
-              Metric
-            </button>
+            {(['imperial', 'metric'] as const).map((system) => (
+              <button
+                key={system}
+                type="button"
+                onClick={() => setMeasurementSystem(system)}
+                className={`flex-1 py-3 rounded-xl text-center font-manrope font-medium transition-all capitalize ${
+                  measurementSystem === system ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
+                }`}
+              >
+                {system}
+              </button>
+            ))}
           </motion.div>
 
           <div className="max-w-md mx-auto w-full space-y-6">
-            {/* Height Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -135,11 +122,10 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               
               {measurementSystem === 'imperial' ? (
                 <div className="space-y-4">
-                  {/* Feet */}
                   <div>
                     <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Feet</span>
-                      <span>{feet} ft</span>
+                      <span className="font-playfair font-normal text-[#18181b]">{feet} ft</span>
                     </div>
                     <input
                       type="range"
@@ -152,11 +138,10 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                     />
                   </div>
                   
-                  {/* Inches */}
                   <div>
                     <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                       <span>Inches</span>
-                      <span>{inches} in</span>
+                      <span className="font-playfair font-normal text-[#18181b]">{inches} in</span>
                     </div>
                     <input
                       type="range"
@@ -173,7 +158,7 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                 <div>
                   <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Centimeters</span>
-                    <span>{cm} cm</span>
+                    <span className="font-playfair font-normal text-[#18181b]">{cm} cm</span>
                   </div>
                   <input
                     type="range"
@@ -188,7 +173,6 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               )}
             </motion.div>
 
-            {/* Weight Section */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -200,7 +184,7 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                 <div>
                   <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Pounds</span>
-                    <span>{pounds} lbs</span>
+                    <span className="font-playfair font-normal text-[#18181b]">{pounds} lbs</span>
                   </div>
                   <input
                     type="range"
@@ -216,7 +200,7 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
                 <div>
                   <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Kilograms</span>
-                    <span>{kg} kg</span>
+                    <span className="font-playfair font-normal text-[#18181b]">{kg} kg</span>
                   </div>
                   <input
                     type="range"
@@ -231,17 +215,16 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               )}
             </motion.div>
 
-            <p className="text-zinc-400 text-sm text-center pt-4">
+            <p className="font-manrope text-[15px] text-[#a1a1aa] text-center pt-4">
               This will be used to create your personal plan
             </p>
           </div>
         </div>
 
-        {/* Button */}
         <div className="px-6 pb-10">
           <OnboardingButton title="Continue" onPress={handleContinue} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

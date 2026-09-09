@@ -2,15 +2,48 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
+import { ONBOARDING_UI } from '@/lib/constants/onboarding'
 
 interface Onboarding12Props {
   data: any
   updateData: (data: any) => void
   onNext: () => void
   onBack: () => void
+}
+
+function YesNo({
+  value,
+  onChange,
+}: {
+  value: boolean | null
+  onChange: (v: boolean) => void
+}) {
+  return (
+    <div className="flex gap-3">
+      {[
+        { label: 'Yes', v: true },
+        { label: 'No', v: false },
+      ].map((opt) => {
+        const selected = value === opt.v
+        return (
+          <button
+            key={opt.label}
+            type="button"
+            onClick={() => onChange(opt.v)}
+            className={`flex-1 rounded-2xl py-4 font-manrope text-[15px] font-semibold transition-all ${
+              selected ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
+            }`}
+          >
+            {opt.label}
+          </button>
+        )
+      })}
+    </div>
+  )
 }
 
 export default function Onboarding12({ data, updateData, onNext, onBack }: Onboarding12Props) {
@@ -37,121 +70,61 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={13} totalSteps={21} onBack={onBack} />
 
-        <div className="flex-1 flex flex-col px-6 pt-8">
-          {/* Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="text-center mb-8"
-          >
-            <h1 className="text-[#18181b] text-[24px] font-bold">
-              Do you smoke or drink alcohol?
-            </h1>
-          </motion.div>
+        <div className="flex flex-1 flex-col px-6 pt-6">
+          <OptionTitle className="mb-10">Do you smoke or drink alcohol?</OptionTitle>
 
-          <div className="max-w-md mx-auto w-full space-y-8">
-            {/* Smoking Question */}
+          <div className="mx-auto w-full max-w-md space-y-8">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              transition={{ duration: 0.35, delay: 0.05 }}
             >
-              <div className="flex items-center gap-2 mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="2">
-                  <path d="M18 12H2v4h16v-4zM22 12v4M22 10c0-1.5-1-3-3-3V4" />
-                </svg>
-                <span className="text-[#18181b] font-semibold text-base">Do you smoke?</span>
-              </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => handleSmokingChange(true)}
-                  className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
-                    smokingStatus === true
-                      ? 'border-[#18181b] bg-[#18181b] text-white'
-                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
-                  }`}
-                >
-                  Yes
-                </button>
-                <button
-                  onClick={() => handleSmokingChange(false)}
-                  className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
-                    smokingStatus === false
-                      ? 'border-[#18181b] bg-[#18181b] text-white'
-                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
-                  }`}
-                >
-                  No
-                </button>
-              </div>
+              <p className="mb-3 font-manrope text-[15px] font-semibold text-[#18181b]">Do you smoke?</p>
+              <YesNo value={smokingStatus} onChange={handleSmokingChange} />
             </motion.div>
 
-            {/* Drinking Question */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
+              transition={{ duration: 0.35, delay: 0.1 }}
             >
-              <div className="flex items-center gap-2 mb-3">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="2">
-                  <path d="M8 22h8M12 11v11M7 2h10l-3 9H10L7 2z" />
-                </svg>
-                <span className="text-[#18181b] font-semibold text-base">Do you drink alcohol?</span>
-              </div>
-              <div className="flex gap-3">
-                <button
-                  onClick={() => handleDrinkingChange(true)}
-                  className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
-                    drinkingStatus === true
-                      ? 'border-[#18181b] bg-[#18181b] text-white'
-                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
-                  }`}
-                >
-                  Yes
-                </button>
-                <button
-                  onClick={() => handleDrinkingChange(false)}
-                  className={`flex-1 py-4 rounded-xl border font-medium transition-all ${
-                    drinkingStatus === false
-                      ? 'border-[#18181b] bg-[#18181b] text-white'
-                      : 'border-zinc-200 bg-white text-[#a1a1aa]'
-                  }`}
-                >
-                  No
-                </button>
-              </div>
+              <p className="mb-3 font-manrope text-[15px] font-semibold text-[#18181b]">
+                Do you drink alcohol?
+              </p>
+              <YesNo value={drinkingStatus} onChange={handleDrinkingChange} />
             </motion.div>
 
-            {/* Info Box */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.3 }}
-              className="flex gap-3 p-5 rounded-2xl bg-white border border-zinc-200 mb-4"
+              transition={{ duration: 0.35, delay: 0.15 }}
+              className="mb-4 flex gap-3 rounded-2xl border border-zinc-200 bg-white p-5"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="1.5" className="flex-shrink-0 opacity-50 mt-0.5">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#18181b"
+                strokeWidth="1.5"
+                className="mt-0.5 shrink-0 opacity-40"
+              >
                 <circle cx="12" cy="12" r="10" />
                 <path d="M12 16v-4M12 8h.01" />
               </svg>
-              <p className="text-[#a1a1aa] text-sm leading-relaxed">
-                {getInfoText()}
-              </p>
+              <p className="font-manrope text-sm leading-relaxed text-[#a1a1aa]">{getInfoText()}</p>
             </motion.div>
           </div>
         </div>
 
-        {/* Button */}
         <div className="px-6 pb-10">
           <OnboardingButton title="Continue" onPress={onNext} disabled={!isReadyToContinue} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

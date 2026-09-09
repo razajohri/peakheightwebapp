@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/contexts/AuthContext'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
+import ProgressHeader from './ProgressHeader'
 
 interface OnboardingAuthProps {
   data: any
@@ -103,39 +105,23 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
   }
 
   return (
-    <div 
-      className="fixed inset-0 bg-gradient-to-b from-[#f4f7fc] via-[#edf3fb] to-[#dde7f4] flex flex-col"
-      style={{ paddingTop: 'env(safe-area-inset-top)' }}
-    >
-      {/* Back Button */}
-      <div className="flex-shrink-0 px-4 pt-3">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-[#a1a1aa] hover:text-[#18181b] transition-colors"
-        >
-          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-          </svg>
-          <span className="text-[14px]">Back</span>
-        </button>
-      </div>
+    <OnboardingShell>
+      <OnboardingMotionColumn>
+        <ProgressHeader currentStep={19} totalSteps={21} onBack={onBack} />
 
-      {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden">
-        <div className="max-w-[400px] mx-auto w-full px-5 pt-4 pb-6">
-          
-          {/* Header */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="mx-auto w-full max-w-[400px] px-5 pb-6 pt-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-6"
+            className="mb-6 text-center"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[26px] mb-2">
+            <h1 className="mb-2 font-playfair text-[28px] font-medium leading-[1.2] tracking-[-0.02em] text-[#18181b]">
               {mode === 'signup' ? 'Create Account' : 'Welcome Back'}
             </h1>
-            <p className="text-[#a1a1aa] text-[14px]">
-              {mode === 'signup' 
-                ? 'Sign up to save your progress' 
+            <p className="font-manrope text-[15px] text-[#a1a1aa]">
+              {mode === 'signup'
+                ? 'Sign up to save your progress'
                 : 'Sign in to continue your program'}
             </p>
           </motion.div>
@@ -303,8 +289,9 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
             <a href="/privacy" className="text-zinc-400 underline">Privacy Policy</a>
           </motion.p>
 
+          </div>
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
+import { ONBOARDING_UI } from '@/lib/constants/onboarding'
 
 interface Onboarding8Props {
   data: any
@@ -38,48 +40,39 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
 
   const handleSystemChange = (system: string) => {
     setSizeSystem(system)
-    const { default: defaultSize } = getMinMaxValues()
     setFootSize(system === 'us' ? 9 : system === 'eu' ? 42 : 8)
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={10} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
-          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-6"
+            className="mb-6"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[28px] mb-2">
+            <OptionTitle subtitle="This helps us track your growth progress">
               What is your foot size?
-            </h1>
-            <p className="text-[#a1a1aa] text-base">
-              This helps us track your growth progress
-            </p>
+            </OptionTitle>
           </motion.div>
 
-          {/* Size System Toggle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
-            className="flex rounded-xl border border-zinc-200 overflow-hidden mb-10 max-w-md mx-auto w-full"
+            className="flex gap-3 mb-10 max-w-md mx-auto w-full"
           >
             {['us', 'eu', 'uk'].map((system) => (
               <button
                 key={system}
+                type="button"
                 onClick={() => handleSystemChange(system)}
-                className={`flex-1 py-3 text-center font-medium transition-all uppercase ${
-                  sizeSystem === system
-                    ? 'bg-[#18181b] text-white'
-                    : 'text-[#a1a1aa]'
+                className={`flex-1 py-3 rounded-xl text-center font-manrope font-medium transition-all uppercase ${
+                  sizeSystem === system ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
                 }`}
               >
                 {system}
@@ -87,18 +80,16 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
             ))}
           </motion.div>
 
-          {/* Size Display */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-10"
           >
-            <p className="text-[#18181b] text-6xl font-bold">{footSize}</p>
-            <p className="text-zinc-400 text-sm mt-2 uppercase">{sizeSystem}</p>
+            <p className="text-[#18181b] text-6xl font-playfair font-normal">{footSize}</p>
+            <p className="font-manrope text-[15px] text-[#a1a1aa] mt-2 uppercase">{sizeSystem}</p>
           </motion.div>
 
-          {/* Slider */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,18 +105,17 @@ export default function Onboarding8({ data, updateData, onNext, onBack }: Onboar
               onChange={(e) => setFootSize(Number(e.target.value))}
               className="w-full h-2 bg-zinc-100 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-[#18181b] [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:cursor-pointer [&::-webkit-slider-thumb]:shadow-lg"
             />
-            <div className="flex justify-between text-zinc-400 text-sm mt-2">
+            <div className="flex justify-between font-manrope text-[15px] text-[#a1a1aa] mt-2">
               <span>{min}</span>
               <span>{max}</span>
             </div>
           </motion.div>
         </div>
 
-        {/* Button */}
         <div className="px-6 pb-10">
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

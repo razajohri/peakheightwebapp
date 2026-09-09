@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
 
 interface Onboarding7Props {
   data: any
@@ -47,10 +48,8 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-[100svh] bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-[100svh] flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={8} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-1 pb-2 min-h-0">
@@ -60,9 +59,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.35 }}
             className="mb-4"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[22px] sm:text-[26px] leading-snug tracking-tight">
-              Height isn&apos;t inherited, it&apos;s earned.
-            </h1>
+            <OptionTitle>Height isn&apos;t inherited, it&apos;s earned.</OptionTitle>
           </motion.div>
 
           <motion.div
@@ -89,7 +86,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.35, delay: 0.2 }}
             className="relative pl-3 border-l-2 border-[#18181b]/80 mb-4"
           >
-            <p className="text-[#71717a] text-sm leading-relaxed">
+            <p className="font-manrope text-[15px] text-[#a1a1aa] leading-relaxed">
               {renderText()}
               {currentIndex < fullText.length && <span className="animate-pulse">|</span>}
             </p>
@@ -102,7 +99,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
         >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

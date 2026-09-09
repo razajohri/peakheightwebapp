@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
+import { ONBOARDING_UI } from '@/lib/constants/onboarding'
 
 interface Onboarding6Props {
   data: any
@@ -105,10 +107,8 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={7} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-5 sm:px-6 pt-2 pb-4 overflow-y-auto">
@@ -116,41 +116,29 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="text-center mb-6"
+            className="mb-6"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[26px] sm:text-[28px] tracking-tight">
-              How tall are your parents?
-            </h1>
+            <OptionTitle>How tall are your parents?</OptionTitle>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.05 }}
-            className="flex p-1 rounded-full bg-white border border-zinc-200 mb-8 max-w-md mx-auto w-full shadow-sm"
+            className="flex gap-3 mb-8 max-w-md mx-auto w-full"
           >
-            <button
-              type="button"
-              onClick={() => setMeasurementSystem('imperial')}
-              className={`flex-1 py-2.5 rounded-full text-center text-sm font-medium transition-all ${
-                measurementSystem === 'imperial'
-                  ? 'bg-[#18181b] text-white'
-                  : 'text-[#71717a] hover:text-[#18181b]'
-              }`}
-            >
-              Imperial
-            </button>
-            <button
-              type="button"
-              onClick={() => setMeasurementSystem('metric')}
-              className={`flex-1 py-2.5 rounded-full text-center text-sm font-medium transition-all ${
-                measurementSystem === 'metric'
-                  ? 'bg-[#18181b] text-white'
-                  : 'text-[#71717a] hover:text-[#18181b]'
-              }`}
-            >
-              Metric
-            </button>
+            {(['imperial', 'metric'] as const).map((system) => (
+              <button
+                key={system}
+                type="button"
+                onClick={() => setMeasurementSystem(system)}
+                className={`flex-1 py-2.5 rounded-full text-center text-sm font-manrope font-medium transition-all capitalize ${
+                  measurementSystem === system ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
+                }`}
+              >
+                {system}
+              </button>
+            ))}
           </motion.div>
 
           <div className="max-w-md mx-auto w-full flex flex-col gap-5">
@@ -246,7 +234,7 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
         <div className="px-5 sm:px-6 pt-4 pb-10">
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
+      </OnboardingMotionColumn>
 
       <AnimatePresence>
         {showInfoModal && (
@@ -294,6 +282,6 @@ export default function Onboarding6({ data, updateData, onNext, onBack }: Onboar
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </OnboardingShell>
   )
 }

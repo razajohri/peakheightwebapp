@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
 import Onboarding2 from '@/components/onboarding/Onboarding2'
+import OnboardingWelcome from '@/components/onboarding/OnboardingWelcome'
 
 // 3-2-1 countdown — all inline styles, no CSS deps. Shows first so user always sees something.
 function IntroCountdown({ onComplete }: { onComplete: () => void }) {
@@ -109,15 +110,53 @@ function OnboardingFlow() {
   const router = useRouter()
   const { currentStep, data, updateData, nextStep, prevStep } = useOnboarding()
   const [countdownDone, setCountdownDone] = useState(false)
+  const [welcomeDone, setWelcomeDone] = useState(false)
 
   const handleAuthRequired = (authMode: 'signup' | 'signin' = 'signup') => {
     router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
   }
 
+  // Resume mid-flow skips welcome; step 1 can return to it via back
+  useEffect(() => {
+    if (currentStep > 1) {
+      setWelcomeDone(true)
+      try {
+        sessionStorage.setItem('ph_welcome_done', '1')
+      } catch {
+        /* ignore */
+      }
+      return
+    }
+    try {
+      if (sessionStorage.getItem('ph_welcome_done') === '1') setWelcomeDone(true)
+    } catch {
+      /* ignore */
+    }
+  }, [currentStep])
+
+  const finishWelcome = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_welcome_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setWelcomeDone(true)
+  }, [])
+
+  const backToWelcome = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_welcome_done')
+    } catch {
+      /* ignore */
+    }
+    setWelcomeDone(false)
+  }, [])
+
   // Prefetch next step's chunk so it loads faster when user taps Continue
   useEffect(() => {
     if (currentStep >= 21) return
     const prefetch: Record<number, () => Promise<unknown>> = {
+      1: () => import('@/components/onboarding/Onboarding3'),
       2: () => import('@/components/onboarding/Onboarding3'),
       3: () => import('@/components/onboarding/Onboarding4'),
       4: () => import('@/components/onboarding/Onboarding5'),
@@ -146,6 +185,10 @@ function OnboardingFlow() {
     return <IntroCountdown onComplete={onCountdownComplete} />
   }
 
+  if (!welcomeDone) {
+    return <OnboardingWelcome onNext={finishWelcome} />
+  }
+
   // Render current onboarding step
   const commonProps = {
     data,
@@ -156,7 +199,12 @@ function OnboardingFlow() {
 
   switch (currentStep) {
     case 1:
-      return <Onboarding2 {...commonProps} />
+      return (
+        <Onboarding2
+          {...commonProps}
+          onBack={backToWelcome}
+        />
+      )
     case 2:
       return <Onboarding3 {...commonProps} />
     case 3:

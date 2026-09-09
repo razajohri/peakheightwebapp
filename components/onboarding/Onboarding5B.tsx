@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
+import { ONBOARDING_UI } from '@/lib/constants/onboarding'
 
 interface Onboarding5BProps {
   data: any
@@ -54,66 +56,53 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={6} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
-          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-8"
+            className="mb-8"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[22px] min-[390px]:text-[24px] sm:text-[28px] whitespace-nowrap tracking-tight">
-              What&apos;s your Dream Height?
-            </h1>
+            <OptionTitle>What&apos;s your Dream Height?</OptionTitle>
           </motion.div>
 
-          {/* Unit Toggle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 }}
             className="flex gap-3 mb-10 max-w-md mx-auto w-full"
           >
-            <button
-              onClick={() => setMeasurementSystem('imperial')}
-              className={`flex-1 py-3 rounded-lg text-center font-semibold transition-all ${
-                measurementSystem === 'imperial'
-                  ? 'bg-[#18181b] text-white'
-                  : 'bg-zinc-100 text-[#a1a1aa]'
-              }`}
-            >
-              ft/in
-            </button>
-            <button
-              onClick={() => setMeasurementSystem('metric')}
-              className={`flex-1 py-3 rounded-lg text-center font-semibold transition-all ${
-                measurementSystem === 'metric'
-                  ? 'bg-[#18181b] text-white'
-                  : 'bg-zinc-100 text-[#a1a1aa]'
-              }`}
-            >
-              cm
-            </button>
+            {[
+              { id: 'imperial', label: 'ft/in' },
+              { id: 'metric', label: 'cm' },
+            ].map(({ id, label }) => (
+              <button
+                key={id}
+                type="button"
+                onClick={() => setMeasurementSystem(id)}
+                className={`flex-1 py-3 rounded-lg text-center font-manrope font-semibold transition-all ${
+                  measurementSystem === id ? ONBOARDING_UI.chipSelected : ONBOARDING_UI.chipIdle
+                }`}
+              >
+                {label}
+              </button>
+            ))}
           </motion.div>
 
-          {/* Height Display */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-10"
           >
-            <p className="text-[#a1a1aa] text-base mb-2">Dream Height</p>
-            <p className="text-[#18181b] text-5xl font-bold">{displayHeight()}</p>
+            <p className="font-manrope text-[15px] text-[#a1a1aa] mb-2">Dream Height</p>
+            <p className="text-[#18181b] text-5xl font-playfair font-normal">{displayHeight()}</p>
           </motion.div>
 
-          {/* Slider */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -122,7 +111,6 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
           >
             {measurementSystem === 'imperial' ? (
               <div className="space-y-6">
-                {/* Feet Slider */}
                 <div>
                   <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Feet</span>
@@ -139,7 +127,6 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
                   />
                 </div>
                 
-                {/* Inches Slider */}
                 <div>
                   <div className="flex justify-between text-[#a1a1aa] text-sm mb-2">
                     <span>Inches</span>
@@ -174,17 +161,16 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
               </div>
             )}
 
-            <p className="text-[#a1a1aa] text-sm text-center mt-10 mb-2">
+            <p className="font-manrope text-[15px] text-[#a1a1aa] text-center mt-10 mb-2">
               This will be used to create your personal plan
             </p>
           </motion.div>
         </div>
 
-        {/* Button */}
         <div className="px-6 pt-6 pb-10 sm:pt-8">
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

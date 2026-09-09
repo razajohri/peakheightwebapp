@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import FloatingStars from './FloatingStars'
+import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
 
 interface Onboarding3Props {
   data: any
@@ -49,10 +50,8 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
-      <FloatingStars />
-
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+    <OnboardingShell>
+      <OnboardingMotionColumn>
         <ProgressHeader currentStep={3} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
@@ -60,14 +59,9 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="text-center mb-8"
+            className="mb-8"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[28px] mb-2">
-              How old are you?
-            </h1>
-            <p className="text-[#a1a1aa] text-base">
-              Choose your date of birth
-            </p>
+            <OptionTitle subtitle="Choose your date of birth">How old are you?</OptionTitle>
           </motion.div>
 
           <div className="flex-1 flex flex-col justify-center pb-8">
@@ -106,7 +100,7 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
         >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
-      </div>
-    </div>
+      </OnboardingMotionColumn>
+    </OnboardingShell>
   )
 }

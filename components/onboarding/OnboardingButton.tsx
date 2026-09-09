@@ -8,6 +8,7 @@ interface OnboardingButtonProps {
   disabled?: boolean
   variant?: 'primary' | 'secondary'
   className?: string
+  showArrow?: boolean
 }
 
 export default function OnboardingButton({
@@ -16,6 +17,7 @@ export default function OnboardingButton({
   disabled = false,
   variant = 'primary',
   className = '',
+  showArrow = true,
 }: OnboardingButtonProps) {
   if (variant === 'primary') {
     return (
@@ -26,19 +28,22 @@ export default function OnboardingButton({
         disabled={disabled}
         className={`
           relative w-full
-          min-h-[52px] sm:min-h-[56px]
+          min-h-[52px] sm:min-h-[54px]
           px-6 sm:px-8
           rounded-full
           bg-[#18181b]
           text-white
-          font-medium
-          tracking-wide
+          font-manrope font-medium
+          tracking-[-0.01em]
           ${disabled ? 'opacity-45 cursor-not-allowed' : 'cursor-pointer'}
           touch-manipulation
           ${className}
         `}
       >
-        <span className="text-base sm:text-lg">{title}</span>
+        <span className="inline-flex items-center justify-center gap-2 text-[16px] sm:text-[17px]">
+          {title}
+          {showArrow && !disabled ? <span aria-hidden className="translate-y-px">→</span> : null}
+        </span>
       </motion.button>
     )
   }
@@ -51,10 +56,11 @@ export default function OnboardingButton({
       disabled={disabled}
       className={`
         w-full
-        min-h-[52px] sm:min-h-[56px]
+        min-h-[52px] sm:min-h-[54px]
         px-6 sm:px-8
         rounded-full
         border
+        font-manrope
         ${
           disabled
             ? 'opacity-45 cursor-not-allowed border-zinc-200'
@@ -65,7 +71,7 @@ export default function OnboardingButton({
         ${className}
       `}
     >
-      <span className="text-[#18181b] font-medium text-base sm:text-lg">{title}</span>
+      <span className="text-[#18181b] font-medium text-[16px] sm:text-[17px]">{title}</span>
     </motion.button>
   )
 }
