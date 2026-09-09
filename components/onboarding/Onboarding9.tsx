@@ -20,18 +20,17 @@ const frequencies = [
 ]
 
 function DotIcon({ count, selected }: { count: number; selected: boolean }) {
+  const dot = selected ? 'bg-white' : 'bg-[#18181b]'
   if (count === 1) {
-    return (
-      <div className="w-3 h-3 rounded-full bg-white" />
-    )
+    return <div className={`w-3 h-3 rounded-full ${dot}`} />
   }
   if (count === 3) {
     return (
       <div className="flex flex-col items-center gap-0.5">
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
         <div className="flex gap-1">
-          <div className="w-1.5 h-1.5 rounded-full bg-white" />
-          <div className="w-1.5 h-1.5 rounded-full bg-white" />
+          <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+          <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
         </div>
       </div>
     )
@@ -39,14 +38,14 @@ function DotIcon({ count, selected }: { count: number; selected: boolean }) {
   return (
     <div className="flex flex-col gap-0.5">
       <div className="flex gap-1">
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
       </div>
       <div className="flex gap-1">
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
-        <div className="w-1.5 h-1.5 rounded-full bg-white" />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+        <div className={`w-1.5 h-1.5 rounded-full ${dot}`} />
       </div>
     </div>
   )
@@ -65,7 +64,7 @@ export default function Onboarding9({ data, updateData, onNext, onBack }: Onboar
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <ProgressHeader currentStep={11} onBack={onBack} />
+        <ProgressHeader currentStep={11} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-4">
           {/* Title */}
@@ -94,7 +93,7 @@ export default function Onboarding9({ data, updateData, onNext, onBack }: Onboar
                     onClick={() => handleSelect(freq.id)}
                     className={`w-full flex items-center gap-4 rounded-2xl border p-5 transition-all duration-200 ${
                       isSelected
-                        ? 'border-[#18181b] bg-zinc-100'
+                        ? 'border-[#18181b] bg-[#18181b]'
                         : 'border-zinc-200 bg-white hover:border-zinc-300'
                     }`}
                   >
