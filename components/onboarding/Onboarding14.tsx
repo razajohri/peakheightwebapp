@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
@@ -74,10 +75,15 @@ export default function Onboarding14({ data, updateData, onNext, onBack }: Onboa
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full overflow-hidden bg-zinc-100 flex items-center justify-center shrink-0">
-                      <img
+                      <Image
                         src={review.image}
                         alt={review.name}
+                        width={40}
+                        height={40}
+                        sizes="40px"
                         className="w-full h-full object-cover"
+                        loading="eager"
+                        priority={index === 0}
                       />
                     </div>
                     <div>

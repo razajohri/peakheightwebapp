@@ -33,6 +33,11 @@ export interface OnboardingData {
   motivation?: string
   barriers?: string[]
   ethnicity?: string
+  country?: string
+  countryCode?: string
+  city?: string
+  commitmentLevel?: string
+  resultsTimeline?: string
   footSize?: number
   footSizeSystem?: string
   workoutFrequency?: string

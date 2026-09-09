@@ -67,7 +67,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="mb-8"
           >
-            <OptionTitle>What&apos;s your Dream Height?</OptionTitle>
+            <OptionTitle>What&apos;s your Height Goal?</OptionTitle>
           </motion.div>
 
           <motion.div
@@ -99,7 +99,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4, delay: 0.2 }}
             className="text-center mb-10"
           >
-            <p className="font-manrope text-[15px] text-[#a1a1aa] mb-2">Dream Height</p>
+            <p className="font-manrope text-[15px] text-[#a1a1aa] mb-2">Height Goal</p>
             <p className="text-[#18181b] text-5xl font-playfair font-normal">{displayHeight()}</p>
           </motion.div>
 

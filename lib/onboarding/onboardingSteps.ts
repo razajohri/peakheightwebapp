@@ -58,6 +58,7 @@ export const ONBOARDING_STEPS: OnboardingStepDef[] = [
       { id: 'Prefer not to say', label: 'Prefer not to say' },
     ],
   },
+  // Location (“Where do you live?”) is a web gate before height on step 4 in the flow.
   {
     step: 5,
     type: 'question',
@@ -135,6 +136,7 @@ export const ONBOARDING_STEPS: OnboardingStepDef[] = [
     title: 'Do you smoke or drink alcohol?',
     dataKeys: ['smokingStatus', 'drinkingStatus'],
   },
+  // Web also shows “How far are you willing to go?” before the conversion screens below.
   {
     step: 14,
     type: 'info',

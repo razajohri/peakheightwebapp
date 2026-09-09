@@ -74,8 +74,10 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
                 alt="How posture, load, sleep, and nutrition affect height potential"
                 width={384}
                 height={684}
+                sizes="(max-width: 768px) 72vw, 280px"
                 className="w-full h-auto object-contain"
-                priority={false}
+                priority
+                loading="eager"
               />
             </div>
           </motion.div>

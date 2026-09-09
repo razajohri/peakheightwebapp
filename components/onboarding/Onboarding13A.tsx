@@ -37,7 +37,7 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="rounded-3xl bg-[#f4f7fc] border border-zinc-200 p-6 shadow-[0_0_30px_rgba(0,255,198,0.15)]"
+            className="rounded-3xl bg-[#f4f7fc] border border-zinc-200 p-6"
           >
             <OptionTitle className="mb-6">How tall will you actually grow?</OptionTitle>
 

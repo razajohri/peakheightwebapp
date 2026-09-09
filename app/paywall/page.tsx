@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import RevenueCatPaywall from '@/components/paywall/RevenueCatPaywall'
+import PeakHeightPaywall from '@/components/paywall/PeakHeightPaywall'
 import {
   initializeRevenueCat,
   getCustomerInfo,
@@ -114,15 +114,10 @@ export default function PaywallPage() {
     )
   }
 
-  // When status === 'paywall', immediately show the hosted paywall (no intermediate screen)
   return (
-    <div className="min-h-screen bg-[#f4f7fc] flex flex-col items-center justify-center px-6">
-      <div className="w-full max-w-md">
-        <RevenueCatPaywall
-          onPurchaseSuccess={handlePurchaseSuccess}
-          onBack={() => router.push('/dashboard')}
-        />
-      </div>
-    </div>
+    <PeakHeightPaywall
+      onPurchaseSuccess={handlePurchaseSuccess}
+      onBack={() => router.push('/dashboard')}
+    />
   )
 }

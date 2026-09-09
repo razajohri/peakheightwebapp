@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
 import ProgressHeader from './ProgressHeader'
 import OnboardingButton from './OnboardingButton'
+import { OptionTitle } from './OptionCard'
+
 interface Onboarding17Props {
   data: any
   updateData: (data: any) => void
@@ -20,23 +22,49 @@ function formatHeight(heightInCm: number | undefined) {
   return `${feet}'${inches}"`
 }
 
-function BenefitIcon({ kind }: { kind: string }) {
+function FeatureIcon({ kind }: { kind: string }) {
   const common = {
-    width: 18,
-    height: 18,
+    width: 16,
+    height: 16,
     viewBox: '0 0 24 24',
     fill: 'none',
     stroke: '#18181b',
-    strokeWidth: 1.75,
+    strokeWidth: 1.7,
     strokeLinecap: 'round' as const,
     strokeLinejoin: 'round' as const,
   }
+
   switch (kind) {
+    case 'height':
+      return (
+        <svg {...common}>
+          <path d="M8 4v16M16 4v16M8 4h3M16 4h-3M8 20h3M16 20h-3M11 12h2" />
+        </svg>
+      )
+    case 'body':
+      return (
+        <svg {...common}>
+          <circle cx="12" cy="5" r="2.5" />
+          <path d="M8 21v-7l-2-4h12l-2 4v7M10 10v4M14 10v4" />
+        </svg>
+      )
+    case 'ratio':
+      return (
+        <svg {...common}>
+          <path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />
+        </svg>
+      )
+    case 'track':
+      return (
+        <svg {...common}>
+          <path d="M4 12a8 8 0 1 0 8-8" />
+          <path d="M12 4v8l4 2" />
+        </svg>
+      )
     case 'plan':
       return (
         <svg {...common}>
-          <path d="M4 19V5a1 1 0 0 1 1-1h10l5 5v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z" />
-          <path d="M14 4v5h5M8 13h8M8 17h5" />
+          <path d="M8 6h11M8 12h11M8 18h11M4 6h.01M4 12h.01M4 18h.01" />
         </svg>
       )
     case 'workout':
@@ -61,24 +89,56 @@ function BenefitIcon({ kind }: { kind: string }) {
     default:
       return (
         <svg {...common}>
-          <path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6" />
+          <path d="M12 3l2.2 6.6H21l-5.4 3.9 2.1 6.5L12 16.8 6.3 20l2.1-6.5L3 9.6h6.8L12 3z" />
         </svg>
       )
   }
 }
 
-const benefits: { kind: string; title: string; desc: string }[] = [
-  { kind: 'plan', title: 'Personalized Growth Plan', desc: 'Tailored to your body & goals' },
-  { kind: 'workout', title: '200+ Growth Exercises', desc: 'Science-backed stretches & workouts' },
-  { kind: 'food', title: 'Nutrition Guide', desc: 'Foods that maximize growth' },
-  { kind: 'sleep', title: 'Sleep Optimization', desc: 'Boost growth hormone naturally' },
-  { kind: 'chart', title: 'Progress Tracking', desc: 'See your gains over time' },
+function FeaturePill({
+  kind,
+  label,
+  index,
+}: {
+  kind: string
+  label: string
+  index: number
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: 0.08 + index * 0.04 }}
+      className="flex items-center gap-3 rounded-full border border-zinc-200 bg-white px-3.5 py-3"
+    >
+      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f4f7fc]">
+        <FeatureIcon kind={kind} />
+      </span>
+      <span className="font-manrope text-[13px] font-medium leading-snug text-[#18181b]">
+        {label}
+      </span>
+    </motion.div>
+  )
+}
+
+const BASIC_FEATURES = [
+  { kind: 'height', label: 'Current vs goal height summary' },
+  { kind: 'body', label: 'Body & habit assessment' },
+  { kind: 'ratio', label: 'Growth potential estimate' },
+  { kind: 'track', label: 'Baseline progress snapshot' },
+]
+
+const PRO_FEATURES = [
+  { kind: 'plan', label: 'Personalized daily growth plan' },
+  { kind: 'workout', label: '200+ stretches & exercises' },
+  { kind: 'food', label: 'Nutrition & sleep optimization' },
+  { kind: 'spark', label: 'Reminders & progress tracking' },
 ]
 
 export default function Onboarding17({
   data,
   onBack,
-  onAuthRequired,
+  onNext,
 }: Onboarding17Props) {
   const currentHeight = formatHeight(data?.currentHeight)
   const targetHeight = formatHeight(data?.targetHeight)
@@ -86,112 +146,92 @@ export default function Onboarding17({
   return (
     <OnboardingShell>
       <OnboardingMotionColumn>
-        <ProgressHeader currentStep={18} totalSteps={21} onBack={onBack} />
+        <ProgressHeader currentStep={18} totalSteps={22} onBack={onBack} />
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="mx-auto w-full max-w-[400px] px-5 pb-4 pt-2">
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-5 flex justify-center"
-            >
-              <span className="rounded-full border border-zinc-200 bg-white px-4 py-1.5 font-manrope text-[12px] font-medium text-[#18181b]">
-                Your Report is Ready
-              </span>
-            </motion.div>
+            <OptionTitle className="mb-6">What each plan includes</OptionTitle>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 16 }}
+            {/* Height snapshot */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="mb-2 text-center font-playfair text-[28px] font-normal leading-[1.2] tracking-[-0.02em] text-[#18181b]"
+              className="mb-6 flex items-center justify-between rounded-2xl border border-zinc-200 bg-white px-4 py-3.5"
             >
-              Unlock Your Growth Potential
-            </motion.h1>
+              <div className="flex-1 text-center">
+                <p className="mb-0.5 font-manrope text-[11px] font-medium tracking-wide text-[#a1a1aa]">
+                  NOW
+                </p>
+                <p className="font-playfair text-[22px] font-normal text-[#18181b]">
+                  {currentHeight}
+                </p>
+              </div>
+              <div className="px-2 text-[#18181b]">→</div>
+              <div className="flex-1 text-center">
+                <p className="mb-0.5 font-manrope text-[11px] font-medium tracking-wide text-[#a1a1aa]">
+                  GOAL
+                </p>
+                <p className="font-playfair text-[22px] font-normal text-[#18181b]">
+                  {targetHeight}
+                </p>
+              </div>
+            </motion.div>
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
+            {/* BASIC */}
+            <motion.section
+              initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="mb-6 text-center font-manrope text-[14px] leading-relaxed text-[#a1a1aa]"
-            >
-              Based on your answers, we&apos;ve created a personalized plan just for you
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.15 }}
-              className="mb-5 rounded-2xl border border-zinc-200 bg-white p-4"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex-1 text-center">
-                  <p className="mb-1 font-manrope text-[11px] font-medium tracking-wide text-[#a1a1aa]">
-                    NOW
-                  </p>
-                  <p className="font-playfair text-[26px] font-normal text-[#18181b]">{currentHeight}</p>
-                </div>
-                <div className="flex items-center gap-2 px-3 text-[#18181b]">
-                  <div className="h-[2px] w-6 bg-zinc-200" />
-                  <span className="text-[16px]">→</span>
-                  <div className="h-[2px] w-6 bg-[#18181b]" />
-                </div>
-                <div className="flex-1 text-center">
-                  <p className="mb-1 font-manrope text-[11px] font-medium tracking-wide text-[#a1a1aa]">
-                    GOAL
-                  </p>
-                  <p className="font-playfair text-[26px] font-normal text-[#18181b]">{targetHeight}</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
               className="mb-5"
             >
-              <p className="mb-3 font-manrope text-[11px] font-semibold tracking-[0.08em] text-[#a1a1aa]">
-                WHAT YOU&apos;LL GET
-              </p>
+              <span className="mb-3 inline-flex rounded-full border border-[#18181b] bg-white px-3 py-1 font-manrope text-[11px] font-bold tracking-[0.06em] text-[#18181b]">
+                BASIC
+              </span>
+              <h2 className="mb-3 font-manrope text-[16px] font-semibold text-[#18181b]">
+                See your growth potential
+              </h2>
               <div className="space-y-2.5">
-                {benefits.map((benefit, index) => (
-                  <motion.div
-                    key={benefit.title}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.22 + index * 0.04 }}
-                    className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white px-4 py-3.5"
-                  >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f4f7fc]">
-                      <BenefitIcon kind={benefit.kind} />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-manrope text-[14px] font-semibold text-[#18181b]">
-                        {benefit.title}
-                      </p>
-                      <p className="font-manrope text-[12px] text-[#a1a1aa]">{benefit.desc}</p>
-                    </div>
-                    <svg
-                      className="h-5 w-5 shrink-0 text-[#18181b]"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </motion.div>
+                {BASIC_FEATURES.map((f, i) => (
+                  <FeaturePill key={f.label} kind={f.kind} label={f.label} index={i} />
                 ))}
               </div>
-            </motion.div>
+            </motion.section>
+
+            {/* PRO */}
+            <motion.section
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.18 }}
+              className="mb-2 rounded-[22px] border border-[#d7e4f4] bg-[#eef4fb] p-4"
+            >
+              <span className="mb-3 inline-flex rounded-full bg-[#18181b] px-3 py-1 font-manrope text-[11px] font-bold tracking-[0.06em] text-white">
+                PRO
+              </span>
+              <h2 className="mb-1 font-manrope text-[16px] font-semibold text-[#18181b]">
+                Reach your height goal
+              </h2>
+              <p className="mb-3 font-manrope text-[13px] text-[#71717a]">
+                Everything in Basic, plus:
+              </p>
+              <div className="space-y-2.5">
+                {PRO_FEATURES.map((f, i) => (
+                  <FeaturePill
+                    key={f.label}
+                    kind={f.kind}
+                    label={f.label}
+                    index={i + BASIC_FEATURES.length}
+                  />
+                ))}
+              </div>
+            </motion.section>
           </div>
         </div>
 
-        <div className="px-5 pb-10">
+        <div className="px-5 pb-10 pt-2">
           <OnboardingButton
-            title="Unlock My Custom Report"
-            onPress={() => onAuthRequired('signup')}
+            title="Continue"
+            onPress={onNext}
             showArrow
           />
         </div>

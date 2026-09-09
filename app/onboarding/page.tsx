@@ -80,6 +80,8 @@ function StepLoading() {
 // Lazy-load other steps
 const Onboarding3 = dynamic(() => import('@/components/onboarding/Onboarding3'), { ssr: false, loading: StepLoading })
 const Onboarding4 = dynamic(() => import('@/components/onboarding/Onboarding4'), { ssr: false, loading: StepLoading })
+const OnboardingLocation = dynamic(() => import('@/components/onboarding/OnboardingLocation'), { ssr: false, loading: StepLoading })
+const OnboardingCohort = dynamic(() => import('@/components/onboarding/OnboardingCohort'), { ssr: false, loading: StepLoading })
 const Onboarding5 = dynamic(() => import('@/components/onboarding/Onboarding5'), { ssr: false, loading: StepLoading })
 const Onboarding5B = dynamic(() => import('@/components/onboarding/Onboarding5B'), { ssr: false, loading: StepLoading })
 const Onboarding6 = dynamic(() => import('@/components/onboarding/Onboarding6'), { ssr: false, loading: StepLoading })
@@ -89,11 +91,14 @@ const Onboarding8 = dynamic(() => import('@/components/onboarding/Onboarding8'),
 const Onboarding9 = dynamic(() => import('@/components/onboarding/Onboarding9'), { ssr: false, loading: StepLoading })
 const Onboarding10 = dynamic(() => import('@/components/onboarding/Onboarding10'), { ssr: false, loading: StepLoading })
 const Onboarding12 = dynamic(() => import('@/components/onboarding/Onboarding12'), { ssr: false, loading: StepLoading })
+const OnboardingCommitment = dynamic(() => import('@/components/onboarding/OnboardingCommitment'), { ssr: false, loading: StepLoading })
+const OnboardingTimeline = dynamic(() => import('@/components/onboarding/OnboardingTimeline'), { ssr: false, loading: StepLoading })
 const Onboarding13 = dynamic(() => import('@/components/onboarding/Onboarding13'), { ssr: false, loading: StepLoading })
 const Onboarding13A = dynamic(() => import('@/components/onboarding/Onboarding13A'), { ssr: false, loading: StepLoading })
 const Onboarding14 = dynamic(() => import('@/components/onboarding/Onboarding14'), { ssr: false, loading: StepLoading })
 const Onboarding15 = dynamic(() => import('@/components/onboarding/Onboarding15'), { ssr: false, loading: StepLoading })
 const Onboarding17 = dynamic(() => import('@/components/onboarding/Onboarding17'), { ssr: false, loading: StepLoading })
+const OnboardingWhereYouCouldBe = dynamic(() => import('@/components/onboarding/OnboardingWhereYouCouldBe'), { ssr: false, loading: StepLoading })
 const OnboardingAuth = dynamic(() => import('@/components/onboarding/OnboardingAuth'), { ssr: false, loading: StepLoading })
 const OnboardingComplete = dynamic(() => import('@/components/onboarding/OnboardingComplete'), { ssr: false, loading: StepLoading })
 
@@ -116,6 +121,11 @@ function OnboardingFlow() {
   const [countdownDone, setCountdownDone] = useState(false)
   const [welcomeDone, setWelcomeDone] = useState(false)
   const [preStep, setPreStep] = useState<'name' | 'reveal' | 'done'>('name')
+  const [locationDone, setLocationDone] = useState(false)
+  const [cohortDone, setCohortDone] = useState(false)
+  const [commitmentDone, setCommitmentDone] = useState(false)
+  const [timelineDone, setTimelineDone] = useState(false)
+  const [planIncludesDone, setPlanIncludesDone] = useState(false)
 
   const handleAuthRequired = (authMode: 'signup' | 'signin' = 'signup') => {
     router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
@@ -132,11 +142,51 @@ function OnboardingFlow() {
       } catch {
         /* ignore */
       }
-      return
+    }
+    if (currentStep > 4) {
+      setLocationDone(true)
+      setCohortDone(true)
+      try {
+        sessionStorage.setItem('ph_location_done', '1')
+        sessionStorage.setItem('ph_cohort_done', '1')
+      } catch {
+        /* ignore */
+      }
+    }
+    if (currentStep > 13) {
+      setCommitmentDone(true)
+      setTimelineDone(true)
+      try {
+        sessionStorage.setItem('ph_commitment_done', '1')
+        sessionStorage.setItem('ph_timeline_done', '1')
+      } catch {
+        /* ignore */
+      }
+    }
+    if (currentStep > 17) {
+      setPlanIncludesDone(true)
+      try {
+        sessionStorage.setItem('ph_plan_includes_done', '1')
+      } catch {
+        /* ignore */
+      }
     }
     try {
-      if (sessionStorage.getItem('ph_welcome_done') === '1') setWelcomeDone(true)
-      if (sessionStorage.getItem('ph_name_done') === '1') setPreStep('done')
+      if (currentStep === 1) {
+        if (sessionStorage.getItem('ph_welcome_done') === '1') setWelcomeDone(true)
+        if (sessionStorage.getItem('ph_name_done') === '1') setPreStep('done')
+      }
+      if (currentStep === 4) {
+        if (sessionStorage.getItem('ph_location_done') === '1') setLocationDone(true)
+        if (sessionStorage.getItem('ph_cohort_done') === '1') setCohortDone(true)
+      }
+      if (currentStep === 13) {
+        if (sessionStorage.getItem('ph_commitment_done') === '1') setCommitmentDone(true)
+        if (sessionStorage.getItem('ph_timeline_done') === '1') setTimelineDone(true)
+      }
+      if (currentStep === 17 && sessionStorage.getItem('ph_plan_includes_done') === '1') {
+        setPlanIncludesDone(true)
+      }
     } catch {
       /* ignore */
     }
@@ -178,6 +228,100 @@ function OnboardingFlow() {
     setPreStep('name')
   }, [])
 
+  const finishLocation = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_location_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setLocationDone(true)
+  }, [])
+
+  const backToLocation = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_location_done')
+      sessionStorage.removeItem('ph_cohort_done')
+    } catch {
+      /* ignore */
+    }
+    setLocationDone(false)
+    setCohortDone(false)
+  }, [])
+
+  const finishCohort = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_cohort_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setCohortDone(true)
+  }, [])
+
+  const backToCohort = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_cohort_done')
+    } catch {
+      /* ignore */
+    }
+    setCohortDone(false)
+  }, [])
+
+  const finishCommitment = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_commitment_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setCommitmentDone(true)
+  }, [])
+
+  const backToCommitment = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_commitment_done')
+      sessionStorage.removeItem('ph_timeline_done')
+    } catch {
+      /* ignore */
+    }
+    setCommitmentDone(false)
+    setTimelineDone(false)
+  }, [])
+
+  const finishTimeline = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_timeline_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setTimelineDone(true)
+  }, [])
+
+  const backToTimeline = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_timeline_done')
+    } catch {
+      /* ignore */
+    }
+    setTimelineDone(false)
+  }, [])
+
+  const finishPlanIncludes = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_plan_includes_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setPlanIncludesDone(true)
+  }, [])
+
+  const backToPlanIncludes = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_plan_includes_done')
+    } catch {
+      /* ignore */
+    }
+    setPlanIncludesDone(false)
+  }, [])
+
   // Prefetch next step's chunk so it loads faster when user taps Continue
   useEffect(() => {
     if (currentStep >= 21) return
@@ -185,7 +329,7 @@ function OnboardingFlow() {
       1: () => import('@/components/onboarding/Onboarding3'),
       2: () => import('@/components/onboarding/Onboarding3'),
       3: () => import('@/components/onboarding/Onboarding4'),
-      4: () => import('@/components/onboarding/Onboarding5'),
+      4: () => import('@/components/onboarding/OnboardingCohort'),
       5: () => import('@/components/onboarding/Onboarding5B'),
       6: () => import('@/components/onboarding/Onboarding6'),
       7: () => import('@/components/onboarding/Onboarding7'),
@@ -257,7 +401,30 @@ function OnboardingFlow() {
     case 3:
       return <Onboarding4 {...commonProps} />
     case 4:
-      return <Onboarding5 {...commonProps} />
+      if (!locationDone) {
+        return (
+          <OnboardingLocation
+            {...commonProps}
+            onNext={finishLocation}
+            onBack={prevStep}
+          />
+        )
+      }
+      if (!cohortDone) {
+        return (
+          <OnboardingCohort
+            {...commonProps}
+            onNext={finishCohort}
+            onBack={backToLocation}
+          />
+        )
+      }
+      return (
+        <Onboarding5
+          {...commonProps}
+          onBack={backToCohort}
+        />
+      )
     case 5:
       return <Onboarding5B {...commonProps} />
     case 6:
@@ -275,7 +442,30 @@ function OnboardingFlow() {
     case 12:
       return <Onboarding12 {...commonProps} />
     case 13:
-      return <Onboarding13 {...commonProps} />
+      if (!commitmentDone) {
+        return (
+          <OnboardingCommitment
+            {...commonProps}
+            onNext={finishCommitment}
+            onBack={prevStep}
+          />
+        )
+      }
+      if (!timelineDone) {
+        return (
+          <OnboardingTimeline
+            {...commonProps}
+            onNext={finishTimeline}
+            onBack={backToCommitment}
+          />
+        )
+      }
+      return (
+        <Onboarding13
+          {...commonProps}
+          onBack={backToTimeline}
+        />
+      )
     case 14:
       return <Onboarding13A {...commonProps} />
     case 15:
@@ -283,7 +473,22 @@ function OnboardingFlow() {
     case 16:
       return <Onboarding15 {...commonProps} />
     case 17:
-      return <Onboarding17 {...commonProps} onAuthRequired={handleAuthRequired} />
+      if (!planIncludesDone) {
+        return (
+          <Onboarding17
+            {...commonProps}
+            onNext={finishPlanIncludes}
+            onAuthRequired={handleAuthRequired}
+          />
+        )
+      }
+      return (
+        <OnboardingWhereYouCouldBe
+          {...commonProps}
+          onNext={() => handleAuthRequired('signup')}
+          onBack={backToPlanIncludes}
+        />
+      )
     case 18:
       return <OnboardingAuth {...commonProps} />
     case 19:

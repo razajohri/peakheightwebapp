@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useAuth } from '@/contexts/AuthContext'
 import OnboardingShell, { OnboardingMotionColumn } from './OnboardingShell'
@@ -14,93 +14,102 @@ interface OnboardingAuthProps {
 }
 
 export default function OnboardingAuth({ data, updateData, onNext, onBack }: OnboardingAuthProps) {
-  const { user, signInWithEmail, signUpWithEmail, signInWithApple, signInWithGoogle } = useAuth()
-  const [mode, setMode] = useState<'signup' | 'signin'>('signup')
+  const { user, sendEmailOtp, verifyEmailOtp } = useAuth()
+  const [emailStep, setEmailStep] = useState<'email' | 'code'>('email')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
+  const [code, setCode] = useState('')
+  const [name, setName] = useState(data?.userName || '')
   const [isLoading, setIsLoading] = useState(false)
-  const [loadingProvider, setLoadingProvider] = useState<string | null>(null)
   const [error, setError] = useState('')
+  const [info, setInfo] = useState('')
+  const [resendIn, setResendIn] = useState(0)
+  const codeInputRef = useRef<HTMLInputElement>(null)
 
-  // If user is already logged in, proceed to next step
   useEffect(() => {
     if (user) {
-      updateData({ 
+      updateData({
         userEmail: user.email,
-        userName: user.user_metadata?.display_name || user.user_metadata?.full_name || user.email?.split('@')[0],
-        userId: user.id
+        userName:
+          user.user_metadata?.display_name ||
+          user.user_metadata?.full_name ||
+          user.email?.split('@')[0],
+        userId: user.id,
       })
       onNext()
     }
   }, [user])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  useEffect(() => {
+    if (resendIn <= 0) return
+    const t = setTimeout(() => setResendIn((s) => s - 1), 1000)
+    return () => clearTimeout(t)
+  }, [resendIn])
+
+  useEffect(() => {
+    if (emailStep === 'code') codeInputRef.current?.focus()
+  }, [emailStep])
+
+  const sendCode = async () => {
     setError('')
+    setInfo('')
     setIsLoading(true)
-
     try {
-      let result
-      if (mode === 'signup') {
-        result = await signUpWithEmail(email, password, name)
-      } else {
-        result = await signInWithEmail(email, password)
-      }
-
+      const result = await sendEmailOtp(email, {
+        name: name || undefined,
+        returnTo: '/paywall',
+      })
       if (result.error) {
-        if (result.error.message.includes('Invalid login credentials')) {
-          setError('Invalid email or password. Please try again.')
-        } else if (result.error.message.includes('User already registered')) {
-          setError('An account with this email already exists. Try signing in.')
-        } else if (result.error.message.includes('Email not confirmed')) {
-          setError('Please check your email to confirm your account.')
+        const msg = result.error.message || ''
+        if (msg.includes('rate limit') || msg.includes('security purposes')) {
+          setError('Please wait a moment before requesting another code.')
         } else {
-          setError(result.error.message)
+          setError(msg || 'Could not send code. Please try again.')
         }
       } else {
-        // Success - user state will update and useEffect will call onNext
-        updateData({ 
-          userEmail: email,
-          userName: name || email.split('@')[0]
+        setEmailStep('code')
+        setCode('')
+        setResendIn(30)
+        setInfo(`We sent a 6-digit code to ${email.trim().toLowerCase()}`)
+        updateData({
+          userEmail: email.trim().toLowerCase(),
+          userName: name || email.split('@')[0],
         })
       }
-    } catch (err) {
+    } catch {
       setError('Something went wrong. Please try again.')
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleAppleSignIn = async () => {
-    setError('')
-    setLoadingProvider('apple')
-    try {
-      const result = await signInWithApple('/paywall')
-      if (result.error) {
-        setError('Apple Sign In failed. Please try again.')
-        setLoadingProvider(null)
-      }
-      // OAuth will redirect, so we don't need to handle success here
-    } catch (err) {
-      setError('Apple Sign In failed. Please try again.')
-      setLoadingProvider(null)
-    }
+  const handleSendCode = async (e: React.FormEvent) => {
+    e.preventDefault()
+    await sendCode()
   }
 
-  const handleGoogleSignIn = async () => {
+  const handleVerifyCode = async (e: React.FormEvent) => {
+    e.preventDefault()
     setError('')
-    setLoadingProvider('google')
+    setIsLoading(true)
     try {
-      const result = await signInWithGoogle('/paywall')
+      const result = await verifyEmailOtp(email, code, name || undefined)
       if (result.error) {
-        setError('Google Sign In failed. Please try again.')
-        setLoadingProvider(null)
+        const msg = result.error.message || ''
+        if (msg.toLowerCase().includes('invalid') || msg.toLowerCase().includes('expired')) {
+          setError('Invalid or expired code. Try again or resend.')
+        } else {
+          setError(msg || 'Could not verify code. Please try again.')
+        }
+      } else {
+        updateData({
+          userEmail: email.trim().toLowerCase(),
+          userName: name || email.split('@')[0],
+        })
       }
-      // OAuth will redirect, so we don't need to handle success here
-    } catch (err) {
-      setError('Google Sign In failed. Please try again.')
-      setLoadingProvider(null)
+    } catch {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -111,184 +120,161 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="mx-auto w-full max-w-[400px] px-5 pb-6 pt-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-6 text-center"
-          >
-            <h1 className="mb-2 font-playfair text-[28px] font-normal leading-[1.2] tracking-[-0.02em] text-[#18181b]">
-              {mode === 'signup' ? 'Create Account' : 'Welcome Back'}
-            </h1>
-            <p className="font-manrope text-[15px] text-[#a1a1aa]">
-              {mode === 'signup'
-                ? 'Sign up to save your progress'
-                : 'Sign in to continue your program'}
-            </p>
-          </motion.div>
-
-          {/* Social Sign In Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="space-y-3 mb-6"
-          >
-            {/* Apple Sign In */}
-            <button
-              onClick={handleAppleSignIn}
-              disabled={isLoading || loadingProvider !== null}
-              className="w-full h-[52px] bg-white rounded-xl flex items-center justify-center gap-3 font-semibold text-[15px] text-black active:scale-[0.98] transition-transform disabled:opacity-50"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 text-center"
             >
-              {loadingProvider === 'apple' ? (
-                <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
-              ) : (
-                <>
-                  <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                  </svg>
-                  Continue with Apple
-                </>
-              )}
-            </button>
+              <h1 className="mb-2 font-playfair text-[28px] font-normal leading-[1.2] tracking-[-0.02em] text-[#18181b]">
+                {emailStep === 'code' ? 'Enter your code' : 'Create Account'}
+              </h1>
+              <p className="font-manrope text-[15px] text-[#a1a1aa]">
+                {emailStep === 'code'
+                  ? `Check ${email.trim().toLowerCase()} for a 6-digit code`
+                  : 'Enter your email and we’ll send a 6-digit code'}
+              </p>
+            </motion.div>
 
-            {/* Google Sign In */}
-            <button
-              onClick={handleGoogleSignIn}
-              disabled={isLoading || loadingProvider !== null}
-              className="w-full h-[52px] bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center gap-3 font-semibold text-[15px] text-[#18181b] active:scale-[0.98] transition-transform disabled:opacity-50"
-            >
-              {loadingProvider === 'google' ? (
-                <div className="w-5 h-5 border-2 border-zinc-300 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  <svg className="w-5 h-5" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-                  </svg>
-                  Continue with Google
-                </>
-              )}
-            </button>
-          </motion.div>
-
-          {/* Divider */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex items-center gap-4 mb-6"
-          >
-            <div className="flex-1 h-px bg-zinc-100" />
-            <span className="text-zinc-400 text-[12px]">or</span>
-            <div className="flex-1 h-px bg-zinc-100" />
-          </motion.div>
-
-          {/* Email Form */}
-          <motion.form
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-            onSubmit={handleSubmit}
-            className="space-y-4"
-          >
-            {mode === 'signup' && (
-              <div>
-                <label className="text-[#a1a1aa] text-[12px] font-medium mb-1.5 block">Name</label>
-                <input
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                  className="w-full h-[48px] bg-white border border-zinc-200 rounded-xl px-4 text-[#18181b] text-[15px] placeholder:text-zinc-300 focus:outline-none focus:border-[#18181b] transition-colors"
-                />
-              </div>
-            )}
-
-            <div>
-              <label className="text-[#a1a1aa] text-[12px] font-medium mb-1.5 block">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                className="w-full h-[48px] bg-white border border-zinc-200 rounded-xl px-4 text-[#18181b] text-[15px] placeholder:text-zinc-300 focus:outline-none focus:border-[#18181b] transition-colors"
-              />
-            </div>
-
-            <div>
-              <label className="text-[#a1a1aa] text-[12px] font-medium mb-1.5 block">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                minLength={6}
-                className="w-full h-[48px] bg-white border border-zinc-200 rounded-xl px-4 text-[#18181b] text-[15px] placeholder:text-zinc-300 focus:outline-none focus:border-[#18181b] transition-colors"
-              />
-            </div>
-
-            {error && (
-              <motion.p 
+            {error ? (
+              <motion.p
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-red-400 text-[13px] text-center bg-red-400/10 rounded-lg py-2 px-3"
+                className="mb-4 rounded-lg bg-red-400/10 px-3 py-2 text-center text-[13px] text-red-400"
               >
                 {error}
               </motion.p>
+            ) : null}
+
+            {info && !error ? (
+              <p className="mb-4 rounded-lg bg-zinc-50 px-3 py-2 text-center font-manrope text-[13px] text-[#52525b]">
+                {info}
+              </p>
+            ) : null}
+
+            {emailStep === 'email' ? (
+              <motion.form
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                onSubmit={handleSendCode}
+                className="space-y-4"
+              >
+                <div>
+                  <label className="mb-1.5 block text-[12px] font-medium text-[#a1a1aa]">
+                    Name <span className="font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Your name"
+                    className="h-[48px] w-full rounded-xl border border-zinc-200 bg-white px-4 text-[15px] text-[#18181b] placeholder:text-zinc-300 transition-colors focus:border-[#18181b] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-[12px] font-medium text-[#a1a1aa]">Email</label>
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    required
+                    autoComplete="email"
+                    className="h-[48px] w-full rounded-xl border border-zinc-200 bg-white px-4 text-[15px] text-[#18181b] placeholder:text-zinc-300 transition-colors focus:border-[#18181b] focus:outline-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading || !email.trim()}
+                  className="flex h-[52px] w-full items-center justify-center rounded-full bg-[#18181b] text-[15px] font-medium text-white transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {isLoading ? (
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-300 border-t-white" />
+                  ) : (
+                    'Send 6-digit code'
+                  )}
+                </button>
+              </motion.form>
+            ) : (
+              <motion.form
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                onSubmit={handleVerifyCode}
+                className="space-y-4"
+              >
+                <div>
+                  <label className="mb-1.5 block text-[12px] font-medium text-[#a1a1aa]">
+                    6-digit code
+                  </label>
+                  <input
+                    ref={codeInputRef}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    pattern="[0-9]*"
+                    maxLength={6}
+                    value={code}
+                    onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="000000"
+                    required
+                    className="h-[56px] w-full rounded-xl border border-zinc-200 bg-white px-4 text-center font-manrope text-[28px] font-semibold tracking-[0.35em] text-[#18181b] placeholder:tracking-[0.35em] placeholder:text-zinc-300 focus:border-[#18181b] focus:outline-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading || code.length !== 6}
+                  className="flex h-[52px] w-full items-center justify-center rounded-full bg-[#18181b] text-[15px] font-medium text-white transition-transform active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45"
+                >
+                  {isLoading ? (
+                    <div className="h-5 w-5 animate-spin rounded-full border-2 border-zinc-300 border-t-white" />
+                  ) : (
+                    'Verify & continue'
+                  )}
+                </button>
+
+                <div className="flex items-center justify-between pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEmailStep('email')
+                      setCode('')
+                      setError('')
+                      setInfo('')
+                    }}
+                    className="font-manrope text-[13px] text-[#a1a1aa] underline"
+                  >
+                    Change email
+                  </button>
+                  <button
+                    type="button"
+                    disabled={isLoading || resendIn > 0}
+                    onClick={() => sendCode()}
+                    className="font-manrope text-[13px] font-medium text-[#18181b] disabled:text-[#a1a1aa]"
+                  >
+                    {resendIn > 0 ? `Resend in ${resendIn}s` : 'Resend code'}
+                  </button>
+                </div>
+              </motion.form>
             )}
 
-            <button
-              type="submit"
-              disabled={isLoading || loadingProvider !== null || !email || !password}
-              className="w-full h-[52px] rounded-full bg-[#18181b] text-white font-medium text-[15px] flex items-center justify-center active:scale-[0.98] transition-transform disabled:opacity-45 disabled:cursor-not-allowed"
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="mt-6 text-center text-[11px] leading-relaxed text-zinc-300"
             >
-              {isLoading ? (
-                <div className="w-5 h-5 border-2 border-zinc-300 border-t-white rounded-full animate-spin" />
-              ) : (
-                mode === 'signup' ? 'Create Account' : 'Sign In'
-              )}
-            </button>
-          </motion.form>
-
-          {/* Toggle Mode */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            className="text-center mt-6 text-[14px]"
-          >
-            <span className="text-zinc-400">
-              {mode === 'signup' ? 'Already have an account?' : "Don't have an account?"}
-            </span>
-            {' '}
-            <button
-              onClick={() => {
-                setMode(mode === 'signup' ? 'signin' : 'signup')
-                setError('')
-              }}
-              className="text-[#18181b] font-semibold underline"
-            >
-              {mode === 'signup' ? 'Sign In' : 'Sign Up'}
-            </button>
-          </motion.p>
-
-          {/* Terms */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.35 }}
-            className="text-center mt-4 text-[11px] text-zinc-300 leading-relaxed"
-          >
-            By continuing, you agree to our{' '}
-            <a href="/terms" className="text-zinc-400 underline">Terms of Service</a>
-            {' '}and{' '}
-            <a href="/privacy" className="text-zinc-400 underline">Privacy Policy</a>
-          </motion.p>
-
+              By continuing, you agree to our{' '}
+              <a href="/terms" className="text-zinc-400 underline">
+                Terms of Service
+              </a>{' '}
+              and{' '}
+              <a href="/privacy" className="text-zinc-400 underline">
+                Privacy Policy
+              </a>
+            </motion.p>
           </div>
         </div>
       </OnboardingMotionColumn>

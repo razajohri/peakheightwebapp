@@ -27,12 +27,7 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
             }}
           />
 
-          <motion.div
-            initial={{ opacity: 0, y: 18, scale: 0.94 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="relative z-10 flex flex-col items-center text-center"
-          >
+          <div className="relative z-10 flex flex-col items-center text-center">
             <div
               className="mb-8 flex h-[72px] w-[72px] items-center justify-center overflow-hidden rounded-[18px] bg-[#18181b]"
               style={{
@@ -50,16 +45,23 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
               />
             </div>
 
-            <h1 className="max-w-[320px] font-playfair text-[34px] font-normal leading-[1.15] tracking-[-0.03em] text-[#18181b] sm:text-[36px]">
-              Welcome to
-              <br />
-              PeakHeight.
-            </h1>
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="flex flex-col items-center"
+            >
+              <h1 className="max-w-[320px] font-playfair text-[34px] font-normal leading-[1.15] tracking-[-0.03em] text-[#18181b] sm:text-[36px]">
+                Welcome to
+                <br />
+                PeakHeight.
+              </h1>
 
-            <p className="mt-4 max-w-[280px] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em] text-[#a1a1aa]">
-              The best software for improving your height.
-            </p>
-          </motion.div>
+              <p className="mt-4 max-w-[280px] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em] text-[#a1a1aa]">
+                The best software for improving your height.
+              </p>
+            </motion.div>
+          </div>
         </div>
 
         <div className="relative z-10 px-6 pb-[max(2.5rem,env(safe-area-inset-bottom))]">

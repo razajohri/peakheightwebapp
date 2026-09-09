@@ -75,6 +75,11 @@ export async function saveOnboardingData(userId: string, data: OnboardingData): 
       dbData.ethnicity = data.ethnicity
     }
 
+    // Location
+    if (data.country) dbData.country = data.country
+    if (data.countryCode) dbData.country_code = data.countryCode
+    if (data.city) dbData.city = data.city
+
     // Foot size
     if (data.footSize) {
       dbData.foot_size = data.footSize
@@ -114,6 +119,16 @@ export async function saveOnboardingData(userId: string, data: OnboardingData): 
     // Tried options (array)
     if (data.triedOptions && Array.isArray(data.triedOptions)) {
       dbData.tried_options = data.triedOptions
+    }
+
+    // Commitment level
+    if (data.commitmentLevel) {
+      dbData.commitment_level = data.commitmentLevel
+    }
+
+    // Results timeline
+    if (data.resultsTimeline) {
+      dbData.results_timeline = data.resultsTimeline
     }
 
     // Stopping goals (array)

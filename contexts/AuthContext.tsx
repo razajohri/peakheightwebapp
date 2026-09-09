@@ -11,8 +11,8 @@ interface AuthContextType {
   loading: boolean
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>
   signUpWithEmail: (email: string, password: string, name?: string) => Promise<{ error: AuthError | null }>
-  signInWithApple: (returnTo?: string) => Promise<{ error: AuthError | null }>
-  signInWithGoogle: (returnTo?: string) => Promise<{ error: AuthError | null }>
+  sendEmailOtp: (email: string, options?: { name?: string; returnTo?: string }) => Promise<{ error: AuthError | null }>
+  verifyEmailOtp: (email: string, token: string, name?: string) => Promise<{ error: AuthError | null }>
   signOut: () => Promise<void>
   isPremium: boolean
 }
@@ -168,6 +168,52 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error }
   }
 
+  /** Send a 6-digit email OTP (and magic link if template includes it). */
+  const sendEmailOtp = async (
+    email: string,
+    options?: { name?: string; returnTo?: string }
+  ) => {
+    const next = options?.returnTo && options.returnTo.startsWith('/') ? options.returnTo : '/paywall'
+    const { error } = await supabase.auth.signInWithOtp({
+      email: email.trim().toLowerCase(),
+      options: {
+        shouldCreateUser: true,
+        emailRedirectTo:
+          typeof window !== 'undefined'
+            ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`
+            : undefined,
+        data: options?.name
+          ? {
+              display_name: options.name,
+              full_name: options.name,
+            }
+          : undefined,
+      },
+    })
+    return { error }
+  }
+
+  /** Verify the 6-digit code from email. */
+  const verifyEmailOtp = async (email: string, token: string, name?: string) => {
+    const { data, error } = await supabase.auth.verifyOtp({
+      email: email.trim().toLowerCase(),
+      token: token.trim(),
+      type: 'email',
+    })
+
+    if (!error && data.user) {
+      await createUserProfile(
+        data.user.id,
+        data.user.email ?? email,
+        name ||
+          data.user.user_metadata?.display_name ||
+          data.user.user_metadata?.full_name
+      )
+    }
+
+    return { error }
+  }
+
   /** Ensure a user row exists (e.g. after sign-in). Only sets id, email, updated_at so existing profile is not overwritten. */
   const ensureUserProfileForSignIn = async (userId: string, email: string) => {
     try {
@@ -217,38 +263,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const oauthRedirect = (returnTo?: string) => {
-    const next = returnTo && returnTo.startsWith('/') ? returnTo : '/dashboard'
-    return `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`
-  }
-
-  const signInWithApple = async (returnTo?: string) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'apple',
-      options: {
-        redirectTo: oauthRedirect(returnTo),
-        queryParams: {
-          scope: 'name email',
-        },
-      },
-    })
-    return { error }
-  }
-
-  const signInWithGoogle = async (returnTo?: string) => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: oauthRedirect(returnTo),
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
-      },
-    })
-    return { error }
-  }
-
   const signOut = async () => {
     await logOutRevenueCat()
     await supabase.auth.signOut()
@@ -265,8 +279,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         loading,
         signInWithEmail,
         signUpWithEmail,
-        signInWithApple,
-        signInWithGoogle,
+        sendEmailOtp,
+        verifyEmailOtp,
         signOut,
         isPremium,
       }}
