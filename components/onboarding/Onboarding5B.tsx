@@ -58,7 +58,7 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <ProgressHeader currentStep={6} onBack={onBack} />
+        <ProgressHeader currentStep={6} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
           {/* Title */}
@@ -68,8 +68,8 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
             transition={{ duration: 0.4 }}
             className="text-center mb-8"
           >
-            <h1 className="text-[#18181b] font-playfair font-normal text-[28px]">
-              What's your Dream Height?
+            <h1 className="text-[#18181b] font-playfair font-normal text-[22px] min-[390px]:text-[24px] sm:text-[28px] whitespace-nowrap tracking-tight">
+              What&apos;s your Dream Height?
             </h1>
           </motion.div>
 
