@@ -11,6 +11,8 @@ import {
   type DashboardProfile,
   type DashboardProgress,
 } from '@/lib/dashboard/data'
+import { loadTodayBundle, type DailyTaskBundle } from '@/lib/dashboard/dailyTasks'
+import { fetchHeightHistory, type HeightMeasurement } from '@/lib/dashboard/height'
 import { initializeRevenueCat, isRevenueCatConfigured } from '@/lib/services/revenuecat'
 import logo from '../../peakheight-logo.jpg'
 import { MeTab } from './MeTab'
@@ -33,6 +35,8 @@ export default function DashboardApp() {
   const [tab, setTab] = useState<TabId>('me')
   const [profile, setProfile] = useState<DashboardProfile | null>(null)
   const [progress, setProgress] = useState<DashboardProgress | null>(null)
+  const [bundle, setBundle] = useState<DailyTaskBundle | null>(null)
+  const [history, setHistory] = useState<HeightMeasurement[]>([])
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
@@ -45,10 +49,24 @@ export default function DashboardApp() {
     let cancelled = false
     ;(async () => {
       try {
-        const data = await fetchDashboardData(user.id)
+        const [dash, today, heightRows] = await Promise.all([
+          fetchDashboardData(user.id),
+          loadTodayBundle(user.id),
+          fetchHeightHistory(user.id),
+        ])
         if (cancelled) return
-        setProfile(data.profile)
-        setProgress(data.progress)
+        setProfile(dash.profile)
+        setProgress(
+          today.progress
+            ? {
+                current_day: today.progress.current_day,
+                current_streak: today.progress.current_streak,
+                longest_streak: today.progress.longest_streak,
+              }
+            : dash.progress
+        )
+        setBundle(today.bundle)
+        setHistory(heightRows)
         if (isPremium && isRevenueCatConfigured()) {
           initializeRevenueCat(user.id).catch(() => {})
         }
@@ -67,7 +85,7 @@ export default function DashboardApp() {
     router.push('/')
   }
 
-  if (loading || !ready) {
+  if (loading || !ready || !user) {
     return (
       <div
         className="flex min-h-screen min-h-dvh items-center justify-center"
@@ -117,16 +135,37 @@ export default function DashboardApp() {
 
       <main className="mx-auto w-full max-w-lg px-5 pt-4">
         {tab === 'me' ? (
-          <MeTab name={name} profile={profile} progress={progress} isPremium={premium} />
+          <MeTab
+            userId={user.id}
+            name={name}
+            profile={profile}
+            progress={progress}
+            isPremium={premium}
+            history={history}
+            onProfileHeight={(cm) =>
+              setProfile((prev) => (prev ? { ...prev, current_height: cm } : prev))
+            }
+            onHistoryChange={setHistory}
+          />
         ) : null}
-        {tab === 'today' ? <TodayTab progress={progress} /> : null}
+        {tab === 'today' ? (
+          <TodayTab
+            userId={user.id}
+            progress={progress}
+            bundle={bundle}
+            onBundleChange={setBundle}
+            onProgressChange={setProgress}
+          />
+        ) : null}
         {tab === 'learn' ? <LearnTab /> : null}
         {tab === 'account' ? (
           <AccountTab
+            userId={user.id}
             profile={profile}
-            email={user?.email}
+            email={user.email}
             isPremium={premium}
             onSignOut={handleSignOut}
+            onProfileChange={setProfile}
           />
         ) : null}
       </main>

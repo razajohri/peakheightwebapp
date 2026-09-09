@@ -17,7 +17,7 @@ export function LearnTab() {
           Growth insights
         </h2>
         <p className="mt-1 font-manrope text-[14px] text-[#71717a]">
-          Web-friendly lessons. Videos, extras, and deeper playbooks are in the app.
+          Practical lessons you can use today. Deeper extras and videos live in the app.
         </p>
       </div>
 
@@ -38,9 +38,10 @@ export function LearnTab() {
                 <span className="font-manrope text-[12px] text-[#a1a1aa]">{open ? 'Hide' : 'Read'}</span>
               </div>
               <p className="font-manrope text-[14px] font-semibold text-[#18181b]">{card.title}</p>
+              <p className="mt-1 font-manrope text-[13px] text-[#71717a]">{card.summary}</p>
               {open ? (
-                <p className="mt-2 font-manrope text-[13px] leading-relaxed text-[#71717a]">
-                  {card.summary}
+                <p className="mt-2 border-t border-zinc-100 pt-2 font-manrope text-[13px] leading-relaxed text-[#52525b]">
+                  {card.detail}
                 </p>
               ) : null}
             </button>
