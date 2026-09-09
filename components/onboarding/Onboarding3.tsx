@@ -23,13 +23,6 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
 
   const [date, setDate] = useState(parseInitialDate())
 
-  const formatDate = (d: Date) => {
-    const month = d.getMonth() + 1
-    const day = d.getDate()
-    const year = d.getFullYear()
-    return `${month}/${day}/${year}`
-  }
-
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = new Date(e.target.value)
     if (!isNaN(newDate.getTime())) {
@@ -60,10 +53,9 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <ProgressHeader currentStep={3} onBack={onBack} />
+        <ProgressHeader currentStep={3} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
-          {/* Title */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,7 +70,6 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
             </p>
           </motion.div>
 
-          {/* Date Picker */}
           <div className="flex-1 flex flex-col justify-center pb-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -86,32 +77,14 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
               transition={{ duration: 0.4, delay: 0.1 }}
               className="max-w-md mx-auto w-full"
             >
-              <div className="flex items-center gap-4 rounded-2xl border border-zinc-200 bg-white p-5">
-                {/* Calendar Icon */}
-                <div className="w-14 h-14 rounded-xl bg-zinc-100 flex items-center justify-center">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#18181b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                  </svg>
-                </div>
-
-                {/* Date Display & Input */}
-                <div className="flex-1">
-                  <p className="text-[#a1a1aa] text-sm mb-1">Date of Birth</p>
-                  <p className="text-[#18181b] text-xl font-medium">{formatDate(date)}</p>
-                </div>
-              </div>
-
-              {/* Hidden date input that opens native picker */}
               <input
                 type="date"
                 value={getInputValue()}
                 onChange={handleDateChange}
                 max={new Date().toISOString().split('T')[0]}
                 min="1920-01-01"
-                className="w-full mt-4 p-4 rounded-xl bg-white border border-zinc-200 text-[#18181b] text-lg appearance-none cursor-pointer [color-scheme:light]"
+                aria-label="Date of birth"
+                className="w-full p-4 rounded-xl bg-white border border-zinc-200 text-[#18181b] text-lg appearance-none cursor-pointer [color-scheme:light]"
               />
 
               {isUnder18() && (
@@ -127,8 +100,10 @@ export default function Onboarding3({ data, updateData, onNext, onBack }: Onboar
           </div>
         </div>
 
-        {/* Button */}
-        <div className="px-6 pb-10">
+        <div
+          className="px-6 pt-4"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+        >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>
