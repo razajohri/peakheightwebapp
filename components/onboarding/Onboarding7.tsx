@@ -15,7 +15,7 @@ interface Onboarding7Props {
 }
 
 export default function Onboarding7({ data, updateData, onNext, onBack }: Onboarding7Props) {
-  const fullText = "The right daily routine can unlock hidden growth potential."
+  const fullText = 'The right daily routine can unlock hidden growth potential.'
   const [displayedText, setDisplayedText] = useState('')
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -36,7 +36,7 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
       return (
         <>
           {parts[0]}
-          <span className="bg-zinc-100 px-2 py-0.5 rounded border border-zinc-200">
+          <span className="bg-zinc-100 px-1.5 py-0.5 rounded border border-zinc-200 whitespace-nowrap">
             {highlight}
           </span>
           {parts[1]}
@@ -47,33 +47,31 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
   }
 
   return (
-    <div className="min-h-screen min-h-dvh bg-[#f4f7fc] relative overflow-hidden">
+    <div className="min-h-[100svh] bg-[#f4f7fc] relative overflow-hidden">
       <FloatingStars />
 
-      <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
+      <div className="relative z-10 min-h-[100svh] flex flex-col">
         <ProgressHeader currentStep={8} totalSteps={21} onBack={onBack} />
 
-        <div className="flex-1 flex flex-col px-6 pt-0">
-          {/* Title */}
+        <div className="flex-1 flex flex-col px-6 pt-1 pb-2 min-h-0">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mb-2"
+            transition={{ duration: 0.35 }}
+            className="mb-4"
           >
-            <h1 className="text-[#18181b] text-[20px] sm:text-[24px] font-bold leading-tight">
-              Height isn't inherited, it's earned.
+            <h1 className="text-[#18181b] font-playfair font-normal text-[22px] sm:text-[26px] leading-snug tracking-tight">
+              Height isn&apos;t inherited, it&apos;s earned.
             </h1>
           </motion.div>
 
-          {/* Illustration */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex-1 flex items-center justify-center mb-3"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="flex justify-center mb-5"
           >
-            <div className="w-2/3 sm:w-3/4 max-w-xs sm:max-w-md rounded-3xl bg-gradient-to-br from-white/10 to-white/5 border border-zinc-200 flex items-center justify-center overflow-hidden">
+            <div className="w-[72%] max-w-[280px] rounded-2xl bg-white border border-zinc-200 overflow-hidden shadow-sm">
               <Image
                 src="/assets/height-diagram.webp"
                 alt="How posture, load, sleep, and nutrition affect height potential"
@@ -85,24 +83,23 @@ export default function Onboarding7({ data, updateData, onNext, onBack }: Onboar
             </div>
           </motion.div>
 
-          {/* Description with typing effect */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
-            className="relative pl-3 border-l-2 border-[#18181b]/80 mb-5"
+            transition={{ duration: 0.35, delay: 0.2 }}
+            className="relative pl-3 border-l-2 border-[#18181b]/80 mb-4"
           >
-            <p className="text-zinc-600 text-sm leading-relaxed">
+            <p className="text-[#71717a] text-sm leading-relaxed">
               {renderText()}
-              {currentIndex < fullText.length && (
-                <span className="animate-pulse">|</span>
-              )}
+              {currentIndex < fullText.length && <span className="animate-pulse">|</span>}
             </p>
           </motion.div>
         </div>
 
-        {/* Button */}
-        <div className="px-6 pb-10">
+        <div
+          className="px-6 pt-2"
+          style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}
+        >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>
