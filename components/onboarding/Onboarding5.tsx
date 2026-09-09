@@ -89,7 +89,9 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
             transition={{ duration: 0.4 }}
             className="mb-6"
           >
-            <OptionTitle>What is your height & weight?</OptionTitle>
+            <OptionTitle>
+              What is your height <span className="font-manrope font-normal">&amp;</span> weight?
+            </OptionTitle>
           </motion.div>
 
           <motion.div
