@@ -133,14 +133,17 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
               </div>
             </div>
             
-            <p className="text-[#18181b] text-center text-base leading-relaxed">
+            <p className="text-[#18181b] text-center text-base leading-relaxed mb-2">
               See how dialing in your daily habits can move you closer to your true height potential.
             </p>
           </motion.div>
         </div>
 
         {/* Button */}
-        <div className="px-6 pb-10">
+        <div
+          className="px-6 pt-6"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+        >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>
