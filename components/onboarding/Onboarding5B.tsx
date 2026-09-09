@@ -174,14 +174,14 @@ export default function Onboarding5B({ data, updateData, onNext, onBack }: Onboa
               </div>
             )}
 
-            <p className="text-zinc-400 text-sm text-center mt-8">
+            <p className="text-[#a1a1aa] text-sm text-center mt-10 mb-2">
               This will be used to create your personal plan
             </p>
           </motion.div>
         </div>
 
         {/* Button */}
-        <div className="px-6 pb-10">
+        <div className="px-6 pt-6 pb-10 sm:pt-8">
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>
