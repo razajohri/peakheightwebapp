@@ -215,13 +215,13 @@ export default function Onboarding5({ data, updateData, onNext, onBack }: Onboar
               )}
             </motion.div>
 
-            <p className="font-manrope text-[15px] text-[#a1a1aa] text-center pt-4">
+            <p className="font-manrope text-[15px] text-[#a1a1aa] text-center pt-6 pb-2">
               This will be used to create your personal plan
             </p>
           </div>
         </div>
 
-        <div className="px-6 pb-10">
+        <div className="px-6 pt-6 pb-10">
           <OnboardingButton title="Continue" onPress={handleContinue} disabled={false} />
         </div>
       </OnboardingMotionColumn>
