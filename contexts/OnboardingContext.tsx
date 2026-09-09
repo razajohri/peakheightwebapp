@@ -35,7 +35,9 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
         const step = parseInt(savedStep, 10)
         // Guard: only apply if valid number in range (avoid NaN or corrupt data)
         if (Number.isFinite(step) && step >= 1 && step <= 22) {
-          setCurrentStep(step)
+          // Removed "Losing Height Potential Every Night" — shift saved positions after it
+          if (step > 12) setCurrentStep(Math.min(step - 1, 21))
+          else setCurrentStep(step)
         }
       } catch (error) {
         console.error('Failed to load saved step:', error)
@@ -58,7 +60,7 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
   }
 
   const nextStep = () => {
-    if (currentStep < 22) {
+    if (currentStep < 21) {
       setCurrentStep((prev) => prev + 1)
     }
   }
@@ -70,7 +72,7 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
   }
 
   const goToStep = (step: number) => {
-    if (step >= 1 && step <= 22) {
+    if (step >= 1 && step <= 21) {
       setCurrentStep(step)
     }
   }

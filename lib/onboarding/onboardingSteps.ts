@@ -131,46 +131,40 @@ export const ONBOARDING_STEPS: OnboardingStepDef[] = [
   },
   {
     step: 13,
-    type: 'info',
-    title: 'Losing Height Potential Every Night?',
-    subtitle: 'Sleeping 8+ hours a day boosts growth hormone production by up to 75%, directly impacting height potential and testosterone level.',
-  },
-  {
-    step: 14,
     type: 'question',
     title: 'Do you smoke or drink alcohol?',
     dataKeys: ['smokingStatus', 'drinkingStatus'],
   },
   {
-    step: 15,
+    step: 14,
     type: 'info',
     title: 'The reality of being short',
   },
   {
-    step: 16,
+    step: 15,
     type: 'info',
     title: 'How tall will you actually grow?',
   },
   {
-    step: 17,
+    step: 16,
     type: 'info',
     title: 'Leave a Rating',
     subtitle: 'This helps us bring you more of what you love',
   },
   {
-    step: 18,
+    step: 17,
     type: 'info',
     title: "We're setting everything up for you",
   },
   {
-    step: 19,
+    step: 18,
     type: 'info',
     title: 'Unlock Your Growth Potential',
     subtitle: "Based on your answers, we've created a personalized plan just for you",
   },
-  { step: 20, type: 'auth', title: 'Sign up / Sign in' },
-  { step: 21, type: 'paywall', title: 'Subscribe' },
-  { step: 22, type: 'complete', title: "You're All Set!" },
+  { step: 19, type: 'auth', title: 'Sign up / Sign in' },
+  { step: 20, type: 'paywall', title: 'Subscribe' },
+  { step: 21, type: 'complete', title: "You're All Set!" },
 ]
 
 /** Step index (0-based) to step number (1-based) */

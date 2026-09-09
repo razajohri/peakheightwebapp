@@ -77,7 +77,7 @@ export default function Onboarding15({ data, updateData, onNext, onBack }: Onboa
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <ProgressHeader currentStep={18} totalSteps={22} onBack={onBack} />
+        <ProgressHeader currentStep={17} totalSteps={21} onBack={onBack} />
         <div className="flex-1 flex flex-col px-6 pt-4">
           <AnimatePresence mode="wait">
             {analyzing ? (

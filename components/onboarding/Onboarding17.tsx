@@ -40,7 +40,7 @@ export default function Onboarding17({ data, updateData, onNext, onBack, onAuthR
       className="fixed inset-0 bg-gradient-to-b from-[#f4f7fc] via-[#edf3fb] to-[#dde7f4] flex flex-col"
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <ProgressHeader currentStep={19} totalSteps={22} onBack={onBack} />
+      <ProgressHeader currentStep={18} totalSteps={21} onBack={onBack} />
       {/* Scrollable Content */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden">
         <div className="max-w-[400px] mx-auto w-full px-5 pt-2 pb-4">

@@ -41,7 +41,7 @@ export default function Onboarding12({ data, updateData, onNext, onBack }: Onboa
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <ProgressHeader currentStep={14} onBack={onBack} />
+        <ProgressHeader currentStep={13} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-8">
           {/* Title */}

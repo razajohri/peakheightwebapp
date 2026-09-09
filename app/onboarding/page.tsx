@@ -83,7 +83,6 @@ const Onboarding7A = dynamic(() => import('@/components/onboarding/Onboarding7A'
 const Onboarding8 = dynamic(() => import('@/components/onboarding/Onboarding8'), { ssr: false, loading: StepLoading })
 const Onboarding9 = dynamic(() => import('@/components/onboarding/Onboarding9'), { ssr: false, loading: StepLoading })
 const Onboarding10 = dynamic(() => import('@/components/onboarding/Onboarding10'), { ssr: false, loading: StepLoading })
-const Onboarding11 = dynamic(() => import('@/components/onboarding/Onboarding11'), { ssr: false, loading: StepLoading })
 const Onboarding12 = dynamic(() => import('@/components/onboarding/Onboarding12'), { ssr: false, loading: StepLoading })
 const Onboarding13 = dynamic(() => import('@/components/onboarding/Onboarding13'), { ssr: false, loading: StepLoading })
 const Onboarding13A = dynamic(() => import('@/components/onboarding/Onboarding13A'), { ssr: false, loading: StepLoading })
@@ -117,7 +116,7 @@ function OnboardingFlow() {
 
   // Prefetch next step's chunk so it loads faster when user taps Continue
   useEffect(() => {
-    if (currentStep >= 22) return
+    if (currentStep >= 21) return
     const prefetch: Record<number, () => Promise<unknown>> = {
       2: () => import('@/components/onboarding/Onboarding3'),
       3: () => import('@/components/onboarding/Onboarding4'),
@@ -129,15 +128,14 @@ function OnboardingFlow() {
       9: () => import('@/components/onboarding/Onboarding8'),
       10: () => import('@/components/onboarding/Onboarding9'),
       11: () => import('@/components/onboarding/Onboarding10'),
-      12: () => import('@/components/onboarding/Onboarding11'),
-      13: () => import('@/components/onboarding/Onboarding12'),
-      14: () => import('@/components/onboarding/Onboarding13'),
-      15: () => import('@/components/onboarding/Onboarding13A'),
-      16: () => import('@/components/onboarding/Onboarding14'),
-      17: () => import('@/components/onboarding/Onboarding15'),
-      18: () => import('@/components/onboarding/Onboarding17'),
-      19: () => import('@/components/onboarding/OnboardingAuth'),
-      20: () => import('@/components/onboarding/OnboardingComplete'),
+      12: () => import('@/components/onboarding/Onboarding12'),
+      13: () => import('@/components/onboarding/Onboarding13'),
+      14: () => import('@/components/onboarding/Onboarding13A'),
+      15: () => import('@/components/onboarding/Onboarding14'),
+      16: () => import('@/components/onboarding/Onboarding15'),
+      17: () => import('@/components/onboarding/Onboarding17'),
+      18: () => import('@/components/onboarding/OnboardingAuth'),
+      19: () => import('@/components/onboarding/OnboardingComplete'),
     }
     prefetch[currentStep]?.()
   }, [currentStep])
@@ -180,44 +178,42 @@ function OnboardingFlow() {
     case 11:
       return <Onboarding10 {...commonProps} />
     case 12:
-      return <Onboarding11 {...commonProps} />
-    case 13:
       return <Onboarding12 {...commonProps} />
-    case 14:
+    case 13:
       return <Onboarding13 {...commonProps} />
-    case 15:
+    case 14:
       return <Onboarding13A {...commonProps} />
-    case 16:
+    case 15:
       return <Onboarding14 {...commonProps} />
-    case 17:
+    case 16:
       return <Onboarding15 {...commonProps} />
-    case 18:
+    case 17:
       return <Onboarding17 {...commonProps} onAuthRequired={handleAuthRequired} />
-    case 19:
+    case 18:
       return <OnboardingAuth {...commonProps} />
-    case 20:
+    case 19:
       return <OnboardingPaywallRedirect />
-    case 21:
+    case 20:
       return <OnboardingComplete data={data} />
-    case 22:
+    case 21:
       return <OnboardingComplete data={data} />
     default:
       return (
-        <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="min-h-screen bg-[#f4f7fc] flex items-center justify-center">
           <div className="text-center px-4">
-            <h1 className="text-white text-2xl sm:text-3xl mb-4">Step {currentStep}</h1>
-            <p className="text-gray-400 mb-8 text-sm sm:text-base">Coming soon...</p>
+            <h1 className="text-[#18181b] text-2xl sm:text-3xl mb-4">Step {currentStep}</h1>
+            <p className="text-[#a1a1aa] mb-8 text-sm sm:text-base">Coming soon...</p>
             <div className="flex gap-4 justify-center flex-wrap">
               <button
                 onClick={prevStep}
-                className="px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                className="px-6 py-3 bg-[#18181b] text-white rounded-full font-medium hover:opacity-90 transition-opacity"
               >
                 Back
               </button>
-              {currentStep < 22 && (
+              {currentStep < 21 && (
                 <button
                   onClick={nextStep}
-                  className="px-6 py-3 bg-white text-black rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                  className="px-6 py-3 bg-[#18181b] text-white rounded-full font-medium hover:opacity-90 transition-opacity"
                 >
                   Next
                 </button>

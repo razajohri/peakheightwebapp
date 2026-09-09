@@ -82,7 +82,7 @@ export const ONBOARDING_BORDER_RADIUS = {
   BACK_BUTTON: 9999,
 } as const
 
-export const ONBOARDING_TOTAL_STEPS = 22
+export const ONBOARDING_TOTAL_STEPS = 21
 
 export const ONBOARDING_ANIMATIONS = {
   PAGE_TRANSITION: 300,

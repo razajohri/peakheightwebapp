@@ -31,7 +31,7 @@ export default function Onboarding13A({ data, updateData, onNext, onBack }: Onbo
       <FloatingStars />
 
       <div className="relative z-10 min-h-screen min-h-dvh flex flex-col">
-        <ProgressHeader currentStep={16} onBack={onBack} />
+        <ProgressHeader currentStep={15} totalSteps={21} onBack={onBack} />
 
         <div className="flex-1 flex flex-col px-6 pt-4">
           {/* Chart Card */}
