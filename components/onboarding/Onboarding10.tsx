@@ -95,7 +95,7 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.4 }}
-            className="max-w-md mx-auto w-full"
+            className="max-w-md mx-auto w-full mb-2"
           >
             <div className="p-4 rounded-xl border border-zinc-200 bg-white">
               <p className="text-[#18181b] text-base leading-relaxed">
@@ -106,7 +106,10 @@ export default function Onboarding10({ data, updateData, onNext, onBack }: Onboa
         </div>
 
         {/* Button */}
-        <div className="px-6 pb-10">
+        <div
+          className="px-6 pt-6"
+          style={{ paddingBottom: 'max(1.25rem, env(safe-area-inset-bottom))' }}
+        >
           <OnboardingButton title="Continue" onPress={onNext} disabled={false} />
         </div>
       </div>
