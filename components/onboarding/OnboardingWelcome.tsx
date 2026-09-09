@@ -57,7 +57,7 @@ export default function OnboardingWelcome({ onNext }: OnboardingWelcomeProps) {
             </h1>
 
             <p className="mt-4 max-w-[280px] font-manrope text-[14px] font-normal leading-relaxed tracking-[0.01em] text-[#a1a1aa]">
-              The best system for unlocking your height potential.
+              The best software for improving your height.
             </p>
           </motion.div>
         </div>
