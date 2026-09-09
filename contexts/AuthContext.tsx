@@ -11,8 +11,8 @@ interface AuthContextType {
   loading: boolean
   signInWithEmail: (email: string, password: string) => Promise<{ error: AuthError | null }>
   signUpWithEmail: (email: string, password: string, name?: string) => Promise<{ error: AuthError | null }>
-  signInWithApple: () => Promise<{ error: AuthError | null }>
-  signInWithGoogle: () => Promise<{ error: AuthError | null }>
+  signInWithApple: (returnTo?: string) => Promise<{ error: AuthError | null }>
+  signInWithGoogle: (returnTo?: string) => Promise<{ error: AuthError | null }>
   signOut: () => Promise<void>
   isPremium: boolean
 }
@@ -217,13 +217,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const signInWithApple = async () => {
+  const oauthRedirect = (returnTo?: string) => {
+    const next = returnTo && returnTo.startsWith('/') ? returnTo : '/dashboard'
+    return `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`
+  }
+
+  const signInWithApple = async (returnTo?: string) => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'apple',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: oauthRedirect(returnTo),
         queryParams: {
-          // Request email and name scopes
           scope: 'name email',
         },
       },
@@ -231,11 +235,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error }
   }
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (returnTo?: string) => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: oauthRedirect(returnTo),
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',

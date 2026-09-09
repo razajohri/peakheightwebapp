@@ -76,7 +76,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
     setError('')
     setLoadingProvider('apple')
     try {
-      const result = await signInWithApple()
+      const result = await signInWithApple('/paywall')
       if (result.error) {
         setError('Apple Sign In failed. Please try again.')
         setLoadingProvider(null)
@@ -92,7 +92,7 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
     setError('')
     setLoadingProvider('google')
     try {
-      const result = await signInWithGoogle()
+      const result = await signInWithGoogle('/paywall')
       if (result.error) {
         setError('Google Sign In failed. Please try again.')
         setLoadingProvider(null)

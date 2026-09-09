@@ -8,7 +8,8 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOi
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
-  const next = requestUrl.searchParams.get('next') || '/onboarding'
+  const rawNext = requestUrl.searchParams.get('next') || '/dashboard'
+  const next = rawNext.startsWith('/') && !rawNext.startsWith('//') ? rawNext : '/dashboard'
 
   if (code) {
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
@@ -29,10 +30,8 @@ export async function GET(request: NextRequest) {
       }
 
       if (data.user) {
-        // Create or update user profile in users table
-        const { error: profileError } = await supabase
-          .from('users')
-          .upsert({
+        const { error: profileError } = await supabase.from('users').upsert(
+          {
             id: data.user.id,
             email: data.user.email,
             display_name: data.user.user_metadata?.full_name || data.user.user_metadata?.name,
@@ -40,19 +39,15 @@ export async function GET(request: NextRequest) {
             last_name: data.user.user_metadata?.family_name,
             avatar_url: data.user.user_metadata?.avatar_url || data.user.user_metadata?.picture,
             updated_at: new Date().toISOString(),
-          }, {
-            onConflict: 'id'
-          })
+          },
+          { onConflict: 'id' }
+        )
 
         if (profileError) {
           console.error('Error creating user profile:', profileError)
         }
       }
 
-      // Check if user has pending onboarding data in localStorage
-      // This will be handled client-side after redirect
-      
-      // Redirect to the onboarding flow or dashboard based on user state
       return NextResponse.redirect(new URL(next, requestUrl.origin))
     } catch (error) {
       console.error('Auth callback exception:', error)
@@ -60,6 +55,5 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // No code present, redirect to auth page
   return NextResponse.redirect(new URL('/auth', requestUrl.origin))
 }
