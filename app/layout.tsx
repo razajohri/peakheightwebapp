@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Manrope, Playfair_Display } from 'next/font/google'
 import './globals.css'
-import CookieConsent from '@/components/CookieConsent'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -119,7 +118,6 @@ export default function RootLayout({
           </div>
         </noscript>
         {children}
-        <CookieConsent />
       </body>
     </html>
   )
