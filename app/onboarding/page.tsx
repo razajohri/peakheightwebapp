@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { OnboardingProvider, useOnboarding } from '@/contexts/OnboardingContext'
 import Onboarding2 from '@/components/onboarding/Onboarding2'
 import OnboardingWelcome from '@/components/onboarding/OnboardingWelcome'
+import OnboardingName from '@/components/onboarding/OnboardingName'
+import OnboardingNameReveal from '@/components/onboarding/OnboardingNameReveal'
 
 // 3-2-1 countdown — all inline styles, no CSS deps. Shows first so user always sees something.
 function IntroCountdown({ onComplete }: { onComplete: () => void }) {
@@ -111,17 +113,20 @@ function OnboardingFlow() {
   const { currentStep, data, updateData, nextStep, prevStep } = useOnboarding()
   const [countdownDone, setCountdownDone] = useState(false)
   const [welcomeDone, setWelcomeDone] = useState(false)
+  const [preStep, setPreStep] = useState<'name' | 'reveal' | 'done'>('name')
 
   const handleAuthRequired = (authMode: 'signup' | 'signin' = 'signup') => {
     router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
   }
 
-  // Resume mid-flow skips welcome; step 1 can return to it via back
+  // Resume mid-flow skips intro gates; step 1 can return via back
   useEffect(() => {
     if (currentStep > 1) {
       setWelcomeDone(true)
+      setPreStep('done')
       try {
         sessionStorage.setItem('ph_welcome_done', '1')
+        sessionStorage.setItem('ph_name_done', '1')
       } catch {
         /* ignore */
       }
@@ -129,6 +134,7 @@ function OnboardingFlow() {
     }
     try {
       if (sessionStorage.getItem('ph_welcome_done') === '1') setWelcomeDone(true)
+      if (sessionStorage.getItem('ph_name_done') === '1') setPreStep('done')
     } catch {
       /* ignore */
     }
@@ -150,6 +156,24 @@ function OnboardingFlow() {
       /* ignore */
     }
     setWelcomeDone(false)
+  }, [])
+
+  const finishNameReveal = useCallback(() => {
+    try {
+      sessionStorage.setItem('ph_name_done', '1')
+    } catch {
+      /* ignore */
+    }
+    setPreStep('done')
+  }, [])
+
+  const backToName = useCallback(() => {
+    try {
+      sessionStorage.removeItem('ph_name_done')
+    } catch {
+      /* ignore */
+    }
+    setPreStep('name')
   }, [])
 
   // Prefetch next step's chunk so it loads faster when user taps Continue
@@ -189,6 +213,27 @@ function OnboardingFlow() {
     return <OnboardingWelcome onNext={finishWelcome} />
   }
 
+  if (preStep === 'name') {
+    return (
+      <OnboardingName
+        data={data}
+        updateData={updateData}
+        onNext={() => setPreStep('reveal')}
+        onBack={backToWelcome}
+      />
+    )
+  }
+
+  if (preStep === 'reveal') {
+    return (
+      <OnboardingNameReveal
+        name={data.userName || ''}
+        onNext={finishNameReveal}
+        onBack={backToName}
+      />
+    )
+  }
+
   // Render current onboarding step
   const commonProps = {
     data,
@@ -202,7 +247,7 @@ function OnboardingFlow() {
       return (
         <Onboarding2
           {...commonProps}
-          onBack={backToWelcome}
+          onBack={backToName}
         />
       )
     case 2:

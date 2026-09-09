@@ -1,6 +1,7 @@
-/**
- * Merge class names (shadcn-style). Add clsx + tailwind-merge for full behavior.
- */
-export function cn(...classes: (string | undefined | false)[]): string {
-  return classes.filter(Boolean).join(' ')
+import { clsx, type ClassValue } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+/** Merge class names (shadcn-style). */
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
 }
