@@ -47,16 +47,26 @@ export default function PaywallPage() {
 
   useEffect(() => {
     if (loading) return
-    if (!user) {
-      router.replace('/auth?redirect=/paywall&from=onboarding')
-      return
-    }
 
     let cancelled = false
 
-    const run = async () => {
+    // Give session a short moment to hydrate after OTP before bouncing to auth
+    if (!user) {
+      const t = setTimeout(() => {
+        if (cancelled) return
+        router.replace('/auth?redirect=/paywall&from=onboarding')
+      }, 800)
+      return () => {
+        cancelled = true
+        clearTimeout(t)
+      }
+    }
+
+    const loadPaywall = async () => {
       if (!isRevenueCatConfigured()) {
-        setErrorMessage('Subscription options aren’t available on this site yet. If you’re the site owner, add NEXT_PUBLIC_REVENUECAT_API_KEY in Netlify (or your host) and redeploy.')
+        setErrorMessage(
+          'Subscription options aren’t available on this site yet. If you’re the site owner, add NEXT_PUBLIC_REVENUECAT_API_KEY in Netlify (or your host) and redeploy.'
+        )
         setStatus('error')
         return
       }
@@ -78,8 +88,10 @@ export default function PaywallPage() {
       }
     }
 
-    run()
-    return () => { cancelled = true }
+    loadPaywall()
+    return () => {
+      cancelled = true
+    }
   }, [user, loading, router])
 
   const handlePurchaseSuccess = () => {

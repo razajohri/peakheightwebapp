@@ -128,6 +128,12 @@ function OnboardingFlow() {
   const [planIncludesDone, setPlanIncludesDone] = useState(false)
 
   const handleAuthRequired = (authMode: 'signup' | 'signin' = 'signup') => {
+    // Persist past the carousel so returning to /onboarding after auth doesn't re-prompt auth
+    try {
+      localStorage.setItem('onboardingStep', '19')
+    } catch {
+      /* ignore */
+    }
     router.push(`/auth?mode=${authMode}&from=onboarding&redirect=/paywall`)
   }
 

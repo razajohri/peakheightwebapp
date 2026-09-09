@@ -24,20 +24,21 @@ export default function OnboardingAuth({ data, updateData, onNext, onBack }: Onb
   const [info, setInfo] = useState('')
   const [resendIn, setResendIn] = useState(0)
   const codeInputRef = useRef<HTMLInputElement>(null)
+  const advancedRef = useRef(false)
 
   useEffect(() => {
-    if (user) {
-      updateData({
-        userEmail: user.email,
-        userName:
-          user.user_metadata?.display_name ||
-          user.user_metadata?.full_name ||
-          user.email?.split('@')[0],
-        userId: user.id,
-      })
-      onNext()
-    }
-  }, [user])
+    if (!user || advancedRef.current) return
+    advancedRef.current = true
+    updateData({
+      userEmail: user.email,
+      userName:
+        user.user_metadata?.display_name ||
+        user.user_metadata?.full_name ||
+        user.email?.split('@')[0],
+      userId: user.id,
+    })
+    onNext()
+  }, [user, updateData, onNext])
 
   useEffect(() => {
     if (resendIn <= 0) return

@@ -34,10 +34,8 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
       try {
         const step = parseInt(savedStep, 10)
         // Guard: only apply if valid number in range (avoid NaN or corrupt data)
-        if (Number.isFinite(step) && step >= 1 && step <= 22) {
-          // Removed "Losing Height Potential Every Night" — shift saved positions after it
-          if (step > 12) setCurrentStep(Math.min(step - 1, 21))
-          else setCurrentStep(step)
+        if (Number.isFinite(step) && step >= 1 && step <= 21) {
+          setCurrentStep(step)
         }
       } catch (error) {
         console.error('Failed to load saved step:', error)

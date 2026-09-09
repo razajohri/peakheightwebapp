@@ -217,10 +217,7 @@ export default function OnboardingCohort({
         <ProgressHeader currentStep={4} totalSteps={22} onBack={onBack} />
 
         <div className="flex flex-1 flex-col overflow-y-auto px-6 pt-4">
-          <OptionTitle
-            subtitle="Every answer made the comparison more exact."
-            className="mb-8"
-          >
+          <OptionTitle className="mb-8">
             Here&apos;s who you&apos;re measured against.
           </OptionTitle>
 

@@ -61,18 +61,16 @@ function AuthPageContent() {
     }
   }, [emailStep])
 
+  // Always continue once signed in (including onboarding → paywall). Do not leave
+  // users stuck on the "already signed in" screen in a redirect loop.
   useEffect(() => {
-    if (!loading && user && !fromOnboarding && !justCompletedAuth) {
-      const t = setTimeout(() => router.replace(redirectTo), 400)
-      return () => clearTimeout(t)
-    }
+    if (loading || !user) return
+    const t = setTimeout(() => {
+      setJustCompletedAuth(false)
+      router.replace(redirectTo)
+    }, justCompletedAuth || fromOnboarding ? 150 : 400)
+    return () => clearTimeout(t)
   }, [user, loading, router, redirectTo, fromOnboarding, justCompletedAuth])
-
-  useEffect(() => {
-    if (!user || !redirectTo || !justCompletedAuth) return
-    setJustCompletedAuth(false)
-    router.replace(redirectTo)
-  }, [user, redirectTo, justCompletedAuth, router])
 
   const sendCode = async () => {
     setError('')
@@ -122,7 +120,12 @@ function AuthPageContent() {
         }
       } else {
         setJustCompletedAuth(true)
-        router.push(redirectTo)
+        try {
+          localStorage.setItem('onboardingStep', '19')
+        } catch {
+          /* ignore */
+        }
+        router.replace(redirectTo)
       }
     } catch {
       setError('Something went wrong. Please try again.')
@@ -145,47 +148,29 @@ function AuthPageContent() {
   }
 
   if (user) {
-    if (fromOnboarding) {
-      return (
-        <AuthShell>
-          <div className="text-center">
-            <p className="mb-2 font-manrope text-lg font-semibold text-[#18181b]">
-              You&apos;re already signed in
-            </p>
-            <p className="mb-6 font-manrope text-sm text-[#a1a1aa]">
-              Continue to choose your subscription plan.
-            </p>
-            <button
-              type="button"
-              onClick={() => router.push(redirectTo)}
-              className="h-12 w-full rounded-full bg-[#18181b] font-manrope font-medium text-white"
-            >
-              Continue to subscription →
-            </button>
-            <button
-              type="button"
-              onClick={() => signOut()}
-              className="mt-4 font-manrope text-[13px] text-[#a1a1aa] underline"
-            >
-              Use a different account
-            </button>
-          </div>
-        </AuthShell>
-      )
-    }
-
     return (
       <AuthShell>
         <div className="flex flex-col items-center gap-4 text-center">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-zinc-200 border-t-[#18181b]" />
-          <p className="font-manrope text-sm text-[#a1a1aa]">Signed in — redirecting…</p>
+          <p className="font-manrope text-sm text-[#a1a1aa]">
+            {fromOnboarding ? 'Signed in — continuing…' : 'Signed in — redirecting…'}
+          </p>
           <button
             type="button"
-            onClick={() => router.push(redirectTo)}
+            onClick={() => router.replace(redirectTo)}
             className="mt-2 font-manrope text-sm font-medium text-[#18181b] underline"
           >
             Continue now
           </button>
+          {fromOnboarding ? (
+            <button
+              type="button"
+              onClick={() => signOut()}
+              className="font-manrope text-[13px] text-[#a1a1aa] underline"
+            >
+              Use a different account
+            </button>
+          ) : null}
         </div>
       </AuthShell>
     )
